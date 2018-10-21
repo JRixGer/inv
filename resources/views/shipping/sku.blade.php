@@ -1,21 +1,21 @@
 <?php
-$date9_9 = date('Y-m-d H:i:s');
+// $date9_9 = date('Y-m-d H:i:s');
 
-$date9=date_create($date9_9);
+// $date9=date_create($date9_9);
 
-$date10 = date_format($date9,"Y-m-d");
+// $date10 = date_format($date9,"Y-m-d");
 
-$dt_today = date_format($date9, "m/d");
+// $dt_today = date_format($date9, "m/d");
 
-$dt_yesterday = strtotime('-1 day' , strtotime($dt_today));
+// $dt_yesterday = strtotime('-1 day' , strtotime($dt_today));
 
-$dt_yesterday = date('m/d', $dt_yesterday);
+// $dt_yesterday = date('m/d', $dt_yesterday);
 
-$dt_lasttwo = strtotime('-2 day' , strtotime($dt_today));
+// $dt_lasttwo = strtotime('-2 day' , strtotime($dt_today));
 
-$dt_lasttwo = date('m/d', $dt_lasttwo);
+// $dt_lasttwo = date('m/d', $dt_lasttwo);
 
-$dt_last3 = strtotime('-3 day' , strtotime($dt_today));
+// $dt_last3 = strtotime('-3 day' , strtotime($dt_today));
 
 $dt_last3 = date('m/d', $dt_last3);
 
