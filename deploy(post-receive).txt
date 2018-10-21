@@ -1,0 +1,18 @@
+#!/bin/sh
+# The production directory
+TARGET="/home/cbpreparedpatrio/public_html/inv_svr/"
+# A temporary directory for deployment
+TEMP="/home/cbpreparedpatrio/public_html/inv_tmp/"
+# The Git repo
+REPO="/home/cbpreparedpatrio/public_html/inv_repo.git"
+
+# Deploy the content to the temporary directory
+mkdir -p $TEMP
+git --work-tree=$TEMP --git-dir=$REPO checkout -f
+cd $TEMP
+# Do stuffs, like npm install…
+# Replace the production directory
+# with the temporary directory
+cd /
+rm -rf $TARGET
+mv $TEMP $TARGET
