@@ -28,6 +28,7 @@ class InventoryController extends Controller
                        )
                       ->leftjoin('lineItems', 'lineItems.lnkid', '=', 'notifications.id')
                       ->where('lineItems.itemNo', '<>', '')
+                      ->where('notifications.transactionType', '<>', 'TEST')
                       ->orderby('notifications.id', 'desc')
                       ->get();
 
@@ -95,22 +96,22 @@ class InventoryController extends Controller
         foreach ($invs as $key => $inv) 
         {
 
-            $qty4 = ($date_now_front >= strtotime($inv->notifications_date) && $date_now2_front <= strtotime($inv->notifications_date)? $inv->lineItems_quantity : 0);  
-            $qty5 = ($inventory_date1_1 >= strtotime($inv->notifications_date) && $inventory_date2_2 <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);        
-            $qty7 = ($inventory_date7 >= strtotime($inv->notifications_date) && $date_now2_front <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0); 
-            $qty14 = ($inventory_date14 >= strtotime($inv->notifications_date) && $date_now2_front <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);        
-            $qty30 = ($inventory_date30 >= strtotime($inv->notifications_date) && $date_now2_front <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);        
+            $qty4 = ($date_now_front >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity : 0);  
+            $qty5 = ($inventory_date1_1 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $inventory_date2_2? $inv->lineItems_quantity: 0);        
+            $qty7 = ($inventory_date7 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity: 0); 
+            $qty14 = ($inventory_date14 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity: 0);        
+            $qty30 = ($inventory_date30 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity: 0);        
 
-            $qty01 = ($date_2days >= strtotime($inv->notifications_date) && $date_2_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);   
+            $qty01 = ($date_2days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_2_days? $inv->lineItems_quantity: 0);   
             $qty02 = 0;      
-            $qty03 = ($date_3days >= strtotime($inv->notifications_date) && $date_3_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);        
-            $qty04 = ($date_4days >= strtotime($inv->notifications_date) && $date_4_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);        
-            $qty05 = ($date_5days >= strtotime($inv->notifications_date) && $date_5_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);        
-            $qty06 = ($date_6days >= strtotime($inv->notifications_date) && $date_6_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0);        
-            $qty07 = ($date_7days >= strtotime($inv->notifications_date) && $date_7_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0); 
-            $qty08 = ($date_8days >= strtotime($inv->notifications_date) && $date_8_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0); 
-            $qty09 = ($date_9days >= strtotime($inv->notifications_date) && $date_9_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0); 
-            $qty10 = ($date_10days >= strtotime($inv->notifications_date) && $date_10_days <= strtotime($inv->notifications_date)? $inv->lineItems_quantity: 0); 
+            $qty03 = ($date_3days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_3_days? $inv->lineItems_quantity: 0);        
+            $qty04 = ($date_4days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_4_days? $inv->lineItems_quantity: 0);        
+            $qty05 = ($date_5days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_5_days? $inv->lineItems_quantity: 0);        
+            $qty06 = ($date_6days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_6_days? $inv->lineItems_quantity: 0);        
+            $qty07 = ($date_7days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_7_days? $inv->lineItems_quantity: 0); 
+            $qty08 = ($date_8days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_8_days? $inv->lineItems_quantity: 0); 
+            $qty09 = ($date_9days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_9_days? $inv->lineItems_quantity: 0); 
+            $qty10 = ($date_10days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_10_days? $inv->lineItems_quantity: 0); 
             
             DB::table('daily_ship')->insert(
               [

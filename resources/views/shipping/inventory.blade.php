@@ -84,8 +84,24 @@
                             <tr>
                                 <td>{{ $row->item_number }}</td>
                                 <td>{{ $row->description }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ $row->qty30 }}</td>
+                                <td>{{ $row->qty14 }}</td>
 
-                          </tr>
+                                <td>{{ $row->qty01 }}</td>
+                                <td>{{ $row->qty02 }}</td>
+                                <td>{{ $row->qty03 }}</td>
+                                <td>{{ $row->qty04 }}</td>
+                                <td>{{ $row->qty05 }}</td>
+                                <td>{{ $row->qty06 }}</td>
+
+                                <td>{{ $row->qty7 }}</td>
+
+                                <td>{{ $row->qty07 }}</td>
+                                <td>{{ $row->qty08 }}</td>
+
+                              </tr>
                             @endforeach
                         @else
                         <tr>
