@@ -1,47 +1,26 @@
 <?php
-$date9_9 = date('Y-m-d H:i:s');
-
-$date9=date_create($date9_9);
-
-$date10 = date_format($date9,"Y-m-d");
-
-$dt_today = date_format($date9, "m/d");
-
-$dt_yesterday = strtotime('-1 day' , strtotime($dt_today));
-
-$dt_yesterday = date('m/d', $dt_yesterday);
-
-$dt_lasttwo = strtotime('-2 day' , strtotime($dt_today));
-
-$dt_lasttwo = date('m/d', $dt_lasttwo);
-
-$dt_last3 = strtotime('-3 day' , strtotime($dt_today));
-
-$dt_last3 = date('m/d', $dt_last3);
-
-$dt_last4 = strtotime('-4 day' , strtotime($dt_today));
-
-$dt_last4 = date('m/d', $dt_last4);
-
-$dt_last5 = strtotime('-5 day' , strtotime($dt_today));
-
-$dt_last5 = date('m/d', $dt_last5);
-
-$dt_last6 = strtotime('-6 day' , strtotime($dt_today));
-
-$dt_last6 = date('m/d', $dt_last6);
-
-$dt_last7 = strtotime('-7 day' , strtotime($dt_today));
-
-$dt_last7 = date('m/d', $dt_last7);
-
-$dt_last8 = strtotime('-8 day' , strtotime($dt_today));
-
-$dt_last8 = date('m/d', $dt_last8);
-
+  $date9_9 = date('Y-m-d H:i:s');
+  $date9=date_create($date9_9);
+  $date10 = date_format($date9,"Y-m-d");
+  $dt_today = date_format($date9, "m/d");
+  $dt_yesterday = strtotime('-1 day' , strtotime($dt_today));
+  $dt_yesterday = date('m/d', $dt_yesterday);
+  $dt_lasttwo = strtotime('-2 day' , strtotime($dt_today));
+  $dt_lasttwo = date('m/d', $dt_lasttwo);
+  $dt_last3 = strtotime('-3 day' , strtotime($dt_today));
+  $dt_last3 = date('m/d', $dt_last3);
+  $dt_last4 = strtotime('-4 day' , strtotime($dt_today));
+  $dt_last4 = date('m/d', $dt_last4);
+  $dt_last5 = strtotime('-5 day' , strtotime($dt_today));
+  $dt_last5 = date('m/d', $dt_last5);
+  $dt_last6 = strtotime('-6 day' , strtotime($dt_today));
+  $dt_last6 = date('m/d', $dt_last6);
+  $dt_last7 = strtotime('-7 day' , strtotime($dt_today));
+  $dt_last7 = date('m/d', $dt_last7);
+  $dt_last8 = strtotime('-8 day' , strtotime($dt_today));
+  $dt_last8 = date('m/d', $dt_last8);
 ?>
 @extends('layouts.app')
-
 @section('content')
 <div class="container-fluid padding_">
     <div class="row no-gutters justify-content-center">
@@ -100,11 +79,11 @@ $dt_last8 = date('m/d', $dt_last8);
                       <tbody>
 
 
-                        @if($inv->count() > 0)
-                            @foreach($inv as $rowinv)
+                        @if($daily_ship->count() > 0)
+                            @foreach($daily_ship as $row)
                             <tr>
-                                <td>{{ $rowinv->id }}</td>
-                                <td>{{ $rowinv->notifications_transactionTime }}</td>
+                                <td>{{ $row->item_number }}</td>
+                                <td>{{ $row->description }}</td>
 
                           </tr>
                             @endforeach

@@ -61,6 +61,7 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	
 	// Route::post('/post/store', [
 
 	// 	'uses' => 'PostsController@store',
