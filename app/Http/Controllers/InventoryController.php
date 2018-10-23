@@ -117,7 +117,27 @@ class InventoryController extends Controller
         }
 
         $daily_ship = DB::table('daily_ship')
-                      ->select('daily_ship.*')
+                      ->selectRaw(
+                        'item_number,
+                        description,
+                        SUM(qty01) AS qty01,
+                        SUM(qty02) AS qty02,
+                        SUM(qty03) AS qty03,
+                        SUM(qty04) AS qty04,
+                        SUM(qty05) AS qty05,
+                        SUM(qty06) AS qty06,
+                        SUM(qty07) AS qty07,
+                        SUM(qty08) AS qty08,
+                        SUM(qty09) AS qty09,
+                        SUM(qty10) AS qty10,
+                        SUM(qty04) AS qty4,
+                        SUM(qty05) AS qty5,
+                        SUM(qty07) AS qty7,
+                        SUM(qty14) AS qty14,
+                        SUM(qty30) AS qty30'
+                      )
+                      ->groupBy('item_number')
+                      ->groupBy('description')
                       ->get();
 
         return view('shipping.inventory', compact('daily_ship'));
