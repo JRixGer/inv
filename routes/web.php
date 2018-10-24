@@ -61,7 +61,16 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
-	
+
+
+
+	Route::get('/inventory/sku', [
+
+		'uses' => 'InventoryController@sku',
+		'as' => 'inventory.sku'
+	]
+	);
+
 	// Route::post('/post/store', [
 
 	// 	'uses' => 'PostsController@store',

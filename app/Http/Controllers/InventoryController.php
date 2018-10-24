@@ -145,5 +145,10 @@ class InventoryController extends Controller
 
     }
 
+    public function sku()
+    {
+        return view('shipping.sku');
+    }
+
 
 }
