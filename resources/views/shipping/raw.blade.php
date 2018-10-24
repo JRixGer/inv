@@ -13,7 +13,7 @@
                       <thead>
                         <tr>
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_vendor'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_transactionTime'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_transactionDate'))?></th>
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_receipt'))?></th>
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_transactionType'))?></th>     
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'billing_firstName'))?></th>
@@ -43,6 +43,19 @@
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_accountAmount'))?></th>
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_quantity'))?></th>
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_lineItemType'))?></th>
+
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_productPrice'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_productDiscount'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_taxAmount'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_shippingAmount'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_shippingLiable'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_paymentsProcessed'))?></th>
+
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_paymentsRemaining'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_nextPaymentDate'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_affiliatePayout'))?></th>
+
+
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_affiliate'))?></th>
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_role'))?></th>
                         <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_totalAccountAmount'))?></th>
@@ -76,7 +89,7 @@
                             @foreach($raw as $rawnoti)
                             <tr>
                               <td>{{ $rawnoti->notifications_vendor }}</td>
-                              <td>{{ $rawnoti->notifications_transactionTime }}</td>
+                              <td>{{ $rawnoti->dt }}</td>
                               <td>{{ $rawnoti->notifications_receipt }}</td>
                               <td>{{ $rawnoti->notifications_transactionType }}</td>     
                               <td>{{ $rawnoti->billing_firstName }}</td>
@@ -106,6 +119,18 @@
                               <td>{{ $rawnoti->lineItems_accountAmount }}</td>
                               <td>{{ $rawnoti->lineItems_quantity }}</td>
                               <td>{{ $rawnoti->lineItems_lineItemType }}</td>
+
+
+                              <td>{{ $rawnoti->lineItems_productPrice }}</td>
+                              <td>{{ $rawnoti->lineItems_productDiscount }}</td>
+                              <td>{{ $rawnoti->lineItems_taxAmount }}</td>
+                              <td>{{ $rawnoti->lineItems_shippingAmount }}</td>
+                              <td>{{ $rawnoti->lineItems_shippingLiable }}</td>
+                              <td>{{ $rawnoti->lineItems_paymentsProcessed }}</td>
+                              <td>{{ $rawnoti->lineItems_paymentsRemaining }}</td>
+                              <td>{{ $rawnoti->lineItems_nextPaymentDate }}</td>
+                              <td>{{ $rawnoti->lineItems_affiliatePayout }}</td>
+
                               <td>{{ $rawnoti->notifications_affiliate }}</td>
                               <td>{{ $rawnoti->notifications_role }}</td>
                               <td>{{ $rawnoti->notifications_totalAccountAmount }}</td>

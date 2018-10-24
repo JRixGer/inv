@@ -72,8 +72,6 @@
 
                           <th scope="col">{{$dt_last8}}</th>
 
-
-
                         </tr>
                       </thead>
                       <tbody>

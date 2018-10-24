@@ -29,6 +29,7 @@ class InventoryController extends Controller
                       ->leftjoin('lineItems', 'lineItems.lnkid', '=', 'notifications.id')
                       ->where('lineItems.itemNo', '<>', '')
                       ->where('notifications.transactionType', '<>', 'TEST')
+                       ->where('notifications.transactionType', '<>', 'TEST_SALE')
                       ->orderby('notifications.id', 'desc')
                       ->get();
 

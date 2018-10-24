@@ -32,9 +32,12 @@ class NotificationsController extends Controller
     {
     	//return view('admin.categories.index')->with('categories', Category::all());
 
+      //, DB::raw("DATE_FORMAT(cust.cust_dob, '%d-%b-%Y')
+
         $raw = DB::table('notifications')
                         ->select(
                               'notifications.id as id',
+                               DB::raw('DATE_FORMAT(notifications.dt, "%M %d %Y") as dt'),
                               'notifications.vendor as notifications_vendor',
                               'notifications.transactionTime as notifications_transactionTime',
                               'notifications.receipt as notifications_receipt',
@@ -66,6 +69,17 @@ class NotificationsController extends Controller
                               'lineItems.accountAmount as lineItems_accountAmount',
                               'lineItems.quantity as lineItems_quantity',
                               'lineItems.downloadUrl as lineItems_downloadUrl',
+
+                              'lineItems.productPrice as lineItems_productPrice',
+                              'lineItems.productDiscount as lineItems_productDiscount',
+                              'lineItems.taxAmount as lineItems_taxAmount',
+                              'lineItems.shippingAmount as lineItems_shippingAmount',
+                              'lineItems.shippingLiable as lineItems_shippingLiable',
+                              'lineItems.paymentsProcessed as lineItems_paymentsProcessed',
+                              'lineItems.paymentsRemaining as lineItems_paymentsRemaining',
+                              'lineItems.nextPaymentDate as lineItems_nextPaymentDate',
+                              'lineItems.affiliatePayout as lineItems_affiliatePayout',
+
                               'lineItems.lineItemType as lineItems_lineItemType',
                               'notifications.affiliate as notifications_affiliate',
                               'notifications.role as notifications_role',
@@ -102,6 +116,7 @@ class NotificationsController extends Controller
                         ->leftjoin('hopfeed', 'hopfeed.lnkid', '=', 'notifications.id')
                         ->where('notifications.vendor', '=', 'totalpat')
                         ->where('notifications.transactionType', '<>', 'TEST')
+                        ->where('notifications.transactionType', '<>', 'TEST_SALE')
                         ->orderby('notifications.id', 'desc')
                         ->get();
 
