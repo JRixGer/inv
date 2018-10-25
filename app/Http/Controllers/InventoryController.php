@@ -38,11 +38,8 @@ class InventoryController extends Controller
         $date_now_front_num = strtotime($date_now_front);
 
 
-        $inventory_date1_1 = strtotime('-1 day' , strtotime($date_now_front));
-        $inventory_date7 = strtotime('-7 days' , strtotime($date_now_front));
-        $inventory_date14 = strtotime('-14 days' , strtotime($date_now_front));
         $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
-        $date_1days = strtotime('-1 days' , strtotime($date_now_front)); 
+        $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
         $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
         $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
         $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
@@ -55,6 +52,7 @@ class InventoryController extends Controller
         $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
         $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
         $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
+        $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
 
 
         //to
@@ -62,12 +60,8 @@ class InventoryController extends Controller
         $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
         $date_now2_front_num = strtotime($date_now_front);
 
-        $inventory_date2_2 = strtotime('-1 day' , strtotime($date_now2_front));
-        $inventory_date_7 = strtotime('-7 days' , strtotime($date_now2_front));
-        $inventory_date_14 = strtotime('-14 days' , strtotime($date_now2_front));
         $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
-
-        $date_1_days = strtotime('-1 days' , strtotime($date_now2_front)); 
+        $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
         $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
         $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
         $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
@@ -80,19 +74,15 @@ class InventoryController extends Controller
         $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
         $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
         $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
+        $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
         
         DB::table('daily_ship')->delete();
   
         foreach ($invs as $key => $inv) 
         {
 
-            $qty4 = ((int)$date_now_front_num <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity : 0);  
-            $qty5 = ((int)$inventory_date1_1 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$inventory_date2_2? $inv->lineItems_quantity: 0);        
-            $qty7 = ((int)$inventory_date7 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0); 
-            $qty14 = ((int)$inventory_date14 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);        
             $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);        
-
-            $qty01 = ((int)$date_1days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_days? $inv->lineItems_quantity: 0);   
+            $qty01 = ((int)$date_1day <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
             $qty02 = ((int)$date_2days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
             $qty03 = ((int)$date_3days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
             $qty04 = ((int)$date_4days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_4_days? $inv->lineItems_quantity: 0);        
@@ -105,6 +95,7 @@ class InventoryController extends Controller
             $qty11 = ((int)$date_11days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_11_days? $inv->lineItems_quantity: 0); 
             $qty12 = ((int)$date_12days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_12_days? $inv->lineItems_quantity: 0); 
             $qty13 = ((int)$date_13days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
+            $qty14 = ((int)$date_14days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_14_days? $inv->lineItems_quantity: 0);
 
             DB::table('daily_ship')->insert(
             [
@@ -123,9 +114,6 @@ class InventoryController extends Controller
                 'qty11' => $qty11, 
                 'qty12' => $qty12,
                 'qty13' => $qty13,
-                'qty4' => $qty4,  
-                'qty5' => $qty5,  
-                'qty7' => $qty7,  
                 'qty14' => $qty14, 
                 'qty30' => $qty30
             ]
