@@ -26,27 +26,42 @@
 
                           <th scope="col">QTY</th>
 
+                          <th scope="col">TYPE</th>
 
+                          <th scope="col" colspan="2">ACTION</th>
 
                         </tr>
                       </thead>
                       <tbody>
-
-
-
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                 
-
+                            
+                            @if($skus->count() > 0)
+                              @foreach($skus as $sku)
+                              <tr>
+                                <td>
+                                  {{ $sku->prodCode }}
+                                </td>
+                                <td>
+                                  {{ $sku->prodName }}
+                                </td>
+                                <td>
+                                  {{ $sku->prodQty }}
+                                </td>
+                                <td>
+                                  {{ $sku->prodType }}
+                                </td>
+                                <td>
+                                  <a class="btn btn-sm btn-info">Edit</a>
+                                </td>
+                                <td>
+                                  <a class="btn btn-sm btn-warning">Delete</a>
+                                </td>
                               </tr>
-
-          <!--               <tr>
-                            <th colspan="3">No Records</th>
-                        </tr>
-           -->
-
+                              @endforeach
+                            @else
+                            <tr>
+                              <th colspan="3">No Records</th>
+                            </tr>
+                            @endif
                       </tbody>
                     </table>
 

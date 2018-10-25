@@ -20,7 +20,9 @@ class SkuController extends Controller
     
     public function list()
     {
-        return view('shipping.sku');
+        
+        return view('shipping.sku')->with('skus', Sku::all());
+
     }
 
 
