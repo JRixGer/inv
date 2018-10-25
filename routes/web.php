@@ -62,12 +62,10 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	);
 
 
+	Route::get('/sku/list', [
 
-
-	Route::get('/inventory/sku', [
-
-		'uses' => 'InventoryController@sku',
-		'as' => 'inventory.sku'
+		'uses' => 'SkuController@list',
+		'as' => 'sku.list'
 	]
 	);
 

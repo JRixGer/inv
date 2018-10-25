@@ -123,39 +123,39 @@ class InventoryController extends Controller
 
         $daily_ship = DB::table('daily_ship')
                       ->selectRaw(
-                        'item_number,
-                        description,
-                        SUM(qty01) AS qty01,
-                        SUM(qty02) AS qty02,
-                        SUM(qty03) AS qty03,
-                        SUM(qty04) AS qty04,
-                        SUM(qty05) AS qty05,
-                        SUM(qty06) AS qty06,
-                        SUM(qty07) AS qty07,
-                        SUM(qty08) AS qty08,
-                        SUM(qty09) AS qty09,
-                        SUM(qty10) AS qty10,
-                        SUM(qty11) AS qty11,
-                        SUM(qty12) AS qty12,
-                        SUM(qty12) AS qty13,
-                        SUM(qty04) AS qty4,
-                        SUM(qty05) AS qty5,
-                        SUM(qty07) AS qty7,
-                        SUM(qty14) AS qty14,
-                        SUM(qty30) AS qty30'
+                        'daily_ship.item_number AS item_number,
+                        daily_ship.description AS description,
+                        sku.prodQty AS prodQty, 
+                        SUM(daily_ship.qty01) AS qty01,
+                        SUM(daily_ship.qty02) AS qty02,
+                        SUM(daily_ship.qty03) AS qty03,
+                        SUM(daily_ship.qty04) AS qty04,
+                        SUM(daily_ship.qty05) AS qty05,
+                        SUM(daily_ship.qty06) AS qty06,
+                        SUM(daily_ship.qty07) AS qty07,
+                        SUM(daily_ship.qty08) AS qty08,
+                        SUM(daily_ship.qty09) AS qty09,
+                        SUM(daily_ship.qty10) AS qty10,
+                        SUM(daily_ship.qty11) AS qty11,
+                        SUM(daily_ship.qty12) AS qty12,
+                        SUM(daily_ship.qty12) AS qty13,
+                        SUM(daily_ship.qty04) AS qty4,
+                        SUM(daily_ship.qty05) AS qty5,
+                        SUM(daily_ship.qty07) AS qty7,
+                        SUM(daily_ship.qty14) AS qty14,
+                        SUM(daily_ship.qty30) AS qty30'
                       )
-                      ->groupBy('item_number')
-                      ->groupBy('description')
+                      ->leftjoin('sku', 'sku.prodCode', '=', 'daily_ship.item_number')
+                      ->groupBy('daily_ship.item_number')
+                      ->groupBy('daily_ship.description')
+                      ->groupBy('sku.prodQty')
                       ->get();
 
         return view('shipping.inventory', compact('daily_ship'));
 
     }
 
-    public function sku()
-    {
-        return view('shipping.sku');
-    }
+
 
 
 }

@@ -73,7 +73,7 @@
 
                           <th scope="col">DESC</th>
 
-                          <th scope="col">BAL</th>
+                          <th scope="col" style="color: rgb(0, 85, 255);">BAL</th>
 
                           <th scope="col" style="color: rgb(255, 0, 0);">30D</th>
 
@@ -126,7 +126,7 @@
                             <tr>
                                 <td>{{ $row->item_number }}</td>
                                 <td>{{ $row->description }}</td>
-                                <td></td>
+                                <td>{{ $row->prodQty - ($d14 + $d07) }}</td>
                                 <td>{{ $row->qty30 }}</td>
 
                                 <td>{{ $d14 }}</td>

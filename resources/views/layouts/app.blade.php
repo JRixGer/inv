@@ -44,7 +44,7 @@
 
                             <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
                             <li><a class="nav-link" href="{{ route('inventory.list') }}">Inventory</a></li>
-                            <li><a class="nav-link" href="{{ route('inventory.sku') }}">SKU</a></li>
+                            <li><a class="nav-link" href="{{ route('sku.list') }}">SKU</a></li>
                             <li><a class="nav-link">Search</a></li>
 
                         @endguest
