@@ -29,17 +29,20 @@ class InventoryController extends Controller
                       ->leftjoin('lineItems', 'lineItems.lnkid', '=', 'notifications.id')
                       ->where('lineItems.itemNo', '<>', '')
                       ->where('notifications.transactionType', '<>', 'TEST')
-                       ->where('notifications.transactionType', '<>', 'TEST_SALE')
+                      ->where('notifications.transactionType', '<>', 'TEST_SALE')
                       ->orderby('notifications.id', 'desc')
                       ->get();
 
-        $date_now_front = date('Y-m-d 00:00:00');
-        $date_now_front_num = strtotime(date('Y-m-d 00:00:00'));
+
+        $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
+        $date_now_front_num = strtotime($date_now_front);
+
 
         $inventory_date1_1 = strtotime('-1 day' , strtotime($date_now_front));
-        $inventory_date7 = strtotime('-6 days' , strtotime($date_now_front));
-        $inventory_date14 = strtotime('-13 days' , strtotime($date_now_front));
-        $inventory_date30 = strtotime('-29 days' , strtotime($date_now_front));
+        $inventory_date7 = strtotime('-7 days' , strtotime($date_now_front));
+        $inventory_date14 = strtotime('-14 days' , strtotime($date_now_front));
+        $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
+        $date_1days = strtotime('-1 days' , strtotime($date_now_front)); 
         $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
         $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
         $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
@@ -51,14 +54,20 @@ class InventoryController extends Controller
         $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
         $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
         $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
+        $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
+
 
         //to
 
-        $date_now2_front = date('Y-m-d 23:59:59');
+        $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
+        $date_now2_front_num = strtotime($date_now_front);
+
         $inventory_date2_2 = strtotime('-1 day' , strtotime($date_now2_front));
         $inventory_date_7 = strtotime('-7 days' , strtotime($date_now2_front));
+        $inventory_date_14 = strtotime('-14 days' , strtotime($date_now2_front));
         $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
 
+        $date_1_days = strtotime('-1 days' , strtotime($date_now2_front)); 
         $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
         $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
         $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
@@ -70,32 +79,35 @@ class InventoryController extends Controller
         $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
         $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
         $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
-
+        $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
         
         DB::table('daily_ship')->delete();
-        
+  
         foreach ($invs as $key => $inv) 
         {
 
-            $qty4 = ($date_now_front_num >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity : 0);  
-            $qty5 = ($inventory_date1_1 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $inventory_date2_2? $inv->lineItems_quantity: 0);        
-            $qty7 = ($inventory_date7 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity: 0); 
-            $qty14 = ($inventory_date14 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity: 0);        
-            $qty30 = ($inventory_date30 >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_now2_front? $inv->lineItems_quantity: 0);        
+            $qty4 = ((int)$date_now_front_num <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity : 0);  
+            $qty5 = ((int)$inventory_date1_1 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$inventory_date2_2? $inv->lineItems_quantity: 0);        
+            $qty7 = ((int)$inventory_date7 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0); 
+            $qty14 = ((int)$inventory_date14 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);        
+            $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);        
 
-            $qty01 = ($date_2days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_2_days? $inv->lineItems_quantity: 0);   
-            $qty02 = 0;      
-            $qty03 = ($date_3days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_3_days? $inv->lineItems_quantity: 0);        
-            $qty04 = ($date_4days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_4_days? $inv->lineItems_quantity: 0);        
-            $qty05 = ($date_5days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_5_days? $inv->lineItems_quantity: 0);        
-            $qty06 = ($date_6days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_6_days? $inv->lineItems_quantity: 0);        
-            $qty07 = ($date_7days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_7_days? $inv->lineItems_quantity: 0); 
-            $qty08 = ($date_8days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_8_days? $inv->lineItems_quantity: 0); 
-            $qty09 = ($date_9days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_9_days? $inv->lineItems_quantity: 0); 
-            $qty10 = ($date_10days >= strtotime($inv->notifications_date) && strtotime($inv->notifications_date) <= $date_10_days? $inv->lineItems_quantity: 0); 
-            
+            $qty01 = ((int)$date_1days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_days? $inv->lineItems_quantity: 0);   
+            $qty02 = ((int)$date_2days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
+            $qty03 = ((int)$date_3days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
+            $qty04 = ((int)$date_4days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_4_days? $inv->lineItems_quantity: 0);        
+            $qty05 = ((int)$date_5days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_5_days? $inv->lineItems_quantity: 0);        
+            $qty06 = ((int)$date_6days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_6_days? $inv->lineItems_quantity: 0);        
+            $qty07 = ((int)$date_7days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_7_days? $inv->lineItems_quantity: 0); 
+            $qty08 = ((int)$date_8days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_8_days? $inv->lineItems_quantity: 0); 
+            $qty09 = ((int)$date_9days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_9_days? $inv->lineItems_quantity: 0); 
+            $qty10 = ((int)$date_10days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_10_days? $inv->lineItems_quantity: 0); 
+            $qty11 = ((int)$date_11days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_11_days? $inv->lineItems_quantity: 0); 
+            $qty12 = ((int)$date_12days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_12_days? $inv->lineItems_quantity: 0); 
+            $qty13 = ((int)$date_13days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
+
             DB::table('daily_ship')->insert(
-              [
+            [
                 'item_number' => $inv->lineItems_itemNo, 
                 'description' => $inv->lineItems_productTitle, 
                 'qty01' => $qty01, 
@@ -108,11 +120,15 @@ class InventoryController extends Controller
                 'qty08' => $qty08, 
                 'qty09' => $qty09, 
                 'qty10' => $qty10,
+                'qty11' => $qty11, 
+                'qty12' => $qty12,
+                'qty13' => $qty13,
                 'qty4' => $qty4,  
                 'qty5' => $qty5,  
                 'qty7' => $qty7,  
                 'qty14' => $qty14, 
-                'qty30' => $qty30              ]
+                'qty30' => $qty30
+            ]
             );
 
         }
@@ -131,6 +147,9 @@ class InventoryController extends Controller
                         SUM(qty08) AS qty08,
                         SUM(qty09) AS qty09,
                         SUM(qty10) AS qty10,
+                        SUM(qty11) AS qty11,
+                        SUM(qty12) AS qty12,
+                        SUM(qty12) AS qty13,
                         SUM(qty04) AS qty4,
                         SUM(qty05) AS qty5,
                         SUM(qty07) AS qty7,
