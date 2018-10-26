@@ -15,7 +15,7 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-
+Vue.config.devtools = false;
 
 Vue.component('skuslist', require('./components/SkuMaintain.vue'));
 

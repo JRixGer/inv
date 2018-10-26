@@ -23,17 +23,12 @@ class SkuController extends Controller
         
         updateProd_fn();
 
-        //return view('shipping.sku')->with('skus', Sku::all());
-
-        return view('shipping.sku');
-
-        // $skus = Sku::get();
-        // return response()->json([
-        //     'skus'    => $skus,
-        // ], 200);        
+        return view('shipping.sku')->with('skus', Sku::all());
+        //return view('shipping.sku'); // for vueje
 
     }
 
+    // below are for vuejs
     public function mount()
     {
         
@@ -44,14 +39,6 @@ class SkuController extends Controller
         ], 200);        
 
     }
-
-    // public function index()
-    // {
-    //     $tasks = Task::where(['user_id' => Auth::user()->id])->get();
-    //     return response()->json([
-    //         'tasks'    => $tasks,
-    //     ], 200);
-    // }
 
 
 }

@@ -13903,6 +13903,8 @@ window.Vue = __webpack_require__(36);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+Vue.config.devtools = false;
+
 Vue.component('skuslist', __webpack_require__(39));
 
 var app = new Vue({
@@ -47816,7 +47818,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-default",
+                    staticClass: "btn btn-default btn-sm",
                     attrs: { type: "button", "data-dismiss": "modal" }
                   },
                   [_vm._v("Close")]
@@ -47825,7 +47827,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-primary",
+                    staticClass: "btn btn-primary btn-sm",
                     attrs: { type: "button" },
                     on: { click: _vm.updateSku }
                   },
