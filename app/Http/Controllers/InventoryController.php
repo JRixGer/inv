@@ -19,6 +19,8 @@ class InventoryController extends Controller
 
     public function list()
     {
+
+        //updateProd_fn();
         $invs = DB::table('notifications')
                       ->select(
                             'notifications.dt as notifications_date',
@@ -125,7 +127,7 @@ class InventoryController extends Controller
                       ->selectRaw(
                         'daily_ship.item_number AS item_number,
                         daily_ship.description AS description,
-                        sku.prodQty AS prodQty, 
+                        skus.prodQty AS prodQty, 
                         SUM(daily_ship.qty01) AS qty01,
                         SUM(daily_ship.qty02) AS qty02,
                         SUM(daily_ship.qty03) AS qty03,
@@ -145,10 +147,10 @@ class InventoryController extends Controller
                         SUM(daily_ship.qty14) AS qty14,
                         SUM(daily_ship.qty30) AS qty30'
                       )
-                      ->leftjoin('sku', 'sku.prodCode', '=', 'daily_ship.item_number')
+                      ->leftjoin('skus', 'skus.prodCode', '=', 'daily_ship.item_number')
                       ->groupBy('daily_ship.item_number')
                       ->groupBy('daily_ship.description')
-                      ->groupBy('sku.prodQty')
+                      ->groupBy('skus.prodQty')
                       ->get();
 
         return view('shipping.inventory', compact('daily_ship'));

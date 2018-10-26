@@ -17,7 +17,7 @@ window.Vue = require('vue');
 
 
 
-Vue.component('invlist', require('./components/ListInv.vue'));
+Vue.component('skuslist', require('./components/SkuMaintain.vue'));
 
 const app = new Vue({
     el: '#app'

@@ -2,7 +2,6 @@
 
 
   $datenow = date('Y-m-d H:i:s');
-  //$datenow = date_create($datenow);
 
   $dt_last1 = strtotime('-1 day' , strtotime($datenow));
   $dt_last1 = date('m/d', $dt_last1);
@@ -73,7 +72,7 @@
 
                           <th scope="col">DESC</th>
 
-                          <th scope="col" style="color: rgb(0, 85, 255);">BAL</th>
+                          <th scope="col" style="color: rgb(0, 85, 255);">BAL (dummy for now)</th>
 
                           <th scope="col" style="color: rgb(255, 0, 0);">30D</th>
 

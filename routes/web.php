@@ -69,6 +69,29 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+
+	Route::get('/sku/mount', [
+
+		'uses' => 'SkuController@mount',
+		'as' => 'sku.mount'
+	]
+	);
+
+
+	Route::post('/sku/update', [
+
+		'uses' => 'SkuController@update',
+		'as' => 'sku.update'
+	]
+	);
+
+	Route::post('/sku/delete', [
+
+		'uses' => 'SkuController@delete',
+		'as' => 'sku.delete'
+	]
+	);	
+
 	// Route::post('/post/store', [
 
 	// 	'uses' => 'PostsController@store',
