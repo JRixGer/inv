@@ -62,6 +62,15 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	);
 
 
+	Route::get('/maropost/list', [
+
+		'uses' => 'MaropostController@list',
+		'as' => 'maropost.list'
+	]
+	);
+
+
+
 	Route::get('/sku/list', [
 
 		'uses' => 'SkuController@list',
