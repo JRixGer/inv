@@ -79,10 +79,10 @@ class MaropostController extends Controller
             ->where(
               function($query){
                 return $query
-                    ->orWhere('lineitems.itemNo', 'LIKE', 'cptbook%')
-                    ->orWhere('lineitems.itemNo', 'LIKE', 'sgfl%')
-                    ->orWhere('lineitems.itemNo', 'LIKE', 'swt%')
-                    ->orWhere('lineitems.itemNo', 'LIKE', 'tclsr%');
+                    ->orWhere('lineItems.itemNo', 'LIKE', 'cptbook%')
+                    ->orWhere('lineItems.itemNo', 'LIKE', 'sgfl%')
+                    ->orWhere('lineItems.itemNo', 'LIKE', 'swt%')
+                    ->orWhere('lineItems.itemNo', 'LIKE', 'tclsr%');
               }
             )
             ->orderby('notifications.id', 'desc')
