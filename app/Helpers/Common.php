@@ -1,6 +1,11 @@
 <?php
 
+//////////////////////////////////////
 // global functions here :)
+//////////////////////////////////////
+
+
+// starts here: below codes are for the automatic creation of SKU in case its not yet created yet. it will happen every each INS instance
 
 function updateProd_fn()
 {
@@ -49,6 +54,12 @@ function updateProd_fn()
 
 }
 
+// ends here: below codes are for the automatic creation of SKU in case its not yet created yet. it will happen every each INS instance
+
+
+
+
+// starts here: below codes are for maropost posting of email and other relevant adta
 class MP {
   static $auth_token  = "Blft0gQ-XXccABwdFdDdABKf7wqFE3HXfQgwlLtE3gIGgo5YdARhMg";
   static $url_api   = "http://api.maropost.com/accounts/1044/";
@@ -143,5 +154,6 @@ function maroPost_fn($receipt)
 
 
   }  
-
 }
+
+// ends here: below codes are for maropost posting of email and other relevant adta
