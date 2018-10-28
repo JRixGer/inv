@@ -90,4 +90,28 @@
    
     </div>
 </body>
+
+<script type="text/javascript">
+
+    function post_maro(receipt)
+    {
+
+        $.ajaxSetup({
+            headers: {
+
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+           type:'POST',
+           url:'/inv/shipping/maropost/mpost',
+           data:{r:receipt},
+           success:function(data){
+              window.location.reload();
+           }
+        });
+    }  
+
+</script>
+
 </html>

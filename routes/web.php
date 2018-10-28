@@ -70,6 +70,15 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	);
 
 
+	Route::post('/maropost/mpost', [
+
+		'uses' => 'MaropostController@mpost',
+		'as' => 'maropost.mpost'
+	]
+	);
+
+//	Route::post('/maropost/post', 'MaropostController@post')->mpost('here');
+
 
 	Route::get('/sku/list', [
 

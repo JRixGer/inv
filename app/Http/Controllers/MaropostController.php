@@ -76,6 +76,7 @@ class MaropostController extends Controller
             ->where('notifications.vendor', '=', 'totalpat')
             ->where('notifications.transactionType', '<>', 'TEST')
             ->where('notifications.transactionType', '<>', 'TEST_SALE')
+            ->where('billing.email', '<>', '')
             ->where(
               function($query){
                 return $query
@@ -92,5 +93,22 @@ class MaropostController extends Controller
 
     	//return view('shipping.raw')->with('raw', Notifications::all());
      }
+    
 
+    //maroPost_fn($r);
+
+    public function mpost(Request $request)
+    {
+
+        $receipt = $request->all();
+        $res = maroPost_fn($receipt['r']);
+        
+        $output = array(
+            'success'     =>  'Got Simple Ajax Request.',
+            'posted'   =>  'ok'
+        );
+
+        echo json_encode($output);
+
+    }
 }

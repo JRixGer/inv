@@ -12,19 +12,19 @@
                      <table class="table table-sm" border="1">
                       <thead>
                         <tr>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_transactionDate'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_receipt'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_transactionType'))?></th>   
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lineItems_itemNo'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'maropost_posted'))?></th>    
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'billing_firstName'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'billing_lastName'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'billing_phoneNumber'))?></th>
-                        <th scope="col" class="highlight"><?=ucfirst(str_replace('_', ' ', 'billing_email'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'billing_state'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'billing_postalCode'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'billing_country'))?></th>
-                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'notifications_affiliate'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'transactionDate'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'receipt'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'transactionType'))?></th>   
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'itemNo'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'Posted to Maropost' ))?></th>    
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'firstName'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'lastName'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'phoneNumber'))?></th>
+                        <th scope="col" class="highlight"><?=ucfirst(str_replace('_', ' ', 'email'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'state'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'postalCode'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'country'))?></th>
+                        <th scope="col"><?=ucfirst(str_replace('_', ' ', 'URL'))?></th>
                         </tr>
                       </thead>
                       <tbody>
@@ -34,8 +34,8 @@
                         @if($maro->count() > 0)
                             @foreach($maro as $rawmaro)
                             <?php
-                            $p = (($rawmaro->notifications_posted==1)? "<p style='color:BLUE'>Yes</p>":"<p style='color:RED'>No</p>");
-                            $url = '<a href="'.$rawmaro->lineItems_downloadUrl.'" target="blank_">URL<a>';
+                            $p = (($rawmaro->notifications_posted==1)? "<p style=\"color:BLUE\">Yes</p>":"<p style=\"color:RED\">No - <a href=\"#\" onClick=\"post_maro('".$rawmaro->notifications_receipt."')\" style=\"color:GRAY\">(click to post)</a></p>");
+                            $url = '<a href="'.$rawmaro->lineItems_downloadUrl.'" target="blank_">'.substr($rawmaro->lineItems_downloadUrl,0,15).'...<a>';
                             ?>
                             <tr>
                               <td>{{ $rawmaro->dt }}</td>
