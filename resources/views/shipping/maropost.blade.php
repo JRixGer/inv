@@ -5,7 +5,7 @@
     <div class="row no-gutters justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header title_">Maropost Posting List</div>
+                <div class="card-header title_">Maropost Posting History</div>
 
                 <div class="card-body">
                   <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll">
