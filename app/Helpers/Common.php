@@ -107,7 +107,7 @@ function maroPost_fn($receipt)
         ->select(
               'notifications.dt', 
               'notifications.receipt', 
-              'lineitems.itemNo', 
+              'lineItems.itemNo', 
               'billing.email',
               'billing.firstName', 
               'billing.lastName', 
