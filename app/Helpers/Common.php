@@ -111,7 +111,7 @@ function maroPost_fn($receipt)
               'billing.email',
               'billing.firstName', 
               'billing.lastName', 
-              'lineitems.downloadUrl', 
+              'lineItems.downloadUrl', 
               'notifications.affiliate', 
               'notifications.vendor'
               )
@@ -120,11 +120,11 @@ function maroPost_fn($receipt)
         ->where('notifications.receipt', '=', $receipt)
         ->groupby('notifications.dt', 
               'notifications.receipt', 
-              'lineitems.itemNo', 
+              'lineItems.itemNo', 
               'billing.email',
               'billing.firstName', 
               'billing.lastName', 
-              'lineitems.downloadUrl', 
+              'lineItems.downloadUrl', 
               'notifications.affiliate', 
               'notifications.vendor'
               )

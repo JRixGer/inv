@@ -47,12 +47,12 @@ class MP {
 
 
 
-$sql = "SELECT `notifications`.`dt`, `notifications`.`receipt`, `lineitems`.`itemNo`, `billing`.`email`,`billing`.`firstName`, `billing`.`lastName`, `lineitems`.`downloadUrl`, `notifications`.`affiliate`, `notifications`.`vendor`
+$sql = "SELECT `notifications`.`dt`, `notifications`.`receipt`, `lineItems`.`itemNo`, `billing`.`email`,`billing`.`firstName`, `billing`.`lastName`, `lineItems`.`downloadUrl`, `notifications`.`affiliate`, `notifications`.`vendor`
 FROM `notifications`
-LEFT JOIN `lineitems` on `notifications`.`id` = `lineitems`.`lnkid`
+LEFT JOIN `lineItems` on `notifications`.`id` = `lineItems`.`lnkid`
 LEFT JOIN `billing` on `billing`.`lnkid` = `notifications`.`id`
-WHERE (`lineitems`.`itemNo` LIKE 'cptbook%' or `lineitems`.`itemNo` LIKE 'sgfl%' or `lineitems`.`itemNo` LIKE 'swt%' or `lineitems`.`itemNo` LIKE 'tclsr%') AND `billing`.`email` <> '' AND `notifications`.`receipt` = '".$_SESSION['receipt']."' 
-GROUP BY `notifications`.`dt`, `notifications`.`receipt`, `lineitems`.`itemNo`, `billing`.`email`,`billing`.`firstName`, `billing`.`lastName`, `lineitems`.`downloadUrl`, `notifications`.`affiliate`, `notifications`.`vendor`";
+WHERE (`lineItems`.`itemNo` LIKE 'cptbook%' or `lineItems`.`itemNo` LIKE 'sgfl%' or `lineItems`.`itemNo` LIKE 'swt%' or `lineItems`.`itemNo` LIKE 'tclsr%') AND `billing`.`email` <> '' AND `notifications`.`receipt` = '".$_SESSION['receipt']."' 
+GROUP BY `notifications`.`dt`, `notifications`.`receipt`, `lineItems`.`itemNo`, `billing`.`email`,`billing`.`firstName`, `billing`.`lastName`, `lineItems`.`downloadUrl`, `notifications`.`affiliate`, `notifications`.`vendor`";
 
 $mp = new MP;
 $getnew = $myPDO->query($sql);

@@ -50,4 +50,6 @@ class InvEmail extends Mailable
                               'mime' => 'image/jpeg',
                       ]);
     }
+
+    // http://localhost/inv/mail/send       - to execute
 }
