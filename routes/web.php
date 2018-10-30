@@ -32,6 +32,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('mail/send', 'MailController@send');
+
 Auth::routes();
 
 // ?Route::get('/home', 'HomeController@index')->name('home');
@@ -109,6 +111,7 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 		'as' => 'sku.delete'
 	]
 	);	
+
 
 	// Route::post('/post/store', [
 
