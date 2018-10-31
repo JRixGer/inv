@@ -2,47 +2,45 @@
 
 
   $datenow = date('Y-m-d H:i:s');
+  $dt_last1 = date('m/d', strtotime($datenow));
 
-  $dt_last1 = strtotime('-1 day' , strtotime($datenow));
-  $dt_last1 = date('m/d', $dt_last1);
-
-  $dt_last2 = strtotime('-2 day' , strtotime($datenow));
+  $dt_last2 = strtotime('-1 day' , strtotime($datenow));
   $dt_last2 = date('m/d', $dt_last2);
 
-  $dt_last3 = strtotime('-3 day' , strtotime($datenow));
+  $dt_last3 = strtotime('-2 day' , strtotime($datenow));
   $dt_last3 = date('m/d', $dt_last3);
 
-  $dt_last4 = strtotime('-4 day' , strtotime($datenow));
+  $dt_last4 = strtotime('-3 day' , strtotime($datenow));
   $dt_last4 = date('m/d', $dt_last4);
 
-  $dt_last5 = strtotime('-5 day' , strtotime($datenow));
+  $dt_last5 = strtotime('-4 day' , strtotime($datenow));
   $dt_last5 = date('m/d', $dt_last5);
 
-  $dt_last6 = strtotime('-6 day' , strtotime($datenow));
+  $dt_last6 = strtotime('-5 day' , strtotime($datenow));
   $dt_last6 = date('m/d', $dt_last6);
 
-  $dt_last7 = strtotime('-7 day' , strtotime($datenow));
+  $dt_last7 = strtotime('-6 day' , strtotime($datenow));
   $dt_last7 = date('m/d', $dt_last7);
 
-  $dt_last8 = strtotime('-8 day' , strtotime($datenow));
+  $dt_last8 = strtotime('-7 day' , strtotime($datenow));
   $dt_last8 = date('m/d', $dt_last8);
 
-  $dt_last9 = strtotime('-9 day' , strtotime($datenow));
+  $dt_last9 = strtotime('-8 day' , strtotime($datenow));
   $dt_last9 = date('m/d', $dt_last9);
 
-  $dt_last10 = strtotime('-10 day' , strtotime($datenow));
+  $dt_last10 = strtotime('-9 day' , strtotime($datenow));
   $dt_last10 = date('m/d', $dt_last10);
 
-  $dt_last11 = strtotime('-11 day' , strtotime($datenow));
+  $dt_last11 = strtotime('-10 day' , strtotime($datenow));
   $dt_last11 = date('m/d', $dt_last11);
 
-  $dt_last12 = strtotime('-12 day' , strtotime($datenow));
+  $dt_last12 = strtotime('-11 day' , strtotime($datenow));
   $dt_last12 = date('m/d', $dt_last12);
 
-  $dt_last13 = strtotime('-13 day' , strtotime($datenow));
+  $dt_last13 = strtotime('-12 day' , strtotime($datenow));
   $dt_last13 = date('m/d', $dt_last13);
 
-  $dt_last14 = strtotime('-14 day' , strtotime($datenow));
+  $dt_last14 = strtotime('-13 day' , strtotime($datenow));
   $dt_last14 = date('m/d', $dt_last14);
 
 ?>
@@ -78,7 +76,7 @@
 
                           <th scope="col" style="color: rgb(255, 0, 0);">14D</th>
 
-                          <th scope="col">{{$dt_last1}}</th>
+                          <th scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</th>
 
                           <th scope="col">{{$dt_last2}}</th>
 
@@ -129,7 +127,7 @@
                                 <td>{{ $row->qty30 }}</td>
 
                                 <td>{{ $d14 }}</td>
-                                <td>{{ $row->qty01 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $row->qty01 }}</td>
                                 <td>{{ $row->qty02 }}</td>
                                 <td>{{ $row->qty03 }}</td>
                                 <td>{{ $row->qty04 }}</td>

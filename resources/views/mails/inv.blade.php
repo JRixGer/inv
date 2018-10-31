@@ -1,49 +1,51 @@
 <?php
 
   $datenow = date('Y-m-d H:i:s');
+  $datecurr = strtotime($datenow);
 
-  $dt_last1 = strtotime('-1 day' , strtotime($datenow));
-  $dt_last1 = date('m/d', $dt_last1);
+  $dt_last1 = date('m/d', strtotime($datenow));
 
-  $dt_last2 = strtotime('-2 day' , strtotime($datenow));
+  $dt_last2 = strtotime('-1 day' , strtotime($datenow));
   $dt_last2 = date('m/d', $dt_last2);
 
-  $dt_last3 = strtotime('-3 day' , strtotime($datenow));
+  $dt_last3 = strtotime('-2 day' , strtotime($datenow));
   $dt_last3 = date('m/d', $dt_last3);
 
-  $dt_last4 = strtotime('-4 day' , strtotime($datenow));
+  $dt_last4 = strtotime('-3 day' , strtotime($datenow));
   $dt_last4 = date('m/d', $dt_last4);
 
-  $dt_last5 = strtotime('-5 day' , strtotime($datenow));
+  $dt_last5 = strtotime('-4 day' , strtotime($datenow));
   $dt_last5 = date('m/d', $dt_last5);
 
-  $dt_last6 = strtotime('-6 day' , strtotime($datenow));
+  $dt_last6 = strtotime('-5 day' , strtotime($datenow));
   $dt_last6 = date('m/d', $dt_last6);
 
-  $dt_last7 = strtotime('-7 day' , strtotime($datenow));
+  $dt_last7 = strtotime('-6 day' , strtotime($datenow));
   $dt_last7 = date('m/d', $dt_last7);
 
-  $dt_last8 = strtotime('-8 day' , strtotime($datenow));
+  $dt_last8 = strtotime('-7 day' , strtotime($datenow));
   $dt_last8 = date('m/d', $dt_last8);
 
-  $dt_last9 = strtotime('-9 day' , strtotime($datenow));
+  $dt_last9 = strtotime('-8 day' , strtotime($datenow));
   $dt_last9 = date('m/d', $dt_last9);
 
-  $dt_last10 = strtotime('-10 day' , strtotime($datenow));
+  $dt_last10 = strtotime('-9 day' , strtotime($datenow));
   $dt_last10 = date('m/d', $dt_last10);
 
-  $dt_last11 = strtotime('-11 day' , strtotime($datenow));
+  $dt_last11 = strtotime('-10 day' , strtotime($datenow));
   $dt_last11 = date('m/d', $dt_last11);
 
-  $dt_last12 = strtotime('-12 day' , strtotime($datenow));
+  $dt_last12 = strtotime('-11 day' , strtotime($datenow));
   $dt_last12 = date('m/d', $dt_last12);
 
-  $dt_last13 = strtotime('-13 day' , strtotime($datenow));
+  $dt_last13 = strtotime('-12 day' , strtotime($datenow));
   $dt_last13 = date('m/d', $dt_last13);
 
-  $dt_last14 = strtotime('-14 day' , strtotime($datenow));
+  $dt_last14 = strtotime('-13 day' , strtotime($datenow));
   $dt_last14 = date('m/d', $dt_last14);
 
+  $date14 = strtotime('-13 day' , strtotime($datenow));
+  $d = date('n/j/Y',$date14) .' - '. date('n/j/Y',$datecurr);
 ?>
 
 
@@ -87,7 +89,7 @@ img{border:0;}
   width:95%;
   max-width:95%;
   padding:1%;
-  background:#1c75d7 url(../images/corner.png) no-repeat right bottom;
+  background:#87dbd873 url(../images/corner.png) no-repeat right bottom;
   background-size:auto 100%;
   margin:10px auto; 
 }
@@ -197,6 +199,7 @@ img{border:0;}
 }
 tr.border_bottom td {
   border:1pt solid #cccccc;
+  font-size: 12px;
 }
 .col {
   font-weight: bold;
@@ -210,8 +213,7 @@ tr.border_bottom td {
             <h1><a href="index.html" target="_blank">Inventory</a></h1>           
           </header><!--End of header-->
           <section id="content"><!--id="content"-->
-                <h2> Hello Sir Joe, </h2>
-                <p>Below is the inventory report for today: </p>
+                <h2> Hello Sir Joe,<br>Below is the inventory report for : {{ $d }}</h2>
                 <div class="parpagraph" style="width:100%">
 
                     <table class="table table-sm">
@@ -228,35 +230,35 @@ tr.border_bottom td {
 
                           <td scope="col" style="color: rgb(255, 0, 0);">14D</td>
 
-                          <td scope="col">{{!!$dt_last1!!}}</td>
+                          <td scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</td>
 
-                          <td scope="col">{{!!$dt_last2!!}}</td>
+                          <td scope="col">{{$dt_last2}}</td>
 
-                          <td scope="col">{{!!$dt_last3!!}}</td>
+                          <td scope="col">{{$dt_last3}}</td>
 
-                          <td scope="col">{{!!$dt_last4!!}}</td>
+                          <td scope="col">{{$dt_last4}}</td>
 
-                          <td scope="col">{{!!$dt_last5!!}}</td>
+                          <td scope="col">{{$dt_last5}}</td>
 
-                          <td scope="col">{{!!$dt_last6!!}}</td>
+                          <td scope="col">{{$dt_last6}}</td>
 
-                          <td scope="col">{{!!$dt_last7!!}}</td>
+                          <td scope="col">{{$dt_last7}}</td>
 
                           <td scope="col" style="color: rgb(255, 0, 0);">7D</td>
 
-                          <td scope="col">{{!!$dt_last8!!}}</td>
+                          <td scope="col">{{$dt_last8}}</td>
 
-                          <td scope="col">{{!!$dt_last9!!}}</td>
+                          <td scope="col">{{$dt_last9}}</td>
 
-                          <td scope="col">{{!!$dt_last10!!}}</td>
+                          <td scope="col">{{$dt_last10}}</td>
 
-                          <td scope="col">{{!!$dt_last11!!}}</td>
+                          <td scope="col">{{$dt_last11}}</td>
 
-                          <td scope="col">{{!!$dt_last12!!}}</td>
+                          <td scope="col">{{$dt_last12}}</td>
 
-                          <td scope="col">{{!!$dt_last13!!}}</td>
+                          <td scope="col">{{$dt_last13}}</td>
 
-                          <td scope="col">{{!!$dt_last14!!}}</td>
+                          <td scope="col">{{$dt_last14}}</td>
 
 
                         </tr>
@@ -270,28 +272,28 @@ tr.border_bottom td {
                             ?>
                             
                             <tr class="border_bottom">
-                                <td>{{!! $row->item_number !!}}</td>
-                                <td>{{!! $row->description !!}}</td>
-                                <td>{{!! $row->prodQty - ($d14 + $d07) !!}}</td>
-                                <td>{{!! $row->qty30 !!}}</td>
+                                <td>{{ $row->item_number }}</td>
+                                <td>{{ $row->description }}</td>
+                                <td>{{ $row->prodQty - ($d14 + $d07) }}</td>
+                                <td>{{ $row->qty30 }}</td>
 
-                                <td>{{!! $d14 !!}}</td>
-                                <td>{{!! $row->qty01 !!}}</td>
-                                <td>{{!! $row->qty02 !!}}</td>
-                                <td>{{!! $row->qty03 !!}}</td>
-                                <td>{{!! $row->qty04 !!}}</td>
-                                <td>{{!! $row->qty05 !!}}</td>
-                                <td>{{!! $row->qty06 !!}}</td>
-                                <td>{{!! $row->qty07 !!}}</td>
+                                <td>{{ $d14 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $row->qty01 }}</td>
+                                <td>{{ $row->qty02 }}</td>
+                                <td>{{ $row->qty03 }}</td>
+                                <td>{{ $row->qty04 }}</td>
+                                <td>{{ $row->qty05 }}</td>
+                                <td>{{ $row->qty06 }}</td>
+                                <td>{{ $row->qty07 }}</td>
 
-                                <td>{{!! $d07 !!}}</td>
-                                <td>{{!! $row->qty08 !!}}</td>
-                                <td>{{!! $row->qty09 !!}}</td>
-                                <td>{{!! $row->qty10 !!}}</td>
-                                <td>{{!! $row->qty11 !!}}</td>
-                                <td>{{!! $row->qty12 !!}}</td>
-                                <td>{{!! $row->qty13 !!}}</td>
-                                <td>{{!! $row->qty14 !!}}</td>
+                                <td>{{ $d07 }}</td>
+                                <td>{{ $row->qty08 }}</td>
+                                <td>{{ $row->qty09 }}</td>
+                                <td>{{ $row->qty10 }}</td>
+                                <td>{{ $row->qty11 }}</td>
+                                <td>{{ $row->qty12 }}</td>
+                                <td>{{ $row->qty13 }}</td>
+                                <td>{{ $row->qty14 }}</td>
 
                               </tr>
                             @endforeach
