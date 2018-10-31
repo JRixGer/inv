@@ -37,9 +37,9 @@ class InvEmail extends Mailable
      */
     public function build()
     {
-        return $this->from('jrixgeromo@gmail.com')
+        return $this->from('sales@cb.preparedpatriot.us')
                     ->view('mails.inv')
-                    ->text('mails.inv_plain')
+                    //->text('mails.inv_plain')
                     ->with(
                       [
                             'testVarOne' => '1',
