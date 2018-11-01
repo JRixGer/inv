@@ -42,12 +42,12 @@
                                   {{ $sku->prodType }}
                                 </td>
                                 <td>
-                                  <a class="btn btn-sm btn-info">Edit</a>
+                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>','<?php echo $sku->prodQty ?>')">Edit</a>
                                 </td>
                                 <td>
                                   <a class="btn btn-sm btn-warning">Delete</a>
                                 </td>
-                              </tr>
+	                           </tr>
                               @endforeach
                             @else
                             <tr>
@@ -64,5 +64,44 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="update_sku_model">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title">Update SKU Qty</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Code:</label>
+                        <input type="text" class="form-control" disabled id="pcode_update">
+                        <input type="hidden" id="pid_update">
+                    </div>
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" class="form-control" disabled id="pname_update">
+                    </div>
+                    <div class="form-group">
+                        <label>Qty:</label>
+                        <input type="text" class="form-control" id="pqty_update">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="effect_update_sku()">Submit</button>
+                </div>
+
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 @endsection

@@ -15,9 +15,7 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.config.devtools = false;
-
-
+Vue.config.devtools = false;
 
 Vue.component('skuslist', require('./components/SkuMaintain.vue'));
 
@@ -25,10 +23,3 @@ const app = new Vue({
     el: '#app'
 });
 
-
-// import App from './components/SkuMaintain.vue';
-// import Vue from 'vue';
-// new Vue({
-//   el: '#app',
-//   render: h => h(App)
-// });

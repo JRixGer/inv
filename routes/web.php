@@ -89,6 +89,14 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::post('/sku/effect_update', [
+
+		'uses' => 'SkuController@update',
+		'as' => 'sku.update'
+	]
+	);
+
+
 
 	Route::get('/sku/mount', [
 

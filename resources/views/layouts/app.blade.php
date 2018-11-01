@@ -16,8 +16,12 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="{{ asset('public/js/toastr.js') }}"></script>
 
     <!-- Styles -->
+    <link href="{{ asset('public/css/toastr.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
     <style>
@@ -112,6 +116,48 @@
         });
     }  
 
-</script>
 
+    function load_sku(id, pcode, pname, pqty)
+    {
+        $("#pid_update").val(id);
+        $("#pcode_update").val(pcode);
+        $("#pname_update").val(pname);
+        $("#pqty_update").val(pqty);
+        $("#update_sku_model").modal('show');
+    }  
+
+
+    function effect_update_sku()
+    {
+        var pid = $("#pid_update").val();
+        var pcode = $("#pcode_update").val();
+        var pqty = $("#pqty_update").val();
+        //$("#update_sku_model").modal('hide');
+
+        $.ajaxSetup({
+            headers: {
+
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+           type:'POST',
+           url:'/inv/shipping/sku/effect_update',
+           data:{id:pid, pcode:pcode, pqty:pqty},
+           success:function(data){
+              window.location.reload();
+           },
+           error: function(data) {
+                var errors = data.responseJSON;
+                console.log(errors['message']);
+                toastr.options.timeOut = 1000; 
+                //toastr.options.closeButton = true;
+                toastr.error(errors['message']);
+            }
+        });
+
+    }  
+
+</script>
+<!-- {"message":"The given data was invalid.","errors":{"pqty":["The pqty must be a number."]}} -->
 </html>

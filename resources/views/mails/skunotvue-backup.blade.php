@@ -1,12 +1,13 @@
 @extends('layouts.app')
 @section('content')
-<!-- <div class="container-fluid padding_">
+<div class="container-fluid padding_">
     <div class="row no-gutters justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header title_">SKU Inventory</div>
 
                 <div class="card-body">
+                  <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll">
                     <table class="table table-sm">
                       <thead>
                         <tr>
@@ -58,9 +59,10 @@
 
 
                 </div>
+                </div>
             </div>
         </div>
     </div>
-</div> -->
-<skuslist></skuslist>
+</div>
+
 @endsection

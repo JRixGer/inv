@@ -24,7 +24,7 @@ class SkuController extends Controller
         updateProd_fn();
 
         return view('shipping.sku')->with('skus', Sku::all());
-        //return view('shipping.sku'); // for vueje
+        //return view('shipping.sku_vue'); // for vuejs
 
     }
 
@@ -39,6 +39,27 @@ class SkuController extends Controller
         ], 200);        
 
     }
+
+    public function update(Request $request)
+    {
+
+        $this->validate($request, [
+            'pqty' => 'required|numeric'
+        ]);
+
+        $data = $request->all();
+        $id = $data['id'];  
+        $pcode = $data['pcode'];        
+        $pqty = $data['pqty'];        
+
+        $sku = Sku::find($id);
+        $sku->prodQty = $pqty; 
+        $sku->save();
+        //Session::flash('success','You successfully updated a category');
+        //return redirect()->route('categories');
+
+    }
+
 
 
 }
