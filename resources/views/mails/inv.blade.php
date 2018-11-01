@@ -89,7 +89,7 @@ img{border:0;}
   width:95%;
   max-width:95%;
   padding:1%;
-  background:#87dbd873 url(../images/corner.png) no-repeat right bottom;
+  background:#fafafa url(../images/corner.png) no-repeat right bottom;
   background-size:auto 100%;
   margin:10px auto; 
 }
@@ -143,7 +143,7 @@ img{border:0;}
   margin:1%;
 }
 #content .parpagraphB{
-  color:#ooo;
+  color:#5c5c5c;
   font-size:14px; 
   margin-bottom:5px;
   font-family: 'Conv_BPG DejaVu Sans ExtraLight Caps 2012';
@@ -201,6 +201,9 @@ tr.border_bottom td {
   border:1pt solid #cccccc;
   font-size: 12px;
 }
+td {
+  padding: 3px;
+}
 .col {
   font-weight: bold;
 }
@@ -213,7 +216,9 @@ tr.border_bottom td {
             <h1><a href="index.html" target="_blank">Inventory</a></h1>           
           </header><!--End of header-->
           <section id="content"><!--id="content"-->
-                <h2> Hello Sir Joe,<br>Below is the inventory report for : {{ $d }}</h2>
+                <h2> Hello Sir Joe,<br><br>Below is the inventory report for : {{ $d }} <br><br>
+                  Note: The BAL(balance) column quantity is dummy for now because I don't have the quantity of each item yet, but the application has the feature to allow us to input the quantity per item.
+                </h2>
                 <div class="parpagraph" style="width:100%">
 
                     <table class="table table-sm">

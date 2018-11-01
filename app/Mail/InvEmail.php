@@ -176,6 +176,7 @@ class InvEmail extends Mailable
 
         return $this->from('sales@cb.preparedpatriot.us')
                     ->view('mails.inv')
+                    ->subject("Daily Inventory Report")
                     //->text('mails.inv_plain')
                     ->with('daily_ship_inv', $daily_ship);
                     // ->attach(public_path('/images').'/test.jpg', [
