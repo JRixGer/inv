@@ -20,7 +20,39 @@ class InventoryController extends Controller
     public function list()
     {
 
-        //updateProd_fn();
+
+        // Workplan:
+        // - loop the running and new port (in relation with the sku_forcb), each needed item will be stored in temporary table and will be used in the report
+
+
+        $getrunning = DB::table('skus_forcb')
+                      ->selectRaw(
+                            'vw_sku_running_qty.onhand_qty as onhand_qty,
+                            vw_new_report_qty.sold_qty as sold_qty,
+                            skus_forcb.sku_link as onhand_sku'
+                       )
+                      ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'skus_forcb.sku')
+                      ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'skus_forcb.sku')
+                      ->where('skus_forcb.lyle_sku', '<>', '')
+                      ->where('skus_forcb.lyle_sku', '<>', 'b-priority')
+                      ->get();
+
+        DB::table('skus_balance')->delete();            
+        foreach ($getrunning as $key => $running) 
+        {
+
+            DB::table('skus_balance')->insert(
+            [
+                'onhand' => ($running->onhand_qty)? $running->onhand_qty:0, 
+                'sold' => ($running->sold_qty)? $running->sold_qty:0, 
+                'sku_link' => $running->onhand_sku, 
+            ]
+            );
+
+        }
+
+
+
         $invs = DB::table('notifications')
                       ->select(
                             'notifications.dt as notifications_date',
@@ -128,6 +160,8 @@ class InventoryController extends Controller
                         'daily_ship.item_number AS item_number,
                         daily_ship.description AS description,
                         skus.prodQty AS prodQty, 
+                        skus_balance.onhand AS onhand, 
+                        skus_balance.sold AS sold, 
                         SUM(daily_ship.qty01) AS qty01,
                         SUM(daily_ship.qty02) AS qty02,
                         SUM(daily_ship.qty03) AS qty03,
@@ -148,16 +182,16 @@ class InventoryController extends Controller
                         SUM(daily_ship.qty30) AS qty30'
                       )
                       ->leftjoin('skus', 'skus.prodCode', '=', 'daily_ship.item_number')
+                      ->leftjoin('skus_balance', 'skus_balance.sku_link', '=', 'daily_ship.item_number')
                       ->groupBy('daily_ship.item_number')
                       ->groupBy('daily_ship.description')
                       ->groupBy('skus.prodQty')
+                      ->groupBy('skus_balance.onhand')
+                      ->groupBy('skus_balance.sold')
                       ->get();
 
         return view('shipping.inventory', compact('daily_ship'));
 
     }
-
-
-
 
 }

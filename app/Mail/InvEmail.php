@@ -40,7 +40,6 @@ class InvEmail extends Mailable
     public function build()
     {
 
-        //updateProd_fn();
         $invs = DB::table('notifications')
                       ->select(
                             'notifications.dt as notifications_date',

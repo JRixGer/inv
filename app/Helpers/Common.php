@@ -147,10 +147,8 @@ function maroPost_fn($receipt)
             ->update(['posted' => 1]);
 
 
-    // if($newcontact)
-    //   file_put_contents('ins_maro.txt', ">>>>ok result: ".print_r($newcontact , true), FILE_APPEND);
-    // else
-    //   file_put_contents('ins_maro.txt', ">>>>error result: ".print_r($newcontact , true), FILE_APPEND);
+
+    file_put_contents('ins_maro.txt', ">>>> result: ".print_r($contactData , true), FILE_APPEND);
 
 
   }  

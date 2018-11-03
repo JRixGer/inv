@@ -51,7 +51,7 @@ $sql = "SELECT `notifications`.`dt`, `notifications`.`receipt`, `lineItems`.`ite
 FROM `notifications`
 LEFT JOIN `lineItems` on `notifications`.`id` = `lineItems`.`lnkid`
 LEFT JOIN `billing` on `billing`.`lnkid` = `notifications`.`id`
-WHERE (`lineItems`.`itemNo` LIKE 'cptbook%' or `lineItems`.`itemNo` LIKE 'sgfl%' or `lineItems`.`itemNo` LIKE 'swt%' or `lineItems`.`itemNo` LIKE 'tclsr%') AND `billing`.`email` <> '' AND `notifications`.`receipt` = '".$_SESSION['receipt']."' 
+WHERE (`lineItems`.`itemNo` LIKE 'cptbook%' or `lineItems`.`itemNo` LIKE 'sgfl%' or `lineItems`.`itemNo` LIKE 'swt%' or `lineItems`.`itemNo` LIKE 'tclsr%') AND `billing`.`email` <> ''
 GROUP BY `notifications`.`dt`, `notifications`.`receipt`, `lineItems`.`itemNo`, `billing`.`email`,`billing`.`firstName`, `billing`.`lastName`, `lineItems`.`downloadUrl`, `notifications`.`affiliate`, `notifications`.`vendor`";
 
 $mp = new MP;

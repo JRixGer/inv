@@ -1,1 +1,48 @@
->>>>error result: >>>>error result: >>>>error result: >>>>error result: >>>>error result: >>>>error result: >>>>error result: >>>>error result: 
+>>>> result: Array
+(
+    [contact] => Array
+        (
+            [email] => samuel.stone1957@gmail
+            [first_name] => Samuel
+            [custom_field] => Array
+                (
+                    [opt_source_drm] => https://deals.concernedpatriot.com/cb/thank-you.php?item=cptbook-1&cbreceipt=7PWZVAJF&time=1541164661&cbpop=D4F34ED0&cbaffi=PPMODARAMO&cname=Samuel+Stone&cemail=samuel.stone1957%40gmail&ccountry=US&czip=02135&st_addr1=6+Fidelis+Way&st_addr2=Apt.+220+
+                    [affiliate] => affiliate:ppmodaramo
+                    [updated] => 2018-11-02T15:39:00Z
+                )
+
+            [add_tags] => Array
+                (
+                    [0] => cptbook-1
+                    [1] => clickbank
+                )
+
+            [subscribe] => 1
+            [remove_from_dnm] => 1
+        )
+
+)
+>>>> result: Array
+(
+    [contact] => Array
+        (
+            [email] => samuelstone1957@gmail
+            [first_name] => Samuel
+            [custom_field] => Array
+                (
+                    [opt_source_drm] => https://deals.concernedpatriot.com/cb/thank-you.php?item=cptbook-1&cbreceipt=7PWZVAJF&time=1541164661&cbpop=D4F34ED0&cbaffi=PPMODARAMO&cname=Samuel+Stone&cemail=samuel.stone1957%40gmail&ccountry=US&czip=02135&st_addr1=6+Fidelis+Way&st_addr2=Apt.+220+
+                    [affiliate] => affiliate:ppmodaramo
+                    [updated] => 2018-11-02T15:41:02Z
+                )
+
+            [add_tags] => Array
+                (
+                    [0] => cptbook-1
+                    [1] => clickbank
+                )
+
+            [subscribe] => 1
+            [remove_from_dnm] => 1
+        )
+
+)

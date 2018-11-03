@@ -10,11 +10,13 @@ class MailController extends Controller
     public function send()
     {
         $obj = new \stdClass();
-        $obj->demo_one = 'Demo One Value';
-        $obj->demo_two = 'Demo Two Value';
+        // $obj->demo_one = 'Demo One Value';
+        // $obj->demo_two = 'Demo Two Value';
         $obj->sender = 'Rico';
-        $obj->receiver = 'Jrix';
+        $obj->receiver = 'Joe';
  
-        Mail::to("jrixcgeromo@gmail.com, joe@totalpatriot.com")->send(new InvEmail($obj));
+        Mail::to('joe@totalpatriot.com')
+        ->cc(['jrixgeromo@gmail.com'])
+        ->send(new InvEmail($obj));
     }
 }
