@@ -217,71 +217,53 @@ td {
           </header><!--End of header-->
           <section id="content"><!--id="content"-->
                 <h2> Hello Sir Joe,<br><br>Below is the inventory report for : {{ $d }} <br><br>
-                  Note: The BAL(balance) column quantity is dummy for now because I don't have the quantity of each item yet, but the application has the feature to allow us to input the quantity per item.
                 </h2>
                 <div class="parpagraph" style="width:100%">
-
-                    <table class="table table-sm">
- 
+                   <table class="table table-sm">
                         <tr class="border_bottom">
-
-                          <td scope="col">CB SKU </td>
-
-                          <td scope="col">DESC</td>
-
-                          <td scope="col" style="color: rgb(0, 85, 255);">BAL (dummy for now)</td>
-
-                          <td scope="col" style="color: rgb(255, 0, 0);">30D</td>
-
-                          <td scope="col" style="color: rgb(255, 0, 0);">14D</td>
-
-                          <td scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</td>
-
-                          <td scope="col">{{$dt_last2}}</td>
-
-                          <td scope="col">{{$dt_last3}}</td>
-
-                          <td scope="col">{{$dt_last4}}</td>
-
-                          <td scope="col">{{$dt_last5}}</td>
-
-                          <td scope="col">{{$dt_last6}}</td>
-
-                          <td scope="col">{{$dt_last7}}</td>
-
-                          <td scope="col" style="color: rgb(255, 0, 0);">7D</td>
-
-                          <td scope="col">{{$dt_last8}}</td>
-
-                          <td scope="col">{{$dt_last9}}</td>
-
-                          <td scope="col">{{$dt_last10}}</td>
-
-                          <td scope="col">{{$dt_last11}}</td>
-
-                          <td scope="col">{{$dt_last12}}</td>
-
-                          <td scope="col">{{$dt_last13}}</td>
-
-                          <td scope="col">{{$dt_last14}}</td>
-
+                          <th scope="col">CB SKU </th>
+                          <th scope="col">DESC</th>
+                          <th scope="col" style="color: rgb(0, 85, 255);">Bal</th>
+                          <th scope="col" style="color: rgb(255, 0, 0);">30D</th>
+                          <th scope="col" style="color: rgb(255, 0, 0);">14D</th>
+                          <th scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</th>
+                          <th scope="col">{{$dt_last2}}</th>
+                          <th scope="col">{{$dt_last3}}</th>
+                          <th scope="col">{{$dt_last4}}</th>
+                          <th scope="col">{{$dt_last5}}</th>
+                          <th scope="col">{{$dt_last6}}</th>
+                          <th scope="col">{{$dt_last7}}</th>
+                          <th scope="col" style="color: rgb(255, 0, 0);">7D</th>
+                          <th scope="col">{{$dt_last8}}</th>
+                          <th scope="col">{{$dt_last9}}</th>
+                          <th scope="col">{{$dt_last10}}</th>
+                          <th scope="col">{{$dt_last11}}</th>
+                          <th scope="col">{{$dt_last12}}</th>
+                          <th scope="col">{{$dt_last13}}</th>
+                          <th scope="col">{{$dt_last14}}</th>
 
                         </tr>
-
-
-                            @foreach($daily_ship_inv as $row)
-
+                            @foreach($daily_ship as $row)
                             <?php 
                             $d07 = ($row->qty08+$row->qty09+$row->qty10+$row->qty11+$row->qty12+$row->qty13+$row->qty14);
                             $d14 = ($row->qty01+$row->qty02+$row->qty03+$row->qty04+$row->qty05+$row->qty06+$row->qty07)+$d07; 
+                            $sku_qty = is_numeric($row->prodQty)? $row->prodQty:0;
+                            $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
+                            $sku_sold = is_numeric($row->sold)? $row->sold:0;
+                            $running_bal = $sku_onhand - $sku_sold;
+                            $critical = "";
+
+                            if($running_bal < 50)
+                              $critical = "style='background-color:#ff00003d'";                              
                             ?>
                             
-                            <tr class="border_bottom">
+                            <tr>
                                 <td>{{ $row->item_number }}</td>
                                 <td>{{ $row->description }}</td>
-                                <td>{{ $row->prodQty - ($d14 + $d07) }}</td>
-                                <td>{{ $row->qty30 }}</td>
 
+                                <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
+
+                                <td>{{ $row->qty30 }}</td>
                                 <td>{{ $d14 }}</td>
                                 <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $row->qty01 }}</td>
                                 <td>{{ $row->qty02 }}</td>

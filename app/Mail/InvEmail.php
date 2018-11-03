@@ -40,6 +40,33 @@ class InvEmail extends Mailable
     public function build()
     {
 
+        // created 2 views for the running qty and the new report.
+        // loop the running and new port (in relation with the sku_forcb), each needed item will be stored in temporary table 'skus_balance' and will be used in the report
+
+        $getrunning = DB::table('skus_forcb')
+                      ->selectRaw(
+                            'vw_sku_running_qty.onhand_qty as onhand_qty,
+                            vw_new_report_qty.sold_qty as sold_qty,
+                            skus_forcb.sku_link as onhand_sku'
+                       )
+                      ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'skus_forcb.sku')
+                      ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'skus_forcb.sku')
+                      ->where('skus_forcb.lyle_sku', '<>', '')
+                      ->where('skus_forcb.lyle_sku', '<>', 'b-priority')
+                      ->get();
+
+        DB::table('skus_balance')->delete(); // delete old recored             
+        foreach ($getrunning as $key => $running)  // insert new recored
+        {
+            DB::table('skus_balance')->insert(
+            [
+                'onhand' => ($running->onhand_qty)? $running->onhand_qty:0, 
+                'sold' => ($running->sold_qty)? $running->sold_qty:0, 
+                'sku_link' => $running->onhand_sku, 
+            ]
+            );
+        }
+
         $invs = DB::table('notifications')
                       ->select(
                             'notifications.dt as notifications_date',
@@ -49,6 +76,7 @@ class InvEmail extends Mailable
                        )
                       ->leftjoin('lineItems', 'lineItems.lnkid', '=', 'notifications.id')
                       ->where('lineItems.itemNo', '<>', '')
+                      ->where('lineItems.itemNo', '<>', 'b-priority')
                       ->where('notifications.transactionType', '<>', 'TEST')
                       ->where('notifications.transactionType', '<>', 'TEST_SALE')
                       ->orderby('notifications.id', 'desc')
@@ -57,7 +85,6 @@ class InvEmail extends Mailable
 
         $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
         $date_now_front_num = strtotime($date_now_front);
-
 
         $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
         $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
@@ -74,7 +101,6 @@ class InvEmail extends Mailable
         $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
         $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
         $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
-
 
         //to
 
@@ -102,7 +128,7 @@ class InvEmail extends Mailable
         foreach ($invs as $key => $inv) 
         {
 
-            $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);        
+            $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);       
             $qty01 = ((int)$date_1day <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
             $qty02 = ((int)$date_2days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
             $qty03 = ((int)$date_3days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
@@ -139,7 +165,6 @@ class InvEmail extends Mailable
                 'qty30' => $qty30
             ]
             );
-
         }
 
         $daily_ship = DB::table('daily_ship')
@@ -147,6 +172,8 @@ class InvEmail extends Mailable
                         'daily_ship.item_number AS item_number,
                         daily_ship.description AS description,
                         skus.prodQty AS prodQty, 
+                        skus_balance.onhand AS onhand, 
+                        skus_balance.sold AS sold, 
                         SUM(daily_ship.qty01) AS qty01,
                         SUM(daily_ship.qty02) AS qty02,
                         SUM(daily_ship.qty03) AS qty03,
@@ -167,10 +194,13 @@ class InvEmail extends Mailable
                         SUM(daily_ship.qty30) AS qty30'
                       )
                       ->leftjoin('skus', 'skus.prodCode', '=', 'daily_ship.item_number')
+                      ->leftjoin('skus_balance', 'skus_balance.sku_link', '=', 'daily_ship.item_number')
                       ->groupBy('daily_ship.item_number')
                       ->groupBy('daily_ship.description')
                       ->groupBy('skus.prodQty')
-                     ->get();
+                      ->groupBy('skus_balance.onhand')
+                      ->groupBy('skus_balance.sold')
+                      ->get();
 
 
         return $this->from('sales@cb.preparedpatriot.us')

@@ -9,7 +9,6 @@ use DB;
 class InventoryController extends Controller
 {
 
-
     /**
      * Display the specified resource.
      *
@@ -20,10 +19,8 @@ class InventoryController extends Controller
     public function list()
     {
 
-
-        // Workplan:
-        // - loop the running and new port (in relation with the sku_forcb), each needed item will be stored in temporary table and will be used in the report
-
+        // created 2 views for the running qty and the new report.
+        // loop the running and new port (in relation with the sku_forcb), each needed item will be stored in temporary table 'skus_balance' and will be used in the report
 
         $getrunning = DB::table('skus_forcb')
                       ->selectRaw(
@@ -37,10 +34,9 @@ class InventoryController extends Controller
                       ->where('skus_forcb.lyle_sku', '<>', 'b-priority')
                       ->get();
 
-        DB::table('skus_balance')->delete();            
-        foreach ($getrunning as $key => $running) 
+        DB::table('skus_balance')->delete(); // delete old recored             
+        foreach ($getrunning as $key => $running)  // insert new recored
         {
-
             DB::table('skus_balance')->insert(
             [
                 'onhand' => ($running->onhand_qty)? $running->onhand_qty:0, 
@@ -48,10 +44,7 @@ class InventoryController extends Controller
                 'sku_link' => $running->onhand_sku, 
             ]
             );
-
         }
-
-
 
         $invs = DB::table('notifications')
                       ->select(
@@ -62,6 +55,7 @@ class InventoryController extends Controller
                        )
                       ->leftjoin('lineItems', 'lineItems.lnkid', '=', 'notifications.id')
                       ->where('lineItems.itemNo', '<>', '')
+                      ->where('lineItems.itemNo', '<>', 'b-priority')
                       ->where('notifications.transactionType', '<>', 'TEST')
                       ->where('notifications.transactionType', '<>', 'TEST_SALE')
                       ->orderby('notifications.id', 'desc')
@@ -70,7 +64,6 @@ class InventoryController extends Controller
 
         $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
         $date_now_front_num = strtotime($date_now_front);
-
 
         $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
         $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
@@ -87,7 +80,6 @@ class InventoryController extends Controller
         $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
         $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
         $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
-
 
         //to
 
@@ -115,7 +107,7 @@ class InventoryController extends Controller
         foreach ($invs as $key => $inv) 
         {
 
-            $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);        
+            $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);       
             $qty01 = ((int)$date_1day <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
             $qty02 = ((int)$date_2days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
             $qty03 = ((int)$date_3days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
@@ -152,7 +144,6 @@ class InventoryController extends Controller
                 'qty30' => $qty30
             ]
             );
-
         }
 
         $daily_ship = DB::table('daily_ship')
@@ -191,7 +182,5 @@ class InventoryController extends Controller
                       ->get();
 
         return view('shipping.inventory', compact('daily_ship'));
-
     }
-
 }
