@@ -25,8 +25,7 @@
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
     <style>
- 
-
+        .sticky-top { top: 0.5em !important; }
     </style>
 </head>
 <body>

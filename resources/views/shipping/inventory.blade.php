@@ -57,6 +57,7 @@
                             {{ session('status') }}
                         </div>
                     @endif -->
+                    <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll">
                     <table class="table table-sm">
                       <thead>
                         <tr>
@@ -150,7 +151,7 @@
 
                       </tbody>
                     </table>
-
+                  </div>
 
                 </div>
             </div>
