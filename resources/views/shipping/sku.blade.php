@@ -12,14 +12,11 @@
                       <thead>
                         <tr>
 
-                          <th scope="col">CB SKU </th>
-
+                          <th scope="col">CB SKU</th>
+                          <th scope="col">SKU Grouping</th>
                           <th scope="col">DESC</th>
-
                           <th scope="col">QTY (dummy for now)</th>
-
                           <th scope="col">TYPE</th>
-
                           <th scope="col" colspan="2">ACTION</th>
 
                         </tr>
@@ -33,7 +30,9 @@
                                   {{ $sku->prodCode }}
                                 </td>
                                 <td>
-                                  {{ $sku->prodName }}
+                                  {{ $sku->prodCode_grp }}
+                                </td>                                <td>
+                                  {{ $sku->prodName_grp }}
                                 </td>
                                 <td>
                                   {{ $sku->prodQty }}

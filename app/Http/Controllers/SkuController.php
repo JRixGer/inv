@@ -23,7 +23,7 @@ class SkuController extends Controller
         
         updateProd_fn();
 
-        return view('shipping.sku')->with('skus', Sku::all());
+        return view('shipping.sku')->with('skus', Sku::all()->sortBy("prodName"));
         //return view('shipping.sku_vue'); // for vuejs
 
     }
