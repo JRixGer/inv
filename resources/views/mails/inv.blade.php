@@ -1,8 +1,10 @@
 <?php
 
   $datenow = date('Y-m-d H:i:s');
+  $datecurr = strtotime($datenow);
+
   $dt_last1 = date('m/d', strtotime($datenow));
-  
+
   $dt_last2 = strtotime('-1 day' , strtotime($datenow));
   $dt_last2 = date('m/d', $dt_last2);
 
@@ -42,7 +44,8 @@
   $dt_last14 = strtotime('-13 day' , strtotime($datenow));
   $dt_last14 = date('m/d', $dt_last14);
 
-
+  $date14 = strtotime('-13 day' , strtotime($datenow));
+  $d = date('n/j/Y',$date14) .' - '. date('n/j/Y',$datecurr);
 ?>
 
 
@@ -216,31 +219,31 @@ td {
                 <h2> Hello Sir Joe,<br><br>Below is the inventory report for : {{ $d }} <br><br>
                 </h2>
                 <div class="parpagraph" style="width:100%">
-                   <table class="table table-sm">
+                   <table class="table table-sm" cellpadding="1" cellspacing="1" border="1"> 
                         <tr class="border_bottom">
-                          <th scope="col">CB SKU </th>
-                          <th scope="col">DESC</th>
-                          <th scope="col" style="color: rgb(0, 85, 255);">Bal</th>
-                          <th scope="col" style="color: rgb(255, 0, 0);">30D</th>
-                          <th scope="col" style="color: rgb(255, 0, 0);">14D</th>
-                          <th scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</th>
-                          <th scope="col">{{$dt_last2}}</th>
-                          <th scope="col">{{$dt_last3}}</th>
-                          <th scope="col">{{$dt_last4}}</th>
-                          <th scope="col">{{$dt_last5}}</th>
-                          <th scope="col">{{$dt_last6}}</th>
-                          <th scope="col">{{$dt_last7}}</th>
-                          <th scope="col" style="color: rgb(255, 0, 0);">7D</th>
-                          <th scope="col">{{$dt_last8}}</th>
-                          <th scope="col">{{$dt_last9}}</th>
-                          <th scope="col">{{$dt_last10}}</th>
-                          <th scope="col">{{$dt_last11}}</th>
-                          <th scope="col">{{$dt_last12}}</th>
-                          <th scope="col">{{$dt_last13}}</th>
-                          <th scope="col">{{$dt_last14}}</th>
+                          <td scope="col">CB SKU </td>
+                          <td scope="col">DESC</td>
+                          <td scope="col" style="color: rgb(0, 85, 255);">Bal</td>
+                          <td scope="col" style="color: rgb(255, 0, 0);">30D</td>
+                          <td scope="col" style="color: rgb(255, 0, 0);">14D</td>
+                          <td scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</td>
+                          <td scope="col">{{$dt_last2}}</td>
+                          <td scope="col">{{$dt_last3}}</td>
+                          <td scope="col">{{$dt_last4}}</td>
+                          <td scope="col">{{$dt_last5}}</td>
+                          <td scope="col">{{$dt_last6}}</td>
+                          <td scope="col">{{$dt_last7}}</td>
+                          <td scope="col" style="color: rgb(255, 0, 0);">7D</td>
+                          <td scope="col">{{$dt_last8}}</td>
+                          <td scope="col">{{$dt_last9}}</td>
+                          <td scope="col">{{$dt_last10}}</td>
+                          <td scope="col">{{$dt_last11}}</td>
+                          <td scope="col">{{$dt_last12}}</td>
+                          <td scope="col">{{$dt_last13}}</td>
+                          <td scope="col">{{$dt_last14}}</td>
 
                         </tr>
-                            @foreach($daily_ship as $row)
+                            @foreach($daily_ship_inv as $row)
 
                             <?php 
                             $d07 = ($row->qty08+$row->qty09+$row->qty10+$row->qty11+$row->qty12+$row->qty13+$row->qty14);
@@ -270,7 +273,7 @@ td {
                               $critical = "style='background-color:#ff00003d'";                              
                             ?>
                             
-                            <tr>
+                            <tr class="border_bottom">
                                 <td>{{ $row->prodCode }}</td>
                                 <td>{{ $row->prodName }}</td>
 
