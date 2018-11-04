@@ -16,7 +16,6 @@
                           <th scope="col">CB SKU Grouping</th>
                           <th scope="col">Description</th>
                           <th scope="col">Description Grouping</th>
-                          <th scope="col">TYPE</th>
                           <th scope="col" colspan="2">ACTION</th>
 
                         </tr>
@@ -37,9 +36,6 @@
                                 </td>
                                 <td>
                                   {{ $sku->prodName_grp }}
-                                </td>
-                                <td>
-                                  {{ $sku->prodType }}
                                 </td>
                                 <td>
                                   <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>')">Edit</a>
