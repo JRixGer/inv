@@ -43,8 +43,6 @@
   $dt_last14 = strtotime('-13 day' , strtotime($datenow));
   $dt_last14 = date('m/d', $dt_last14);
 
-  $date14 = strtotime('-13 day' , strtotime($datenow));
-  $d = date('n/j/Y',$date14) .' - '. date('n/j/Y',$datecurr);
 ?>
 @extends('layouts.app')
 @section('content')

@@ -1,10 +1,8 @@
 <?php
 
   $datenow = date('Y-m-d H:i:s');
-  $datecurr = strtotime($datenow);
-
   $dt_last1 = date('m/d', strtotime($datenow));
-
+  
   $dt_last2 = strtotime('-1 day' , strtotime($datenow));
   $dt_last2 = date('m/d', $dt_last2);
 
@@ -44,8 +42,7 @@
   $dt_last14 = strtotime('-13 day' , strtotime($datenow));
   $dt_last14 = date('m/d', $dt_last14);
 
-  $date14 = strtotime('-13 day' , strtotime($datenow));
-  $d = date('n/j/Y',$date14) .' - '. date('n/j/Y',$datecurr);
+
 ?>
 
 
