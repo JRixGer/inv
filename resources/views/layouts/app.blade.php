@@ -117,21 +117,25 @@
     }  
 
 
-    function load_sku(id, pcode, pname, pqty)
+    function load_sku(id, pcode, pname, pcode_grp, pname_grp)
     {
         $("#pid_update").val(id);
         $("#pcode_update").val(pcode);
         $("#pname_update").val(pname);
-        $("#pqty_update").val(pqty);
+        $("#pcode_grp_update").val(pcode_grp);
+        $("#pname_grp_update").val(pname_grp);
         $("#update_sku_model").modal('show');
     }  
 
 
     function effect_update_sku()
     {
+
         var pid = $("#pid_update").val();
         var pcode = $("#pcode_update").val();
-        var pqty = $("#pqty_update").val();
+        var pname_grp = $("#pname_grp_update").val();
+        var pcode_grp = $("#pcode_grp_update").val();
+
         //$("#update_sku_model").modal('hide');
 
         $.ajaxSetup({
@@ -143,7 +147,7 @@
         $.ajax({
            type:'POST',
            url:'/inv/shipping/sku/effect_update',
-           data:{id:pid, pcode:pcode, pqty:pqty},
+           data:{id:pid, pcode:pcode, pname_grp:pname_grp, pcode_grp:pcode_grp},
            success:function(data){
               window.location.reload();
            },
