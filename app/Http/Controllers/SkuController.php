@@ -23,7 +23,7 @@ class SkuController extends Controller
         
         updateProd_fn();
 
-        return view('shipping.sku')->with('skus', Sku::all()->sortBy("prodName"));
+        return view('shipping.sku')->with('skus', Sku::all()->where('prodCode', '<>', '1')->sortBy("prodName"));
         //return view('shipping.sku_vue'); // for vuejs
 
     }
@@ -53,7 +53,7 @@ class SkuController extends Controller
         $pcode = $data['pcode'];        
         $pname_grp = $data['pname_grp'];
         $pcode_grp = $data['pcode_grp'];
-        
+
         $sku = Sku::find($id);
 
         $sku->prodName_grp = $pname_grp; 
