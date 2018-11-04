@@ -244,43 +244,59 @@ td {
 
                         </tr>
                             @foreach($daily_ship as $row)
+
                             <?php 
                             $d07 = ($row->qty08+$row->qty09+$row->qty10+$row->qty11+$row->qty12+$row->qty13+$row->qty14);
                             $d14 = ($row->qty01+$row->qty02+$row->qty03+$row->qty04+$row->qty05+$row->qty06+$row->qty07)+$d07; 
-                            $sku_qty = is_numeric($row->prodQty)? $row->prodQty:0;
                             $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
                             $sku_sold = is_numeric($row->sold)? $row->sold:0;
                             $running_bal = $sku_onhand - $sku_sold;
-                            $critical = "";
 
+                            $qty01 = ($row->qty01=="")? 0:$row->qty01; 
+                            $qty02 = ($row->qty02=="")? 0:$row->qty02;
+                            $qty03 = ($row->qty03=="")? 0:$row->qty03;
+                            $qty04 = ($row->qty04=="")? 0:$row->qty04;
+                            $qty05 = ($row->qty05=="")? 0:$row->qty05;
+                            $qty06 = ($row->qty06=="")? 0:$row->qty06;
+                            $qty07 = ($row->qty07=="")? 0:$row->qty07;
+                            $qty08 = ($row->qty08=="")? 0:$row->qty08;
+                            $qty09 = ($row->qty09=="")? 0:$row->qty09;
+                            $qty10 = ($row->qty10=="")? 0:$row->qty10;
+                            $qty11 = ($row->qty11=="")? 0:$row->qty11;
+                            $qty12 = ($row->qty12=="")? 0:$row->qty12;
+                            $qty13 = ($row->qty13=="")? 0:$row->qty13;
+                            $qty14 = ($row->qty14=="")? 0:$row->qty14;
+                            $qty30 = ($row->qty30=="")? 0:$row->qty30;
+
+                            $critical = "";
                             if($running_bal < 50)
                               $critical = "style='background-color:#ff00003d'";                              
                             ?>
                             
                             <tr>
-                                <td>{{ $row->item_number }}</td>
-                                <td>{{ $row->description }}</td>
+                                <td>{{ $row->prodCode }}</td>
+                                <td>{{ $row->prodName }}</td>
 
                                 <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
 
-                                <td>{{ $row->qty30 }}</td>
+                                <td>{{ $qty30 }}</td>
                                 <td>{{ $d14 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $row->qty01 }}</td>
-                                <td>{{ $row->qty02 }}</td>
-                                <td>{{ $row->qty03 }}</td>
-                                <td>{{ $row->qty04 }}</td>
-                                <td>{{ $row->qty05 }}</td>
-                                <td>{{ $row->qty06 }}</td>
-                                <td>{{ $row->qty07 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $qty01 }}</td>
+                                <td>{{ $qty02 }}</td>
+                                <td>{{ $qty03 }}</td>
+                                <td>{{ $qty04 }}</td>
+                                <td>{{ $qty05 }}</td>
+                                <td>{{ $qty06 }}</td>
+                                <td>{{ $qty07 }}</td>
 
                                 <td>{{ $d07 }}</td>
-                                <td>{{ $row->qty08 }}</td>
-                                <td>{{ $row->qty09 }}</td>
-                                <td>{{ $row->qty10 }}</td>
-                                <td>{{ $row->qty11 }}</td>
-                                <td>{{ $row->qty12 }}</td>
-                                <td>{{ $row->qty13 }}</td>
-                                <td>{{ $row->qty14 }}</td>
+                                <td>{{ $qty08 }}</td>
+                                <td>{{ $qty09 }}</td>
+                                <td>{{ $qty10 }}</td>
+                                <td>{{ $qty11 }}</td>
+                                <td>{{ $qty12 }}</td>
+                                <td>{{ $qty13 }}</td>
+                                <td>{{ $qty14 }}</td>
 
                               </tr>
                             @endforeach

@@ -21,6 +21,8 @@ class InventoryController extends Controller
 
         // created 2 views for the running qty and the new report.
         // loop the running and new port (in relation with the sku_forcb), each needed item will be stored in temporary table 'skus_balance' and will be used in the report
+        
+        updateImportedProd_fn();
 
         $getrunning = DB::table('skus_forcb')
                       ->selectRaw(
@@ -146,13 +148,12 @@ class InventoryController extends Controller
             );
         }
 
-        $daily_ship = DB::table('daily_ship')
+        $daily_ship = DB::table('skus')
                       ->selectRaw(
-                        'daily_ship.item_number AS item_number,
-                        daily_ship.description AS description,
-                        skus.prodQty AS prodQty, 
-                        skus_balance.onhand AS onhand, 
-                        skus_balance.sold AS sold, 
+                        'skus.prodCode_grp AS prodCode,
+                        skus.prodName_grp AS prodName,
+                        MAX(skus_balance.onhand) AS onhand, 
+                        MAX(skus_balance.sold) AS sold, 
                         SUM(daily_ship.qty01) AS qty01,
                         SUM(daily_ship.qty02) AS qty02,
                         SUM(daily_ship.qty03) AS qty03,
@@ -172,13 +173,15 @@ class InventoryController extends Controller
                         SUM(daily_ship.qty14) AS qty14,
                         SUM(daily_ship.qty30) AS qty30'
                       )
-                      ->leftjoin('skus', 'skus.prodCode', '=', 'daily_ship.item_number')
-                      ->leftjoin('skus_balance', 'skus_balance.sku_link', '=', 'daily_ship.item_number')
-                      ->groupBy('daily_ship.item_number')
-                      ->groupBy('daily_ship.description')
-                      ->groupBy('skus.prodQty')
-                      ->groupBy('skus_balance.onhand')
-                      ->groupBy('skus_balance.sold')
+                      ->leftjoin('daily_ship', 'skus.prodCode', '=', 'daily_ship.item_number')
+                      ->leftjoin('skus_balance', 'skus.prodCode', '=', 'skus_balance.sku_link')
+                      ->where('skus.prodCode', '<>', '1')
+                      ->where('skus.prodCode', '<>', '2')
+                      ->where('skus.prodCode', '<>', '3')
+                      ->where('skus.prodCode', '<>', 'b-priority')
+                      ->groupBy('skus.prodCode_grp')
+                      ->groupBy('skus.prodName_grp')
+                      ->orderby('skus.prodName_grp')
                       ->get();
 
         return view('shipping.inventory', compact('daily_ship'));

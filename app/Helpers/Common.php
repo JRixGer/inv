@@ -37,12 +37,13 @@ function updateProd_fn()
             'prodCode' => $i->itemNo, 
             'prodName' => $i->productTitle, 
             'prodQty' => 0, 
-            'prodType' => $i->lineItemType 
+            'prodType' => $i->lineItemType ,
+            'prodCode_grp' => $i->itemNo, 
+            'prodName_grp' => $i->productTitle
         ]
         );
 
     }         
-
 
 // Here is how you do in Eloquent
 
@@ -51,6 +52,49 @@ function updateProd_fn()
 
 // $users = DB::table('users')->whereIn('id', array(1, 2, 3))->get();
 
+
+}
+
+
+function updateImportedProd_fn()
+{
+
+
+  $check_sku = DB::table('skus')
+      ->select('prodCode')
+      ->groupby('prodCode')
+      ->get();
+
+  
+  $prodCodes = array();
+  foreach ($check_sku as $key => $p) 
+    {
+      $prodCodes[] = $p->prodCode; 
+    }         
+
+  $check_in_items = DB::table('skus_forcb')
+      ->select('sku_link', 'description')
+      ->whereNotIn('sku_link', $prodCodes)
+      ->where('sku_link', '<>', '')
+      ->where('status', '=', 'activated')
+      ->groupby('sku_link', 'description')
+      ->get();
+
+
+  foreach ($check_in_items as $key => $i) 
+    {
+        DB::table('skus')->insert(
+        [
+            'prodCode' => $i->sku_link, 
+            'prodName' => $i->description, 
+            'prodQty' => 0, 
+            'prodType' => 'Imported', 
+            'prodCode_grp' => $i->sku_link, 
+            'prodName_grp' => $i->description
+        ]
+        );
+
+    }         
 
 }
 
