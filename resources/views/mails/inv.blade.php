@@ -252,21 +252,24 @@ td {
                             $sku_sold = is_numeric($row->sold)? $row->sold:0;
                             $running_bal = $sku_onhand - $sku_sold;
 
-                            $qty01 = ($row->qty01=="")? 0:$row->qty01; 
-                            $qty02 = ($row->qty02=="")? 0:$row->qty02;
-                            $qty03 = ($row->qty03=="")? 0:$row->qty03;
-                            $qty04 = ($row->qty04=="")? 0:$row->qty04;
-                            $qty05 = ($row->qty05=="")? 0:$row->qty05;
-                            $qty06 = ($row->qty06=="")? 0:$row->qty06;
-                            $qty07 = ($row->qty07=="")? 0:$row->qty07;
-                            $qty08 = ($row->qty08=="")? 0:$row->qty08;
-                            $qty09 = ($row->qty09=="")? 0:$row->qty09;
-                            $qty10 = ($row->qty10=="")? 0:$row->qty10;
-                            $qty11 = ($row->qty11=="")? 0:$row->qty11;
-                            $qty12 = ($row->qty12=="")? 0:$row->qty12;
-                            $qty13 = ($row->qty13=="")? 0:$row->qty13;
-                            $qty14 = ($row->qty14=="")? 0:$row->qty14;
-                            $qty30 = ($row->qty30=="")? 0:$row->qty30;
+                            $d07 = ($d07=="" || $d07==0)? "":$d07; 
+                            $d14 = ($d14=="" || $d14==0)? "":$d14; 
+
+                            $qty01 = ($row->qty01=="" || $row->qty01==0)? "":$row->qty01; 
+                            $qty02 = ($row->qty02=="" || $row->qty02==0)? "":$row->qty02;
+                            $qty03 = ($row->qty03=="" || $row->qty03==0)? "":$row->qty03;
+                            $qty04 = ($row->qty04=="" || $row->qty04==0)? "":$row->qty04;
+                            $qty05 = ($row->qty05=="" || $row->qty05==0)? "":$row->qty05;
+                            $qty06 = ($row->qty06=="" || $row->qty06==0)? "":$row->qty06;
+                            $qty07 = ($row->qty07=="" || $row->qty07==0)? "":$row->qty07;
+                            $qty08 = ($row->qty08=="" || $row->qty08==0)? "":$row->qty08;
+                            $qty09 = ($row->qty09=="" || $row->qty09==0)? "":$row->qty09;
+                            $qty10 = ($row->qty10=="" || $row->qty10==0)? "":$row->qty10;
+                            $qty11 = ($row->qty11=="" || $row->qty11==0)? "":$row->qty11;
+                            $qty12 = ($row->qty12=="" || $row->qty12==0)? "":$row->qty12;
+                            $qty13 = ($row->qty13=="" || $row->qty13==0)? "":$row->qty13;
+                            $qty14 = ($row->qty14=="" || $row->qty14==0)? "":$row->qty14;
+                            $qty30 = ($row->qty30=="" || $row->qty30==0)? "":$row->qty30;
 
                             $critical = "";
                             if($running_bal < 50)

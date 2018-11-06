@@ -25,11 +25,11 @@
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
     <style>
-        .sticky-top { top: 0.5em !important; }
-    </style>
+     </style>
 </head>
 <body>
     <div id="app">
+        <!-- <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top" style="background-color: #e3f2fd;"> -->
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color: #e3f2fd;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
