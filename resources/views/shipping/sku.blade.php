@@ -7,7 +7,8 @@
                 <div class="card-header title_">SKU Management</div>
 
                 <div class="card-body">
-                  <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll">
+                  <!-- <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll"> -->
+                  <div style="max-width:auto; overflow: scroll;" class="horiz-scroll">
                     <table class="table table-sm">
                       <thead>
                         <tr>
@@ -45,9 +46,14 @@
                                 </td>
 	                           </tr>
                               @endforeach
+                            <tr>
+                              <td colspan="6">
+                                {{ $skus->links() }}
+                              </td>
+                            </tr>                              
                             @else
                             <tr>
-                              <th colspan="3">No Records</th>
+                              <th colspan="6">No Records</th>
                             </tr>
                             @endif
                       </tbody>

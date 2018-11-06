@@ -87,7 +87,8 @@ class MaropostController extends Controller
               }
             )
             ->orderby('notifications.id', 'desc')
-            ->get();
+            ->paginate(14);
+            //->get();
 
             return view('shipping.maropost', compact('maro')); 
 

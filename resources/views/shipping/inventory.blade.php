@@ -57,7 +57,8 @@
                             {{ session('status') }}
                         </div>
                     @endif -->
-                    <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll">
+                    <!-- <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll"> -->
+                    <div style="max-width:auto; overflow: scroll;" class="horiz-scroll">
                     <table class="table table-sm">
                       <thead>
                         <tr>
@@ -146,9 +147,14 @@
 
                               </tr>
                             @endforeach
+                          <tr>
+                            <td colspan="20">
+                              {{ $daily_ship->links() }}
+                            </td>
+                          </tr>
                         @else
                         <tr>
-                            <th colspan="3">No Records</th>
+                            <td colspan="20">No Records</td>
                         </tr>
                         @endif
 

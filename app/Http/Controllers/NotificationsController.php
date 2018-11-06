@@ -118,7 +118,8 @@ class NotificationsController extends Controller
                         ->where('notifications.transactionType', '<>', 'TEST')
                         ->where('notifications.transactionType', '<>', 'TEST_SALE')
                         ->orderby('notifications.id', 'desc')
-                        ->get();
+                        ->paginate(9);
+                        //->get();
 
         return view('shipping.raw', compact('raw')); 
 

@@ -8,7 +8,8 @@
                 <div class="card-header title_">INS Raw Data</div>
 
                 <div class="card-body">
-                  <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll">
+                  <!-- <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll"> -->
+                  <div style="max-width:auto; overflow: scroll;" class="horiz-scroll">
                      <table class="table table-sm" border="1">
                       <thead>
                         <tr>
@@ -158,6 +159,12 @@
 
                           </tr>
                             @endforeach
+                          <tr>
+                            <td colspan="100">
+                              {{ $raw->links() }}
+                            </td>
+                          </tr>
+                          
                         @else
                         <tr>
                             <th colspan="100">No Records</th>

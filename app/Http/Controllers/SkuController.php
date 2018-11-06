@@ -23,7 +23,16 @@ class SkuController extends Controller
         
         updateProd_fn();
 
-        return view('shipping.sku')->with('skus', Sku::all()->where('prodCode', '<>', '1')->sortBy("prodName"));
+
+        $skus = DB::table('skus')
+        ->select('*')
+        ->where('prodCode', '<>', '1')
+        ->orderby('prodName')
+        ->paginate(17);
+
+        return view('shipping.sku', compact('skus'));
+
+        //return view('shipping.sku')->with('skus', Sku::all()->where('prodCode', '<>', '1')->sortBy("prodName"));
         //return view('shipping.sku_vue'); // for vuejs
 
     }

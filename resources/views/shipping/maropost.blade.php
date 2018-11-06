@@ -8,7 +8,8 @@
                 <div class="card-header title_">Maropost Posting History</div>
 
                 <div class="card-body">
-                  <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll">
+                  <!-- <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll"> -->
+                  <div style="max-width:auto; overflow: scroll;" class="horiz-scroll">
                      <table class="table table-sm" border="1">
                       <thead>
                         <tr>
@@ -53,9 +54,14 @@
                               <td><?php echo $url ?></td>
                           </tr>
                             @endforeach
+                          <tr>
+                            <td colspan="13">
+                              {{ $maro->links() }}
+                            </td>
+                          </tr>                            
                         @else
                         <tr>
-                            <th colspan="100">No Records</th>
+                            <th colspan="13">No Records</th>
                         </tr>
                         @endif
 
