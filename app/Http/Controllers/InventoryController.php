@@ -183,7 +183,7 @@ class InventoryController extends Controller
                       ->groupBy('skus.prodName_grp')
                       ->orderby('skus.prodName_grp')
                       //->get();
-                      ->paginate(19);
+                      ->paginate(22);
 
         return view('shipping.inventory', compact('daily_ship'));
     }
