@@ -125,7 +125,8 @@ ol,
 ul,
 dl {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
+  /*margin-bottom: 1rem;*/
 }
 
 ol ol,
