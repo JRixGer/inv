@@ -17,12 +17,10 @@ class SkuController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
     public function list()
     {
         
         updateProd_fn();
-
 
         $skus = DB::table('skus')
         ->select('*')

@@ -186,5 +186,16 @@ class InventoryController extends Controller
                       ->paginate(22);
 
         return view('shipping.inventory', compact('daily_ship'));
+
+
+        // try {
+        //     $users = $user->with('detail')->select(['*', 'name as nick_name'])->sortable()->paginate(10);
+
+        //     return view('user', ['users' => $users]);
+        // } catch (\Kyslik\ColumnSortable\Exceptions\ColumnSortableException $e) {
+        //     dd($e);
+        // }
+
+
     }
 }
