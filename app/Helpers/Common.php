@@ -179,8 +179,8 @@ function maroPost_fn($receipt)
 
     $first_name=$m->firstName;
     $email=$m->email;
-    $page=$m->downloadUrl;
-    $affiliate=(empty($m->affiliate)? 'vendor:'.$m->vendor:'affiliate:'.$m->affiliate);
+    $page="";
+    $affiliate=(empty($m->affiliate)? "":$m->affiliate);
     $updatedTimeUtc = gmdate("Y-m-d\\TH:i:s\\Z");
 
     $contactData= ["contact"=>["email"=>$email,"first_name"=>$first_name,"custom_field"=>["opt_source_drm"=>$page,"affiliate"=>$affiliate,"updated" => $updatedTimeUtc],"add_tags"=>[$m->itemNo, "clickbank"],"subscribe"=>true,"remove_from_dnm"=>true]];

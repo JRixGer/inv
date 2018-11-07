@@ -16,7 +16,7 @@ class MailController extends Controller
         $obj->receiver = 'Joe';
  
         Mail::to('joe@totalpatriot.com')
-        ->cc(['jrixgeromo@gmail.com'])
+        ->bcc(['jrixgeromo@gmail.com'])
         ->send(new InvEmail($obj));
     }
 }
