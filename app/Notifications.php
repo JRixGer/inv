@@ -8,7 +8,29 @@ class Notifications extends Model
 {
    
     use Sortable;
-	public $sortable = ['shipping_city',
+	public $sortable = [
+	'id',
+	'dt',
+	'notifications_vendor',
+	'notifications_transactionTime',
+	'notifications_receipt',
+	'notifications_transactionType',     
+	'billing_firstName',
+	'billing_lastName',
+	'billing_fullName',
+	'billing_phoneNumber',
+	'billing_email',
+	'billing_state',
+	'billing_postalCode',
+	'billing_country',
+	'shipping_firstName',
+	'shipping_lastName',
+	'shipping_fullName',
+	'shipping_phoneNumber',
+	'shipping_email',
+	'shipping_address1',
+	'shipping_address2',
+	'shipping_city',
 	'shipping_county',
 	'shipping_state',
 	'shipping_postalCode',
@@ -52,7 +74,8 @@ class Notifications extends Model
 	'upsell_upsellSession',
 	'upsell_upsellPath',
 	'vendorVariables_v1',
-	'vendorVariables_v2'];
+	'vendorVariables_v2'
+];
 
 	protected $table = 'vw_notification';
 
