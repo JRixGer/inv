@@ -189,14 +189,5 @@ class InventoryController extends Controller
         
         return view('shipping.inventory', ['daily_ship' => $daily_ship]);
 
-        // try {
-        //     $users = $user->with('detail')->select(['*', 'name as nick_name'])->sortable()->paginate(10);
-
-        //     return view('user', ['users' => $users]);
-        // } catch (\Kyslik\ColumnSortable\Exceptions\ColumnSortableException $e) {
-        //     dd($e);
-        // }
-
-
     }
 }

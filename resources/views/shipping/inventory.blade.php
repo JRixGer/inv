@@ -1,6 +1,5 @@
 <?php
 
-
   $datenow = date('Y-m-d H:i:s');
   $dt_last1 = date('m/d', strtotime($datenow));
 
