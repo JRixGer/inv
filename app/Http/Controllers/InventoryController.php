@@ -148,45 +148,46 @@ class InventoryController extends Controller
             );
         }
 
-        $daily_ship = DB::table('skus')
-                      ->selectRaw(
-                        'skus.prodCode_grp AS prodCode,
-                        skus.prodName_grp AS prodName,
-                        MAX(skus_balance.onhand) AS onhand, 
-                        MAX(skus_balance.sold) AS sold, 
-                        SUM(daily_ship.qty01) AS qty01,
-                        SUM(daily_ship.qty02) AS qty02,
-                        SUM(daily_ship.qty03) AS qty03,
-                        SUM(daily_ship.qty04) AS qty04,
-                        SUM(daily_ship.qty05) AS qty05,
-                        SUM(daily_ship.qty06) AS qty06,
-                        SUM(daily_ship.qty07) AS qty07,
-                        SUM(daily_ship.qty08) AS qty08,
-                        SUM(daily_ship.qty09) AS qty09,
-                        SUM(daily_ship.qty10) AS qty10,
-                        SUM(daily_ship.qty11) AS qty11,
-                        SUM(daily_ship.qty12) AS qty12,
-                        SUM(daily_ship.qty12) AS qty13,
-                        SUM(daily_ship.qty04) AS qty4,
-                        SUM(daily_ship.qty05) AS qty5,
-                        SUM(daily_ship.qty07) AS qty7,
-                        SUM(daily_ship.qty14) AS qty14,
-                        SUM(daily_ship.qty30) AS qty30'
-                      )
-                      ->leftjoin('daily_ship', 'skus.prodCode', '=', 'daily_ship.item_number')
-                      ->leftjoin('skus_balance', 'skus.prodCode', '=', 'skus_balance.sku_link')
-                      ->where('skus.prodCode', '<>', '1')
-                      ->where('skus.prodCode', '<>', '2')
-                      ->where('skus.prodCode', '<>', '3')
-                      ->where('skus.prodCode', '<>', 'b-priority')
-                      ->groupBy('skus.prodCode_grp')
-                      ->groupBy('skus.prodName_grp')
-                      ->orderby('skus.prodName_grp')
-                      //->get();
-                      ->paginate(22);
+        // $daily_ship = DB::table('skus')
+        //               ->selectRaw(
+        //                 'skus.prodCode_grp AS prodCode,
+        //                 skus.prodName_grp AS prodName,
+        //                 MAX(skus_balance.onhand) AS onhand, 
+        //                 MAX(skus_balance.sold) AS sold, 
+        //                 SUM(daily_ship.qty01) AS qty01,
+        //                 SUM(daily_ship.qty02) AS qty02,
+        //                 SUM(daily_ship.qty03) AS qty03,
+        //                 SUM(daily_ship.qty04) AS qty04,
+        //                 SUM(daily_ship.qty05) AS qty05,
+        //                 SUM(daily_ship.qty06) AS qty06,
+        //                 SUM(daily_ship.qty07) AS qty07,
+        //                 SUM(daily_ship.qty08) AS qty08,
+        //                 SUM(daily_ship.qty09) AS qty09,
+        //                 SUM(daily_ship.qty10) AS qty10,
+        //                 SUM(daily_ship.qty11) AS qty11,
+        //                 SUM(daily_ship.qty12) AS qty12,
+        //                 SUM(daily_ship.qty12) AS qty13,
+        //                 SUM(daily_ship.qty04) AS qty4,
+        //                 SUM(daily_ship.qty05) AS qty5,
+        //                 SUM(daily_ship.qty07) AS qty7,
+        //                 SUM(daily_ship.qty14) AS qty14,
+        //                 SUM(daily_ship.qty30) AS qty30'
+        //               )
+        //               ->leftjoin('daily_ship', 'skus.prodCode', '=', 'daily_ship.item_number')
+        //               ->leftjoin('skus_balance', 'skus.prodCode', '=', 'skus_balance.sku_link')
+        //               ->where('skus.prodCode', '<>', '1')
+        //               ->where('skus.prodCode', '<>', '2')
+        //               ->where('skus.prodCode', '<>', '3')
+        //               ->where('skus.prodCode', '<>', 'b-priority')
+        //               ->groupBy('skus.prodCode_grp')
+        //               ->groupBy('skus.prodName_grp')
+        //               ->orderby('skus.prodName_grp')
+        //               //->get();
+        //               ->paginate(22);
 
-        return view('shipping.inventory', compact('daily_ship'));
-
+        $daily_ship = Inventory::sortable()->paginate(17);
+        
+        return view('shipping.inventory', ['daily_ship' => $daily_ship]);
 
         // try {
         //     $users = $user->with('detail')->select(['*', 'name as nick_name'])->sortable()->paginate(10);

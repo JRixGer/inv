@@ -62,26 +62,28 @@
                     <table class="table table-sm">
                       <thead>
                         <tr>
-                          <th scope="col">CB SKU </th>
-                          <th scope="col">DESC</th>
-                          <th scope="col" style="color: rgb(0, 85, 255);">Bal</th>
-                          <th scope="col" style="color: rgb(255, 0, 0);">30D</th>
-                          <th scope="col" style="color: rgb(255, 0, 0);">14D</th>
-                          <th scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</th>
-                          <th scope="col">{{$dt_last2}}</th>
-                          <th scope="col">{{$dt_last3}}</th>
-                          <th scope="col">{{$dt_last4}}</th>
-                          <th scope="col">{{$dt_last5}}</th>
-                          <th scope="col">{{$dt_last6}}</th>
-                          <th scope="col">{{$dt_last7}}</th>
-                          <th scope="col" style="color: rgb(255, 0, 0);">7D</th>
-                          <th scope="col">{{$dt_last8}}</th>
-                          <th scope="col">{{$dt_last9}}</th>
-                          <th scope="col">{{$dt_last10}}</th>
-                          <th scope="col">{{$dt_last11}}</th>
-                          <th scope="col">{{$dt_last12}}</th>
-                          <th scope="col">{{$dt_last13}}</th>
-                          <th scope="col">{{$dt_last14}}</th>
+
+                            <th scope="col">@sortablelink('prodCode','CB SKU')</th>
+                            <th scope="col">@sortablelink('prodName','Product Name')</th>
+                            <th scope="col" style="color: rgb(0, 85, 255);">Bal</th>
+                            <th scope="col" style="color: rgb(255, 0, 0);">@sortablelink('qty30','30D')</th>
+                            <th scope="col" style="color: rgb(255, 0, 0);">14D</th>
+                            <td scope="col" style="background-color: rgba(220, 250, 215, 0.35)">@sortablelink('qty01',$dt_last1)</td>
+                            <th scope="col">@sortablelink('qty02',$dt_last2)</th>
+                            <th scope="col">@sortablelink('qty03',$dt_last3)</th>
+                            <th scope="col">@sortablelink('qty04',$dt_last4)</th>
+                            <th scope="col">@sortablelink('qty05',$dt_last5)</th>
+                            <th scope="col">@sortablelink('qty06',$dt_last6)</th>
+                            <th scope="col">@sortablelink('qty07',$dt_last7)</th>
+                            <th scope="col" style="color: rgb(255, 0, 0);">7D</th>
+                            <th scope="col">@sortablelink('qty08',$dt_last8)</th>
+                            <th scope="col">@sortablelink('qty09',$dt_last9)</th>
+                            <th scope="col">@sortablelink('qty10',$dt_last10)</th>
+                            <th scope="col">@sortablelink('qty11',$dt_last11)</th>
+                            <th scope="col">@sortablelink('qty12',$dt_last12)</th>
+                            <th scope="col">@sortablelink('qty13',$dt_last13)</th>
+                            <th scope="col">@sortablelink('qty14',$dt_last14)</th>
+
                         </tr>
                       </thead>
                       <tbody>
@@ -149,7 +151,7 @@
                             @endforeach
                           <tr>
                             <td colspan="20">
-                              {{ $daily_ship->links() }}
+                              {{ $daily_ship->appends(\Request::except('page'))->render() }}
                             </td>
                           </tr>
                         @else
