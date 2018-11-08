@@ -12,14 +12,12 @@
                     <table class="table table-sm">
                       <thead>
                         <tr>
-
-                          <th scope="col">CB SKU</th>
-                          <th scope="col">CB SKU Grouping</th>
-                          <th scope="col">Description</th>
-                          <th scope="col">Description Grouping</th>
+                          <th scope="col">@sortablelink('prodCode','CB SKU')</th>
+                          <th scope="col">@sortablelink('prodCode_grp','CB SKU Grouping')</th>
+                          <th scope="col">@sortablelink('prodName','Description')</th>
+                          <th scope="col">@sortablelink('prodName_grp','Description Grouping')</th>
                           <th scope="col" colspan="2">ACTION</th>
-
-                        </tr>
+                         </tr>
                       </thead>
                       <tbody>
                             
@@ -48,7 +46,9 @@
                               @endforeach
                             <tr>
                               <td colspan="6">
-                                {{ $skus->links() }}
+                                
+                                {{ $skus->appends(\Request::except('page'))->render() }}
+
                               </td>
                             </tr>                              
                             @else
