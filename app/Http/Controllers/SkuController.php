@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sku;
+//use App\SkuRunningQty;
 use Illuminate\Http\Request;
 use DB;
 
@@ -17,16 +18,30 @@ class SkuController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function running()
+    {
+        $running = DB::connection('mysql2')->table('sku_running_qty')
+        ->select('*')
+        ->paginate(17);
+        
+        dd($running);
+
+        //return view('shipping.sku', compact('skus')); 
+ 
+
+    }
+
+
     public function list()
     {
         
         updateProd_fn();
 
-        // $skus = DB::table('skus')
+        // $skus = DB::connection('mysql')->table('skus')
         // ->select('*')
         // ->where('prodCode', '<>', '1')
         // ->orderby('prodName')
-        // ->sortable()->paginate(17);
+        // ->paginate(17);
         // return view('shipping.sku', compact('skus'));
 
 
