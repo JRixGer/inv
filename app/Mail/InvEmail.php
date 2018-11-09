@@ -8,6 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use DB;
 use App\Sku;
+use App\Inventory;
 
 class InvEmail extends Mailable
 {
@@ -43,17 +44,18 @@ class InvEmail extends Mailable
         // created 2 views for the running qty and the new report.
         // loop the running and new port (in relation with the sku_forcb), each needed item will be stored in temporary table 'skus_balance' and will be used in the report
 
-
-        $getrunning = DB::table('skus_forcb')
+        $getrunning = DB::connection('mysql2')->table('vw_skus')
                       ->selectRaw(
                             'vw_sku_running_qty.onhand_qty as onhand_qty,
                             vw_new_report_qty.sold_qty as sold_qty,
-                            skus_forcb.sku_link as onhand_sku'
+                            vw_skus.sku_link as onhand_sku,
+                            vw_skus.description as prodName_common'
                        )
-                      ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'skus_forcb.sku')
-                      ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'skus_forcb.sku')
-                      ->where('skus_forcb.lyle_sku', '<>', '')
-                      ->where('skus_forcb.lyle_sku', '<>', 'b-priority')
+                      ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'vw_skus.sku')
+                      ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'vw_skus.sku')
+                      ->where('vw_skus.lyle_sku', '<>', '')
+                      ->where('vw_skus.lyle_sku', '<>', 'b-priority')
+                      ->where('vw_skus.status', '=', 'activated')
                       ->get();
 
         DB::table('skus_balance')->delete(); // delete old recored             
@@ -64,6 +66,7 @@ class InvEmail extends Mailable
                 'onhand' => ($running->onhand_qty)? $running->onhand_qty:0, 
                 'sold' => ($running->sold_qty)? $running->sold_qty:0, 
                 'sku_link' => $running->onhand_sku, 
+                'prodName_common' => $running->prodName_common 
             ]
             );
         }
@@ -168,43 +171,46 @@ class InvEmail extends Mailable
             );
         }
 
-        $daily_ship = DB::table('skus')
-                      ->selectRaw(
-                        'skus.prodCode_grp AS prodCode,
-                        skus.prodName_grp AS prodName,
-                        MAX(skus_balance.onhand) AS onhand, 
-                        MAX(skus_balance.sold) AS sold, 
-                        SUM(daily_ship.qty01) AS qty01,
-                        SUM(daily_ship.qty02) AS qty02,
-                        SUM(daily_ship.qty03) AS qty03,
-                        SUM(daily_ship.qty04) AS qty04,
-                        SUM(daily_ship.qty05) AS qty05,
-                        SUM(daily_ship.qty06) AS qty06,
-                        SUM(daily_ship.qty07) AS qty07,
-                        SUM(daily_ship.qty08) AS qty08,
-                        SUM(daily_ship.qty09) AS qty09,
-                        SUM(daily_ship.qty10) AS qty10,
-                        SUM(daily_ship.qty11) AS qty11,
-                        SUM(daily_ship.qty12) AS qty12,
-                        SUM(daily_ship.qty12) AS qty13,
-                        SUM(daily_ship.qty04) AS qty4,
-                        SUM(daily_ship.qty05) AS qty5,
-                        SUM(daily_ship.qty07) AS qty7,
-                        SUM(daily_ship.qty14) AS qty14,
-                        SUM(daily_ship.qty30) AS qty30'
-                      )
-                      ->leftjoin('daily_ship', 'skus.prodCode', '=', 'daily_ship.item_number')
-                      ->leftjoin('skus_balance', 'skus.prodCode', '=', 'skus_balance.sku_link')
-                      ->where('skus.prodCode', '<>', '1')
-                      ->where('skus.prodCode', '<>', '2')
-                      ->where('skus.prodCode', '<>', '3')
-                      ->where('skus.prodCode', '<>', 'b-priority')
-                      ->groupBy('skus.prodCode_grp')
-                      ->groupBy('skus.prodName_grp')
-                      ->orderby('skus.prodName_grp')
-                      ->get();
+        // $daily_ship = DB::table('skus')
+        //               ->selectRaw(
+        //                 'skus.prodCode_grp AS prodCode,
+        //                 skus.prodName_grp AS prodName,
+        //                 MAX(skus_balance.onhand) AS onhand, 
+        //                 MAX(skus_balance.sold) AS sold, 
+        //                 SUM(daily_ship.qty01) AS qty01,
+        //                 SUM(daily_ship.qty02) AS qty02,
+        //                 SUM(daily_ship.qty03) AS qty03,
+        //                 SUM(daily_ship.qty04) AS qty04,
+        //                 SUM(daily_ship.qty05) AS qty05,
+        //                 SUM(daily_ship.qty06) AS qty06,
+        //                 SUM(daily_ship.qty07) AS qty07,
+        //                 SUM(daily_ship.qty08) AS qty08,
+        //                 SUM(daily_ship.qty09) AS qty09,
+        //                 SUM(daily_ship.qty10) AS qty10,
+        //                 SUM(daily_ship.qty11) AS qty11,
+        //                 SUM(daily_ship.qty12) AS qty12,
+        //                 SUM(daily_ship.qty12) AS qty13,
+        //                 SUM(daily_ship.qty04) AS qty4,
+        //                 SUM(daily_ship.qty05) AS qty5,
+        //                 SUM(daily_ship.qty07) AS qty7,
+        //                 SUM(daily_ship.qty14) AS qty14,
+        //                 SUM(daily_ship.qty30) AS qty30'
+        //               )
+        //               ->leftjoin('daily_ship', 'skus.prodCode', '=', 'daily_ship.item_number')
+        //               ->leftjoin('skus_balance', 'skus.prodCode', '=', 'skus_balance.sku_link')
+        //               ->where('skus.prodCode', '<>', '1')
+        //               ->where('skus.prodCode', '<>', '2')
+        //               ->where('skus.prodCode', '<>', '3')
+        //               ->where('skus.prodCode', '<>', 'b-priority')
+        //               ->groupBy('skus.prodCode_grp')
+        //               ->groupBy('skus.prodName_grp')
+        //               ->orderby('skus.prodName_grp')
+        //               ->get();
 
+        $daily_ship = Inventory::all();
 
+        dd($daily_ship);
+        
         return $this->from('sales@cb.preparedpatriot.us')
                     ->view('mails.inv')
                     ->subject("Daily Inventory Report")

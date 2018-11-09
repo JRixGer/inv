@@ -72,7 +72,7 @@ function updateImportedProd_fn()
       $prodCodes[] = $p->prodCode; 
     }         
 
-  $check_in_items = DB::table('skus_forcb')
+  $check_in_items = DB::connection('mysql2')->table('vw_skus')
       ->select('sku_link', 'description')
       ->whereNotIn('sku_link', $prodCodes)
       ->where('sku_link', '<>', '')
