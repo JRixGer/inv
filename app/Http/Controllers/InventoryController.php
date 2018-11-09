@@ -22,20 +22,45 @@ class InventoryController extends Controller
         // created 2 views for the running qty and the new report.
         // loop the running and new port (in relation with the sku_forcb), each needed item will be stored in temporary table 'skus_balance' and will be used in the report
         
-        updateImportedProd_fn();
+        // DB::table('skus_forcb')->delete(); // delete old recored             
 
-        $getrunning = DB::table('skus_forcb')
+        // $update_sku = DB::connection('mysql2')->table('vw_skus')->where('lyle_sku', '<>', '')
+        // ->select('*')
+        // ->get();
+
+  
+        // foreach ($update_sku as $key => $value)
+        // {
+        //     DB::table('skus_forcb')->insert(
+        //     [
+        //         'sku' => $value->sku, 
+        //         'is_sku' => $value->is_sku, 
+        //         'lyle_sku' => $value->lyle_sku, 
+        //         'description' => $value->description,
+        //         'inventory' => $value->inventory, 
+        //         'sold' => $value->sold, 
+        //         'weight' => $value->weight, 
+        //         'item_number' => $value->item_number, 
+        //         'status' => $value->status, 
+        //         'sku_link' => $value->sku_link 
+        //     ]
+        //     );
+        // }
+
+        //updateImportedProd_fn();
+
+        $getrunning = DB::connection('mysql2')->table('vw_skus')
                       ->selectRaw(
                             'vw_sku_running_qty.onhand_qty as onhand_qty,
                             vw_new_report_qty.sold_qty as sold_qty,
-                            skus_forcb.sku_link as onhand_sku,
-                            skus_forcb.description as prodName_common'
+                            vw_skus.sku_link as onhand_sku,
+                            vw_skus.description as prodName_common'
                        )
-                      ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'skus_forcb.sku')
-                      ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'skus_forcb.sku')
-                      ->where('skus_forcb.lyle_sku', '<>', '')
-                      ->where('skus_forcb.lyle_sku', '<>', 'b-priority')
-                      ->where('skus_forcb.status', '=', 'activated')
+                      ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'vw_skus.sku')
+                      ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'vw_skus.sku')
+                      ->where('vw_skus.lyle_sku', '<>', '')
+                      ->where('vw_skus.lyle_sku', '<>', 'b-priority')
+                      ->where('vw_skus.status', '=', 'activated')
                       ->get();
 
         DB::table('skus_balance')->delete(); // delete old recored             
@@ -189,7 +214,9 @@ class InventoryController extends Controller
         //               ->paginate(22);
 
         $daily_ship = Inventory::sortable()->paginate(17);
-        
+
+        updateImportedProd_fn();
+       
         return view('shipping.inventory', ['daily_ship' => $daily_ship]);
 
     }
