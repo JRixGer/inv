@@ -63,7 +63,7 @@
                         <tr>
 
                             <th scope="col">@sortablelink('prodCode','CB SKU')</th>
-                            <th scope="col">@sortablelink('prodName','Product Name')</th>
+                            <th scope="col">@sortablelink('prodName_common','Product Name')</th>
                             <th scope="col" style="color: rgb(0, 85, 255);">Bal</th>
                             <th scope="col" style="color: rgb(255, 0, 0);">@sortablelink('qty30','30D')</th>
                             <th scope="col" style="color: rgb(255, 0, 0);">14D</th>
@@ -116,6 +116,8 @@
                             $qty14 = ($row->qty14=="" || $row->qty14==0)? "":$row->qty14;
                             $qty30 = ($row->qty30=="" || $row->qty30==0)? "":$row->qty30;
 
+                            $prodN = empty($row->prodName_common)? $row->prodName:$row->prodName_common; 
+
                             $critical = "";
                             if($running_bal < 50)
                               $critical = "style='background-color:#ff00003d'";                              
@@ -123,7 +125,7 @@
                             
                             <tr>
                                 <td>{{ $row->prodCode }}</td>
-                                <td>{{ $row->prodName }}</td>
+                                <td>{{ $prodN }}</td>
 
                                 <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
 

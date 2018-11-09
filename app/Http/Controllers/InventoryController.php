@@ -28,12 +28,14 @@ class InventoryController extends Controller
                       ->selectRaw(
                             'vw_sku_running_qty.onhand_qty as onhand_qty,
                             vw_new_report_qty.sold_qty as sold_qty,
-                            skus_forcb.sku_link as onhand_sku'
+                            skus_forcb.sku_link as onhand_sku,
+                            skus_forcb.description as prodName_common'
                        )
                       ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'skus_forcb.sku')
                       ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'skus_forcb.sku')
                       ->where('skus_forcb.lyle_sku', '<>', '')
                       ->where('skus_forcb.lyle_sku', '<>', 'b-priority')
+                      ->where('skus_forcb.status', '=', 'activated')
                       ->get();
 
         DB::table('skus_balance')->delete(); // delete old recored             
@@ -44,6 +46,7 @@ class InventoryController extends Controller
                 'onhand' => ($running->onhand_qty)? $running->onhand_qty:0, 
                 'sold' => ($running->sold_qty)? $running->sold_qty:0, 
                 'sku_link' => $running->onhand_sku, 
+                'prodName_common' => $running->prodName_common 
             ]
             );
         }
