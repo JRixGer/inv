@@ -209,8 +209,6 @@ class InvEmail extends Mailable
 
         $daily_ship = Inventory::all();
 
-        dd($daily_ship);
-        
         return $this->from('sales@cb.preparedpatriot.us')
                     ->view('mails.inv')
                     ->subject("Daily Inventory Report")
