@@ -84,10 +84,12 @@ class SkuController extends Controller
         $pcode = $data['pcode'];        
         $pname_grp = $data['pname_grp'];
         $pcode_grp = $data['pcode_grp'];
+        $pcode_common = $data['pcode_common'];
 
         $sku = Sku::find($id);
 
         $sku->prodName_grp = $pname_grp; 
+        $sku->prodName_common = $pcode_common; 
         $sku->prodCode_grp = $pcode_grp; 
 
         $sku->save();

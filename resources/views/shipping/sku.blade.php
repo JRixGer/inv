@@ -41,7 +41,7 @@
                                   {{ $sku->prodName_common }}
                                 </td>
                                 <td>
-                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>')">Edit</a>
+                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')">Edit</a>
                                 </td>
                                 <td>
                                   <a class="btn btn-sm btn-warning">Delete</a>
@@ -103,6 +103,10 @@
                         <input type="text" class="form-control" id="pname_grp_update">
                     </div>
 
+                    <div class="form-group">
+                        <label>Common Name:</label>
+                        <input type="text" class="form-control" id="pname_common_update">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
