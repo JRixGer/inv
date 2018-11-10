@@ -19,6 +19,7 @@
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
+                background: url("public/images/fba7da61.png") repeat;
             }
 
             .full-height {
