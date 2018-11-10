@@ -39,7 +39,8 @@ function updateProd_fn()
             'prodQty' => 0, 
             'prodType' => $i->lineItemType ,
             'prodCode_grp' => $i->itemNo, 
-            'prodName_grp' => $i->productTitle
+            'prodName_grp' => $i->productTitle,
+            'prodName_common' => $i->productTitle
         ]
         );
 
@@ -77,7 +78,8 @@ function updateProd_fn()
             'prodQty' => 0, 
             'prodType' => 'Imported',
             'prodCode_grp' => strtolower($i->sku_link), 
-            'prodName_grp' => $i->description
+            'prodName_grp' => $i->description,
+            'prodName_common' => $i->description            
         ]
         );
 
@@ -115,7 +117,8 @@ function updateProd_fn()
             'prodQty' => 0, 
             'prodType' => 'Imported',
             'prodCode_grp' => strtolower($i->sku), 
-            'prodName_grp' => $i->description
+            'prodName_grp' => $i->description,
+            'prodName_common' => $i->description  
         ]
         );
 

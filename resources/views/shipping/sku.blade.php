@@ -16,6 +16,7 @@
                           <th scope="col">@sortablelink('prodCode_grp','CB SKU Grouping')</th>
                           <th scope="col">@sortablelink('prodName','Description')</th>
                           <th scope="col">@sortablelink('prodName_grp','Description Grouping')</th>
+                          <th scope="col">@sortablelink('prodName_common','Description (from shipping)')</th>
                           <th scope="col" colspan="2">ACTION</th>
                          </tr>
                       </thead>
@@ -35,6 +36,9 @@
                                 </td>
                                 <td>
                                   {{ $sku->prodName_grp }}
+                                </td>
+                                <td>
+                                  {{ $sku->prodName_common }}
                                 </td>
                                 <td>
                                   <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>')">Edit</a>
