@@ -13,10 +13,10 @@ class Inventory extends Model
 
 	// SHOW CREATE view `vw_inventory`
 	// to  update
-	// Select 
+ // Select 
 	// skus.prodCode_grp AS prodCode,
 	// skus.prodName_grp AS prodName,
-	// skus.prodName_common AS prodName_common,
+	// skus_balance.prodName_common AS prodName_common,
 	// MAX(skus_balance.onhand) AS onhand, 
 	// MAX(skus_balance.sold) AS sold, 
 	// SUM(daily_ship.qty01) AS qty01,
@@ -41,6 +41,6 @@ class Inventory extends Model
 	// left join daily_ship on skus.prodCode = daily_ship.item_number
 	// left join skus_balance on skus.prodCode = skus_balance.sku_link
 	// WHERE skus.prodCode<>'1' AND skus.prodCode<>'2' AND skus.prodCode<>'3' AND skus.prodCode<>'b-priority'
-	// Group By skus.prodCode_grp, skus.prodName_grp, skus.prodName_common
+	// Group By skus.prodCode_grp, skus.prodName_grp, skus_balance.prodName_common
 	// Order By skus.prodName_grp
 }

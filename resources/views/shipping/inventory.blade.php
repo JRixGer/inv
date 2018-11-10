@@ -116,7 +116,7 @@
                             $qty14 = ($row->qty14=="" || $row->qty14==0)? "":$row->qty14;
                             $qty30 = ($row->qty30=="" || $row->qty30==0)? "":$row->qty30;
 
-                            $prodN = empty($row->prodName_common)? $row->prodName:$row->prodName_common; 
+                            $prodN = empty($row->prodName_common)? '<span style="color:rgb(0, 212, 148)">'.$row->prodName.'</span>':$row->prodName_common;
 
                             $critical = "";
                             if($running_bal < 50)
@@ -125,7 +125,7 @@
                             
                             <tr>
                                 <td>{{ $row->prodCode }}</td>
-                                <td>{{ $prodN }}</td>
+                                <td><?php echo $prodN ?></td>
 
                                 <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
 
