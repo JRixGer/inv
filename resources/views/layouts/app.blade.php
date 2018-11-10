@@ -22,7 +22,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('public/css/toastr.css') }}" rel="stylesheet" />
-    <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+    
     <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
     <style>
     

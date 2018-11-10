@@ -24,7 +24,6 @@ class InventoryController extends Controller
 
         $daily_ship = Inventory::sortable()->orderby('prodName_common')->paginate(17);
 
-       
         return view('shipping.inventory', ['daily_ship' => $daily_ship]);
 
     }

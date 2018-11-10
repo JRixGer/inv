@@ -2,11 +2,19 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
+
 // Variables
 @import "variables";
 
+$fa-font-path: "/inv/public/fonts/vendor/@fortawesome/fontawesome-free/renamed";
+
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+
 
 .navbar-laravel {
   background-color: #fff;

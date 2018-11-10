@@ -4,7 +4,25 @@
     <div class="row no-gutters justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header title_">SKU Management</div>
+                <div class="card-header title_">
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                             SKU Management
+                        </div>
+                        <div class="col-md-6 text-right">
+                          <span class="float-right">
+                          <form class="form-inline text-right">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+                          </form>
+                        </span>
+                        </div>
+                    </div>
+
+
+                </div>
 
                 <div class="card-body">
                   <!-- <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll"> -->
@@ -41,10 +59,10 @@
                                   {{ $sku->prodName_common }}
                                 </td>
                                 <td>
-                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')">Edit</a>
+                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')"><i class="fa fa-edit"></i></a>
                                 </td>
                                 <td>
-                                  <a class="btn btn-sm btn-warning">Delete</a>
+                                  <a class="btn btn-sm btn-warning"><i class="fa fa-trash-alt"></i></a>
                                 </td>
 	                           </tr>
                               @endforeach
