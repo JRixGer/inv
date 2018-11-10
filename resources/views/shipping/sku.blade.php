@@ -14,8 +14,8 @@
                         <div class="col-md-6 text-right">
                           <span class="float-right">
                           <form class="form-inline text-right">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"  id="search_key">
+                            <button class="btn btn-outline-success my-2 my-sm-0" id="search_sku" type="button"><i class="fa fa-search"></i></button>
                           </form>
                         </span>
                         </div>
@@ -25,7 +25,60 @@
                 </div>
 
                 <div class="card-body">
-                  <!-- <div style="max-height:700px; max-width:auto; overflow: scroll;" class="horiz-scroll"> -->
+                  <div style="max-width:auto; overflow: scroll; display: none;" class="horiz-scroll" id="search_list">
+                    <table class="table table-sm" style="background-color: #f8fded">
+                      <thead>
+                        <tr>
+                          <th scope="col" colspan="7" style="color:#CCCCCC; font-weight: 500">Search result:</th>
+                         </tr>
+
+                        <tr>
+                          <th scope="col">CB SKU Raw</th>
+                          <th scope="col">CB SKU Grouping</th>
+                          <th scope="col">Description Raw</th>
+                          <th scope="col">Description Grouping</th>
+                          <th scope="col">Description (from shipping)</th>
+                          <th scope="col" colspan="2">ACTION</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                            
+                            @if($skus->count() > 0)
+                              @foreach($skus as $sku)
+                              <tr>
+                                <td>
+                                  {{ $sku->prodCode }}
+                                </td>
+                                <td>
+                                  {{ $sku->prodCode_grp }}
+                                </td>                                
+                                <td>
+                                  {{ $sku->prodName }}
+                                </td>
+                                <td>
+                                  {{ $sku->prodName_grp }}
+                                </td>
+                                <td>
+                                  {{ $sku->prodName_common }}
+                                </td>
+                                <td>
+                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')"><i class="fa fa-edit"></i></a>
+                                </td>
+                                <td>
+                                  <a class="btn btn-sm btn-warning"><i class="fa fa-trash-alt"></i></a>
+                                </td>
+                             </tr>
+                              @endforeach
+                            @else
+                            <tr>
+                              <th colspan="7">No Records</th>
+                            </tr>
+                            @endif
+                      </tbody>
+                    </table>
+                  </div>
+
+
                   <div style="max-width:auto; overflow: scroll;" class="horiz-scroll">
                     <table class="table table-sm">
                       <thead>
@@ -67,7 +120,7 @@
 	                           </tr>
                               @endforeach
                             <tr>
-                              <td colspan="6">
+                              <td colspan="7">
                                 
                                 {{ $skus->appends(\Request::except('page'))->render() }}
 
@@ -75,7 +128,7 @@
                             </tr>                              
                             @else
                             <tr>
-                              <th colspan="6">No Records</th>
+                              <th colspan="7">No Records</th>
                             </tr>
                             @endif
                       </tbody>

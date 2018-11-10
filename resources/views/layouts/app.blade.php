@@ -26,7 +26,11 @@
     
     <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
     <style>
-    
+    #imgcenter img {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
      </style>
 </head>
 <body>
@@ -163,6 +167,39 @@
         });
 
     }  
+
+    $(document).ready(function() {
+        $("#search_sku").click(function(){
+            
+            if($("#search_key").val()=="")
+               return;     
+
+            $("#search_list").show();
+            $("#search_list").html('<div id="imgcenter" style="width:100%; height:100%"><img src="../../public/images/loading.gif"></div>');
+
+            $.ajaxSetup({
+                headers: {
+
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+               type:'POST',
+               url:"{{ route('sku.search') }}",
+               data:{search_key:$("#search_key").val()},
+               dataType:'json',
+               success:function(data){
+
+                console.log(JSON.stringify(data));
+
+               },
+               error: function(data) {
+                    var errors = data.responseJSON;
+                }
+            });
+
+        }); 
+    });
 
 </script>
 <!-- {"message":"The given data was invalid.","errors":{"pqty":["The pqty must be a number."]}} -->

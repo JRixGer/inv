@@ -127,6 +127,14 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);	
 
+	Route::post('/sku/search', [
+
+		'uses' => 'SkuController@search',
+		'as' => 'sku.search'
+	]
+	);	
+
+
 	Route::get('/lineitem/list', [
 
 		'uses' => 'LineItemsController@list',

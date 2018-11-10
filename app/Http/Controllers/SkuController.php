@@ -57,8 +57,40 @@ class SkuController extends Controller
         //return view('shipping.sku_vue'); // for vuejs
     }
 
+
+    // Route::any ( '/search', function () {
+    //     $q = Input::get ( 'q' );
+    //     if($q != ""){
+    //     $user = User::where ( 'name', 'LIKE', '%' . $q . '%' )->orWhere ( 'email', 'LIKE', '%' . $q . '%' )->paginate (5)->setPath ( '' );
+    //     $pagination = $user->appends ( array (
+    //                 'q' => Input::get ( 'q' ) 
+    //         ) );
+    //     if (count ( $user ) > 0)
+    //         return view ( 'welcome' )->withDetails ( $user )->withQuery ( $q );
+    //     }
+    //         return view ( 'welcome' )->withMessage ( 'No Details found. Try to search again !' );
+    // } );
+
+    public function search(Request $request)
+    {
+        
+ 
+        $data = $request->all();
+        $search_key = $data['search_key'];  
+
+        $skus = Sku::get();
+        return response()->json([
+            'skus'    => $skus,
+        ], 200);        
+
+    }
+
+
+
+
+
     // below are for vuejs
-    public function mount()
+    public function mount(Request $request)
     {
         
  
