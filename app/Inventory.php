@@ -13,7 +13,7 @@ class Inventory extends Model
 
 	// SHOW CREATE view `vw_inventory`
 	// to  update
- // Select 
+ 	// Select 
 	// skus.prodCode_grp AS prodCode,
 	// skus.prodName_grp AS prodName,
 	// skus_balance.prodName_common AS prodName_common,
