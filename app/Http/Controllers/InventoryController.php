@@ -20,7 +20,7 @@ class InventoryController extends Controller
     {
 
 
-        updateImportedProd_fn();
+        updateInventory_fn();
 
         $daily_ship = Inventory::sortable()->paginate(17);
 

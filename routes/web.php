@@ -33,6 +33,7 @@ Route::get('/', function () {
 });
 
 Route::get('mail/send', 'MailController@send');
+Route::get('sku/update_product', 'SkuController@update_product');
 
 Auth::routes();
 

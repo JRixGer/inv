@@ -43,23 +43,96 @@ function updateProd_fn()
         ]
         );
 
+    }    
+
+/////////////////////////////////////////////
+
+  $recheck_sku1 = DB::table('skus')
+      ->select('prodCode')
+      ->groupby('prodCode')
+      ->get();
+
+  
+  $prodCodes_other1 = array();
+  foreach ($recheck_sku1 as $key => $p) 
+    {
+      $prodCodes_other1[] = $p->prodCode; 
     }         
 
-// Here is how you do in Eloquent
+  $check_in_items1 = DB::connection('mysql2')->table('vw_skus')
+      ->select('sku_link', 'description')
+      ->whereNotIn('sku_link', $prodCodes_other1)
+      ->where('sku_link', '<>', '')
+      ->where('status', '=', 'activated')
+      ->groupby('sku_link', 'description')
+      ->get();
 
+
+  foreach ($check_in_items1 as $key => $i) 
+    {
+        DB::table('skus')->insert(
+        [
+            'prodCode' => $i->sku_link, 
+            'prodName' => $i->description, 
+            'prodQty' => 0, 
+            'prodType' => 'Imported',
+            'prodCode_grp' => $i->sku_link, 
+            'prodName_grp' => $i->description
+        ]
+        );
+
+    }   
+
+/////////////////////////////////////////////
+
+  $recheck_sku2 = DB::table('skus')
+      ->select('prodCode')
+      ->groupby('prodCode')
+      ->get();
+
+  
+  $prodCodes_other2 = array();
+  foreach ($recheck_sku2 as $key => $p) 
+    {
+      $prodCodes_other2[] = $p->prodCode; 
+    }         
+
+   $check_in_items2 = DB::connection('mysql2')->table('vw_skus')
+      ->select('sku', 'description')
+      ->whereNotIn('sku', $prodCodes_other2)
+      ->where('sku', '<>', '')
+      ->where('status', '=', 'activated')
+      ->groupby('sku', 'description')
+      ->get();
+
+
+  foreach ($check_in_items2 as $key => $i) 
+    {
+        DB::table('skus')->insert(
+        [
+            'prodCode' => $i->sku, 
+            'prodName' => $i->description, 
+            'prodQty' => 0, 
+            'prodType' => 'Imported',
+            'prodCode_grp' => $i->sku, 
+            'prodName_grp' => $i->description
+        ]
+        );
+
+    }    
+
+// Here is how you do in Eloquent
 // $users = User::whereIn('id', array(1, 2, 3))->get();
 // And if you are using Query builder then :
-
 // $users = DB::table('users')->whereIn('id', array(1, 2, 3))->get();
-
-
 }
 
 
-function updateImportedProd_fn()
+function updateInventory_fn()
 {
 
 
+  
   $getrunning = DB::connection('mysql2')->table('vw_skus')
                 ->selectRaw(
                       'vw_sku_running_qty.onhand_qty as onhand_qty,
@@ -186,42 +259,6 @@ function updateImportedProd_fn()
       ]
       );
   }
-
-  $check_sku = DB::table('skus')
-      ->select('prodCode')
-      ->groupby('prodCode')
-      ->get();
-
-  
-  $prodCodes = array();
-  foreach ($check_sku as $key => $p) 
-    {
-      $prodCodes[] = $p->prodCode; 
-    }         
-
-  $check_in_items = DB::connection('mysql2')->table('vw_skus')
-      ->select('sku_link', 'description')
-      ->whereNotIn('sku_link', $prodCodes)
-      ->where('sku_link', '<>', '')
-      ->where('status', '=', 'activated')
-      ->groupby('sku_link', 'description')
-      ->get();
-
-
-  foreach ($check_in_items as $key => $i) 
-    {
-        DB::table('skus')->insert(
-        [
-            'prodCode' => $i->sku_link, 
-            'prodName' => $i->description, 
-            'prodQty' => 0, 
-            'prodType' => 'Imported', 
-            'prodCode_grp' => $i->sku_link, 
-            'prodName_grp' => $i->description
-        ]
-        );
-
-    }         
 
 }
 

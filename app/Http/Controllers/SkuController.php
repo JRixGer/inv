@@ -32,6 +32,12 @@ class SkuController extends Controller
     }
 
 
+    public function update_product()
+    {
+        
+        updateProd_fn();
+    }
+
     public function list()
     {
         

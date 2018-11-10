@@ -41,7 +41,7 @@ class InvEmail extends Mailable
     public function build()
     {
 
-      updateImportedProd_fn();
+      updateInventory_fn();
       
       $daily_ship = Inventory::all();
 
