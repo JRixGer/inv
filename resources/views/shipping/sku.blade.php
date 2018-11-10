@@ -12,9 +12,9 @@
                     <table class="table table-sm">
                       <thead>
                         <tr>
-                          <th scope="col">@sortablelink('prodCode','CB SKU')</th>
+                          <th scope="col">@sortablelink('prodCode','CB SKU Raw')</th>
                           <th scope="col">@sortablelink('prodCode_grp','CB SKU Grouping')</th>
-                          <th scope="col">@sortablelink('prodName','Description')</th>
+                          <th scope="col">@sortablelink('prodName','Description Raw')</th>
                           <th scope="col">@sortablelink('prodName_grp','Description Grouping')</th>
                           <th scope="col">@sortablelink('prodName_common','Description (from shipping)')</th>
                           <th scope="col" colspan="2">ACTION</th>
@@ -95,7 +95,7 @@
                         <input type="text" class="form-control" id="pcode_grp_update">
                     </div>
                     <div class="form-group">
-                        <label>Name:</label>
+                        <label>Raw Name:</label>
                         <input type="text" class="form-control" disabled id="pname_update">
                     </div>
                     <div class="form-group">
@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Common Name:</label>
+                        <label>Name (from shipping):</label>
                         <input type="text" class="form-control" id="pname_common_update">
                     </div>
                 </div>

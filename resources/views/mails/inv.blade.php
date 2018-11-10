@@ -46,6 +46,9 @@
 
   $date14 = strtotime('-13 day' , strtotime($datenow));
   $d = date('n/j/Y',$date14) .' - '. date('n/j/Y',$datecurr);
+
+  $today = date("jS \of F Y");
+
 ?>
 
 
@@ -216,7 +219,7 @@ td {
             <h1><a href="index.html" target="_blank">Inventory</a></h1>           
           </header><!--End of header-->
           <section id="content"><!--id="content"-->
-                <h2> Hello Sir Joe,<br><br>Below is the inventory report for : {{ $d }} <br><br>
+                <h2> Hello Sir Joe,<br><br>Below is the inventory report on {{ $today }}: ({{ $d }}) <br><br>
                 </h2>
                 <div class="parpagraph" style="width:100%">
                    <table class="table table-sm" cellpadding="1" cellspacing="1" border="1"> 
@@ -278,7 +281,7 @@ td {
                             
                             <tr class="border_bottom">
                                 <td>{{ $row->prodCode }}</td>
-                                {{ $row->prodName_common }}
+                                <td>{{ $row->prodName_common }}</td>
 
                                 <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
 
