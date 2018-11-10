@@ -76,7 +76,7 @@ function updateProd_fn()
             'prodName' => $i->description, 
             'prodQty' => 0, 
             'prodType' => 'Imported',
-            'prodCode_grp' => $i->sku_link, 
+            'prodCode_grp' => strtolower($i->sku_link), 
             'prodName_grp' => $i->description
         ]
         );
@@ -114,7 +114,7 @@ function updateProd_fn()
             'prodName' => $i->description, 
             'prodQty' => 0, 
             'prodType' => 'Imported',
-            'prodCode_grp' => $i->sku, 
+            'prodCode_grp' => strtolower($i->sku), 
             'prodName_grp' => $i->description
         ]
         );
