@@ -4,12 +4,12 @@
     <div class="row no-gutters justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header title_">
+                <div class="card-header title_" style="padding: 0.35rem 1.25rem;">
 
 
                     <div class="row">
-                        <div class="col-md-6">
-                             SKU Management
+                        <div class="col-md-6" style="padding-top: 9px;">
+                             <span>SKU Management</span>
                         </div>
                         <div class="col-md-6 text-right">
                           <span class="float-right">
