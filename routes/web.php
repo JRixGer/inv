@@ -64,6 +64,19 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::get('/inventory/list_is', [
+
+		'uses' => 'InventoryController@list_is',
+		'as' => 'inventory.list_is'
+	]
+	);
+
+	Route::get('/inventory/list_consolidated', [
+
+		'uses' => 'InventoryController@list_consolidated',
+		'as' => 'inventory.list_consolidated'
+	]
+	);
 
 	Route::get('/maropost/list', [
 
@@ -71,6 +84,8 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 		'as' => 'maropost.list'
 	]
 	);
+
+
 
 
 	Route::post('/maropost/mpost', [

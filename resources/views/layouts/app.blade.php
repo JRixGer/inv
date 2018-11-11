@@ -48,15 +48,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        @guest
-                        @else
-
-                            <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
-                            <li><a class="nav-link" href="{{ route('inventory.list') }}">Inventory</a></li>
-                            <li><a class="nav-link" href="{{ route('sku.list') }}">SKU</a></li>
-                            <li><a class="nav-link" href="{{ route('maropost.list') }}">Maropost</a></li>
-
-                        @endguest
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Inventory<span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="nav-link" href="{{ route('inventory.list') }}">ClickBank</a>
+                              <a class="nav-link" href="{{ route('inventory.list_is') }}">InfusionSoft</a>
+                              <a class="nav-link" href="{{ route('inventory.list_consolidated') }}">Consolidated</a>
+                            </div>
+                        </li>
+                        <li><a class="nav-link" href="{{ route('sku.list') }}">SKU</a></li>
+                        <li><a class="nav-link" href="{{ route('maropost.list') }}">Maropost</a></li>
+                        <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

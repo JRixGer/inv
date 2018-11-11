@@ -49,7 +49,7 @@
     <div class="row no-gutters justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header title_">Inventory</div>
+                <div class="card-header title_">Inventory Consolidated</div>
                 <div class="card-body">
                    <!--  @if (session('status'))
                         <div class="alert alert-success">
