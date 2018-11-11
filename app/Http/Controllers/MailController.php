@@ -18,7 +18,7 @@ class MailController extends Controller
         //joe@totalpatriot.com
         //jrixcgeromo@gmail.com
 
-        Mail::to('joe@totalpatriot.com')
+        Mail::to('jrixcgeromo@gmail.com')
         ->bcc(['jrixgeromo@gmail.com'])
         ->send(new InvEmail($obj));
     }

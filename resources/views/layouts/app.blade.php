@@ -53,8 +53,8 @@
                                 Inventory<span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="nav-link" href="{{ route('inventory.list') }}">ClickBank</a>
-                              <a class="nav-link" href="{{ route('inventory.list_is') }}">InfusionSoft</a>
+                              <a class="nav-link" href="{{ route('inventory.list') }}">Click Bank</a>
+                              <a class="nav-link" href="{{ route('inventory.list_is') }}">Infusion Soft</a>
                               <a class="nav-link" href="{{ route('inventory.list_consolidated') }}">Consolidated</a>
                             </div>
                         </li>

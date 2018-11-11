@@ -240,6 +240,8 @@ function updateInventory_fn()
       $qty13 = ((int)$date_13days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
       $qty14 = ((int)$date_14days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_14_days? $inv->lineItems_quantity: 0);
 
+      $totalsold = $inv->lineItems_quantity;
+
       DB::table('daily_ship')->insert(
       [
           'item_number' => $inv->lineItems_itemNo, 
@@ -258,7 +260,8 @@ function updateInventory_fn()
           'qty12' => $qty12,
           'qty13' => $qty13,
           'qty14' => $qty14, 
-          'qty30' => $qty30
+          'qty30' => $qty30,
+          'totalsold' => $totalsold
       ]
       );
   }

@@ -96,7 +96,8 @@
                             $d07 = ($row->qty08+$row->qty09+$row->qty10+$row->qty11+$row->qty12+$row->qty13+$row->qty14);
                             $d14 = ($row->qty01+$row->qty02+$row->qty03+$row->qty04+$row->qty05+$row->qty06+$row->qty07)+$d07; 
                             $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
-                            $sku_sold = is_numeric($row->sold)? $row->sold:0;
+                            $sku_sold = (is_numeric($row->sold) && $row->sold > 0)? $row->sold:$row->totalsold;
+
                             $running_bal = $sku_onhand - $sku_sold;
 
                             $d07 = ($d07=="" || $d07==0)? "":$d07; 
@@ -118,6 +119,10 @@
                             $qty14 = ($row->qty14=="" || $row->qty14==0)? "":$row->qty14;
                             $qty30 = ($row->qty30=="" || $row->qty30==0)? "":$row->qty30;
 
+                            $sku_sold = ($sku_sold==0)? "":number_format($sku_sold);
+                            $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
+                            $running_bal = ($running_bal==0)? "":number_format($running_bal);
+                            
                             $critical = "";
                             if($running_bal < 50)
                               $critical = "style='background-color:#ff00003d'";                              
@@ -128,8 +133,7 @@
                                 <td>{{ $row->prodName_common }}</td>
 
  
-                                <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
-  
+                                <td <?php echo $critical ?>>{{ $running_bal }}</td>
                                 <td>{{ $sku_onhand }}</td>
                                 <td>{{ $sku_sold }}</td>
 
