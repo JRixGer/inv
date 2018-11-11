@@ -26,56 +26,6 @@
 
                 <div class="card-body">
                   <div style="max-width:auto; overflow: scroll; display: none;" class="horiz-scroll" id="search_list">
-                    <table class="table table-sm" style="background-color: #f8fded">
-                      <thead>
-                        <tr>
-                          <th scope="col" colspan="7" style="color:#CCCCCC; font-weight: 500">Search result:</th>
-                         </tr>
-
-                        <tr>
-                          <th scope="col">CB SKU Raw</th>
-                          <th scope="col">CB SKU Grouping</th>
-                          <th scope="col">Description Raw</th>
-                          <th scope="col">Description Grouping</th>
-                          <th scope="col">Description (from shipping)</th>
-                          <th scope="col" colspan="2">ACTION</th>
-                         </tr>
-                      </thead>
-                      <tbody>
-                            
-                            @if($skus->count() > 0)
-                              @foreach($skus as $sku)
-                              <tr>
-                                <td>
-                                  {{ $sku->prodCode }}
-                                </td>
-                                <td>
-                                  {{ $sku->prodCode_grp }}
-                                </td>                                
-                                <td>
-                                  {{ $sku->prodName }}
-                                </td>
-                                <td>
-                                  {{ $sku->prodName_grp }}
-                                </td>
-                                <td>
-                                  {{ $sku->prodName_common }}
-                                </td>
-                                <td>
-                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')"><i class="fa fa-edit"></i></a>
-                                </td>
-                                <td>
-                                  <a class="btn btn-sm btn-warning"><i class="fa fa-trash-alt"></i></a>
-                                </td>
-                             </tr>
-                              @endforeach
-                            @else
-                            <tr>
-                              <th colspan="7">No Records</th>
-                            </tr>
-                            @endif
-                      </tbody>
-                    </table>
                   </div>
 
 

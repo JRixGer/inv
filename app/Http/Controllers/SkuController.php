@@ -74,14 +74,80 @@ class SkuController extends Controller
     public function search(Request $request)
     {
         
- 
-        $data = $request->all();
-        $search_key = $data['search_key'];  
 
-        $skus = Sku::get();
-        return response()->json([
-            'skus'    => $skus,
-        ], 200);        
+        $search = $request->all();
+        $search_key = $search['search_key'];  
+
+        $skus = DB::table('skus')
+        ->select('*')
+        ->orWhere('prodCode', 'LIKE', '%'.$search_key.'%')
+        ->orWhere('prodName', 'LIKE', '%'.$search_key.'%')
+        ->orWhere('prodCode_grp', 'LIKE', '%'.$search_key.'%')
+        ->orWhere('prodName_grp', 'LIKE', '%'.$search_key.'%')
+        ->orWhere('prodName_common', 'LIKE', '%'.$search_key.'%')
+        ->orderby('prodName')->get();
+
+
+        $data['result'] = "<div><span class=\"text-right\"><i class=\"fa fa-window-close float-right\" style=\"color:#f4a605; margin-bottom:-20px\" id=\"search_result\" onclick=\"hide_result()\"></i></span>
+              <table class=\"table table-sm\" style=\"background-color: #f8fded\">
+              <thead>
+                <tr>
+                  <th scope=\"col\">CB SKU Raw</th>
+                  <th scope=\"col\">CB SKU Grouping</th>
+                  <th scope=\"col\">Description Raw</th>
+                  <th scope=\"col\">Description Grouping</th>
+                  <th scope=\"col\">Description (from shipping)</th>
+                  <th scope=\"col\" colspan=\"2\">ACTION</th>
+                 </tr>
+              </thead>
+              <tbody>";
+                    
+                if($skus->count() > 0)
+                {
+                    foreach($skus as $sku)
+                    {
+
+                        $data['result'] .= "<tr>
+                        <td>
+                          ". $sku->prodCode ."
+                        </td>
+                        <td>
+                          ". $sku->prodCode_grp ."
+                        </td>                                
+                        <td>
+                          ". $sku->prodName ."
+                        </td>
+                        <td>
+                          ". $sku->prodName_grp ."
+                        </td>
+                        <td>
+                          ". $sku->prodName_common ."
+                        </td>
+                        <td>
+                          <a class=\"btn btn-sm btn-info\" onclick=\"load_sku('".$sku->id."', '".$sku->prodCode."','".$sku->prodName."', '".$sku->prodCode_grp."','".$sku->prodName_grp."','".$sku->prodName_common."')\"><i class=\"fa fa-edit\"></i></a>
+                        </td>
+                        <td>
+                          <a class=\"btn btn-sm btn-warning\"><i class=\"fa fa-trash-alt\"></i></a>
+                        </td>
+                     </tr>";
+                    }
+                }        
+                else
+                {
+                    $data['result'] .= "<tr>
+                      <th colspan=\"7\" align=\"center\" style=\"color:RED\">No Records</th>
+                    </tr>";
+                }
+            $data['result'] .= "    
+              </tbody>
+            </table><div>";
+        
+        echo json_encode($data);
+        exit;
+        
+        // return response()->json([
+        //     'skus'    => $skus,
+        // ], 200);        
 
     }
 

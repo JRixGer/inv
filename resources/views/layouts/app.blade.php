@@ -168,6 +168,11 @@
 
     }  
 
+    function hide_result()
+    {
+        $("#search_list").hide();
+    }
+
     $(document).ready(function() {
         $("#search_sku").click(function(){
             
@@ -187,11 +192,10 @@
                type:'POST',
                url:"{{ route('sku.search') }}",
                data:{search_key:$("#search_key").val()},
-               dataType:'json',
-               success:function(data){
-
-                console.log(JSON.stringify(data));
-
+               dataType:"html",
+               success: function (data) {
+                    var data = JSON.parse(data);
+                    $("#search_list").html(data.result);
                },
                error: function(data) {
                     var errors = data.responseJSON;
