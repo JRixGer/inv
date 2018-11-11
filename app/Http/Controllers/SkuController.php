@@ -189,6 +189,7 @@ class SkuController extends Controller
         $sku->prodCode_grp = $pcode_grp; 
 
         $sku->save();
+        updateProd_fn();
         //Session::flash('success','You successfully updated a category');
         //return redirect()->route('categories');
 
