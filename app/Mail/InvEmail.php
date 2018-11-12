@@ -41,6 +41,7 @@ class InvEmail extends Mailable
     public function build()
     {
 
+      updateProd_fn();
       updateInventory_fn();
       
       $daily_ship = Inventory::orderBy('prodName_common')->get();

@@ -68,7 +68,7 @@
 
                             <th scope="col" colspan="2" style="color: rgb(255, 0, 0); text-align: center;">30D</th>
                             <th scope="col" colspan="2" style="color: rgb(255, 0, 0); text-align: center;">14D</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last1 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last1 }}</th>
                             <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last2 }}</th>
                             <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last3 }}</th>
                             <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last4 }}</th>
@@ -96,8 +96,8 @@
                             <th scope="col" style="text-align: center;">CB</th>
                             <th scope="col" style="text-align: center;">IS</th>
                             <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
                             <th scope="col" style="text-align: center;">IS</th>
                             <th scope="col" style="text-align: center;">CB</th>
                             <th scope="col" style="text-align: center;">IS</th>

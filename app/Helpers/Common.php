@@ -48,7 +48,7 @@ function updateProd_fn()
 
 /////////////////////////////////////////////
 
-  $recheck_sku1 = DB::table('skus')
+ $recheck_sku1 = DB::table('skus')
       ->select('prodCode')
       ->groupby('prodCode')
       ->get();
@@ -124,6 +124,46 @@ function updateProd_fn()
 
     }    
 
+/////////////////////////////////////////////
+
+  $recheck_sku3 = DB::table('skus')
+      ->select('prodCode')
+      ->groupby('prodCode')
+      ->get();
+
+  
+  $prodCodes_other3 = array();
+  foreach ($recheck_sku3 as $key => $p) 
+    {
+      $prodCodes_other3[] = $p->prodCode; 
+    }         
+
+   $check_in_items3 = DB::connection('mysql2')->table('vw_skus')
+      ->select('item_number', 'description')
+      ->whereNotIn('item_number', $prodCodes_other3)
+      ->where('item_number', '<>', '')
+      ->where('status', '=', 'activated')
+      ->groupby('item_number', 'description')
+      ->get();
+
+
+  foreach ($check_in_items3 as $key => $i) 
+    {
+        DB::table('skus')->insert(
+        [
+            'prodCode' => $i->item_number, 
+            'prodName' => $i->description, 
+            'prodQty' => 0, 
+            'prodType' => 'Imported',
+            'prodCode_grp' => strtolower($i->item_number), 
+            'prodName_grp' => $i->description,
+            'prodName_common' => $i->description  
+        ]
+        );
+
+    }    
+
+    
 // Here is how you do in Eloquent
 // $users = User::whereIn('id', array(1, 2, 3))->get();
 // And if you are using Query builder then :
