@@ -118,13 +118,15 @@
                             $qty14 = ($row->qty14=="" || $row->qty14==0)? "":$row->qty14;
                             $qty30 = ($row->qty30=="" || $row->qty30==0)? "":$row->qty30;
 
+                            $critical = "";
+                            if((int)$running_bal < 50)
+                              $critical = "style='background-color:#ff00003d'";     
+
                             $sku_sold = ($sku_sold==0)? "":number_format($sku_sold);
                             $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
                             $running_bal = ($running_bal==0)? "":number_format($running_bal);
                             
-                            $critical = "";
-                            if($running_bal < 50)
-                              $critical = "style='background-color:#ff00003d'";                              
+                         
                             ?>
                             
                             <tr>
