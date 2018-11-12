@@ -227,8 +227,7 @@ td {
                           <td scope="col">CB SKU </td>
                           <td scope="col">DESC</td>
                           <td scope="col" style="color: rgb(0, 85, 255);">Bal</td>
-                          <td scope="col" style="color: rgb(0, 85, 255);">Total(On-H)</td>
-                          <td scope="col" style="color: rgb(0, 85, 255);">Total(Sold)</td>                          
+                         
                           <td scope="col" style="color: rgb(255, 0, 0);">30D</td>
                           <td scope="col" style="color: rgb(255, 0, 0);">14D</td>
                           <td scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</td>
@@ -291,8 +290,6 @@ td {
                                 <td>{{ $row->prodName_common }}</td>
 
                                 <td <?php echo $critical ?>>{{ $running_bal }}</td>
-                                <td>{{ $sku_onhand }}</td>
-                                <td>{{ $sku_sold }}</td>
 
                                 <td>{{ $qty30 }}</td>
                                 <td>{{ $d14 }}</td>

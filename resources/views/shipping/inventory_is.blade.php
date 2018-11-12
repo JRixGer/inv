@@ -65,8 +65,7 @@
                             <th scope="col">@sortablelink('prodCode','CB SKU')</th>
                             <th scope="col">@sortablelink('prodName_common','Product Name')</th>
                             <th scope="col" style="color: rgb(0, 85, 255);">Bal</th>
-                            <th scope="col" style="color: rgb(0, 85, 255);">Total(On-H)</th>
-                            <th scope="col" style="color: rgb(0, 85, 255);">Total(Sold)</th>
+
                             <th scope="col" style="color: rgb(255, 0, 0);">@sortablelink('qty30','30D')</th>
                             <th scope="col" style="color: rgb(255, 0, 0);">14D</th>
                             <td scope="col" style="background-color: rgba(220, 250, 215, 0.35)">@sortablelink('qty01',$dt_last1)</td>
@@ -129,9 +128,6 @@
 
  
                                 <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
-  
-                                <td>{{ $sku_onhand }}</td>
-                                <td>{{ $sku_sold }}</td>
 
                                 <td>{{ $qty30 }}</td>
                                 <td>{{ $d14 }}</td>

@@ -268,8 +268,555 @@ function updateInventory_fn()
 
 }
 
+
+function retrieveShipInventory_fn()
+{
+
+
+  // todo later (important):
+  // update the sku_is table here to get the latest sku in the shipping
+  // 
+  // must be here, at the top
+  //
+  //
+
+  $getrunning = DB::connection('mysql2')->table('vw_skus')
+                ->selectRaw(
+                      'vw_sku_running_qty.onhand_qty as onhand_qty,
+                      vw_new_report_qty.sold_qty as sold_qty,
+                      vw_skus.sku_link as onhand_sku_link,
+                      vw_skus.sku as onhand_sku,
+                      vw_skus.description as prodName_common'
+                 )
+                ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'vw_skus.sku')
+                ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'vw_skus.sku')
+                ->where('vw_skus.lyle_sku', '<>', '')
+                ->where('vw_skus.lyle_sku', '<>', 'b-priority')
+                ->where('vw_skus.status', '=', 'activated')
+                ->get();
+
+  DB::table('skus_balance_is')->delete(); // delete old recored             
+  foreach ($getrunning as $key => $running)  // insert new recored
+  {
+      DB::table('skus_balance_is')->insert(
+      [
+          'onhand' => ($running->onhand_qty)? $running->onhand_qty:0, 
+          'sold' => ($running->sold_qty)? $running->sold_qty:0, 
+          'sku_link' => $running->onhand_sku_link, 
+          'sku' => $running->onhand_sku, 
+          'prodName_common' => $running->prodName_common 
+      ]
+      );
+  }
+
+  
+  $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
+  $date_now_front_num = strtotime($date_now_front);
+
+  $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
+  $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
+  $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
+  $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
+  $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
+  $date_5days = strtotime('-5 days' , strtotime($date_now_front)); 
+  $date_6days = strtotime('-6 days' , strtotime($date_now_front)); 
+  $date_7days = strtotime('-7 days' , strtotime($date_now_front)); 
+  $date_8days = strtotime('-8 days' , strtotime($date_now_front)); 
+  $date_9days = strtotime('-9 days' , strtotime($date_now_front)); 
+  $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
+  $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
+  $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
+  $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
+  $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
+
+  //to
+
+  $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
+  $date_now2_front_num = strtotime($date_now_front);
+
+  $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
+  $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
+  $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
+  $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
+  $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
+  $date_5_days = strtotime('-5 days' , strtotime($date_now2_front)); 
+  $date_6_days = strtotime('-6 days' , strtotime($date_now2_front)); 
+  $date_7_days = strtotime('-7 days' , strtotime($date_now2_front)); 
+  $date_8_days = strtotime('-8 days' , strtotime($date_now2_front)); 
+  $date_9_days = strtotime('-9 days' , strtotime($date_now2_front)); 
+  $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
+  $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
+  $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
+  $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
+  $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
+  
+  // join the skus and new_report here
+
+  /*
+  $periods = array(
+  'decade' => 315569260,
+  'year' => 31556926,
+  'month' => 2629744,
+  'week' => 604800,
+  'day' => 86400,
+  'hour' => 3600,
+  'minute' => 60,
+  'second' => 1
+  );
+
+  to get seconds: (UNIX_TIMESTAMP(mydate)*1000)
+ 
+ */
+
+
+  $invs = DB::connection('mysql2')->table('skus')
+                ->select(
+                      'new_report.createdAt as createdAt',
+                      'skus.lyle_sku as lyle_sku',
+                      'skus.sku as sku',
+                      'skus.description as description',
+                      'new_report.QTY1 as qty'
+                 )
+                ->leftjoin('new_report', 'skus.sku', '=', 'new_report.SKU1')
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '<=', $date_now_front_num)
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '>=', $inventory_date_30)
+                ->get();
+
+
+  DB::table('daily_ship_is')->delete();
+
+  foreach ($invs as $key => $inv) 
+  {
+
+      $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_now2_front_num? $inv->qty: 0);       
+      $qty01 = ((int)$date_1day <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_1_day? $inv->qty: 0);   
+      $qty02 = ((int)$date_2days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_2_days? $inv->qty: 0);   
+      $qty03 = ((int)$date_3days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_3_days? $inv->qty: 0);        
+      $qty04 = ((int)$date_4days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_4_days? $inv->qty: 0);        
+      $qty05 = ((int)$date_5days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_5_days? $inv->qty: 0);        
+      $qty06 = ((int)$date_6days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_6_days? $inv->qty: 0);        
+      $qty07 = ((int)$date_7days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_7_days? $inv->qty: 0); 
+      $qty08 = ((int)$date_8days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_8_days? $inv->qty: 0); 
+      $qty09 = ((int)$date_9days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_9_days? $inv->qty: 0); 
+      $qty10 = ((int)$date_10days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_10_days? $inv->qty: 0); 
+      $qty11 = ((int)$date_11days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_11_days? $inv->qty: 0); 
+      $qty12 = ((int)$date_12days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_12_days? $inv->qty: 0); 
+      $qty13 = ((int)$date_13days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_13_days? $inv->qty: 0);
+      $qty14 = ((int)$date_14days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_14_days? $inv->qty: 0);
+
+      $totalsold = $inv->qty;
+
+      DB::table('daily_ship_is')->insert(
+      [
+          'sku_link' => $inv->lyle_sku, 
+          'sku' => $inv->sku, 
+          'description' => $inv->description, 
+          'qty01' => $qty01, 
+          'qty02' => $qty02, 
+          'qty03' => $qty03, 
+          'qty04' => $qty04, 
+          'qty05' => $qty05, 
+          'qty06' => $qty06, 
+          'qty07' => $qty07, 
+          'qty08' => $qty08, 
+          'qty09' => $qty09, 
+          'qty10' => $qty10,
+          'qty11' => $qty11, 
+          'qty12' => $qty12,
+          'qty13' => $qty13,
+          'qty14' => $qty14, 
+          'qty30' => $qty30,
+          'totalsold' => $totalsold
+      ]
+      );
+  }
+
+}
 // ends here: below codes are for the automatic creation of SKU in case its not yet created yet. it will happen every each INS instance
 
+
+function createShipInventoryConsolidated_fn()
+{
+
+
+  // todo later (important):
+  // update the sku_is table here to get the latest sku in the shipping
+  // 
+  // must be here, at the top
+  //
+  //
+
+
+  // for CB
+
+  $invs = DB::table('notifications')
+                ->select(
+                      'notifications.dt as notifications_date',
+                      'lineItems.itemNo as lineItems_itemNo',
+                      'lineItems.productTitle as lineItems_productTitle',
+                      'lineItems.quantity as lineItems_quantity'
+                 )
+                ->leftjoin('lineItems', 'lineItems.lnkid', '=', 'notifications.id')
+                ->where('lineItems.itemNo', '<>', '')
+                ->where('lineItems.itemNo', '<>', 'b-priority')
+                ->where('notifications.transactionType', '<>', 'TEST')
+                ->where('notifications.transactionType', '<>', 'TEST_SALE')
+                ->orderby('notifications.id', 'desc')
+                ->get();
+
+
+  $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
+  $date_now_front_num = strtotime($date_now_front);
+
+  $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
+  $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
+  $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
+  $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
+  $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
+  $date_5days = strtotime('-5 days' , strtotime($date_now_front)); 
+  $date_6days = strtotime('-6 days' , strtotime($date_now_front)); 
+  $date_7days = strtotime('-7 days' , strtotime($date_now_front)); 
+  $date_8days = strtotime('-8 days' , strtotime($date_now_front)); 
+  $date_9days = strtotime('-9 days' , strtotime($date_now_front)); 
+  $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
+  $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
+  $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
+  $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
+  $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
+
+  //to
+
+  $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
+  $date_now2_front_num = strtotime($date_now_front);
+
+  $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
+  $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
+  $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
+  $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
+  $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
+  $date_5_days = strtotime('-5 days' , strtotime($date_now2_front)); 
+  $date_6_days = strtotime('-6 days' , strtotime($date_now2_front)); 
+  $date_7_days = strtotime('-7 days' , strtotime($date_now2_front)); 
+  $date_8_days = strtotime('-8 days' , strtotime($date_now2_front)); 
+  $date_9_days = strtotime('-9 days' , strtotime($date_now2_front)); 
+  $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
+  $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
+  $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
+  $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
+  $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
+
+  // SELECT 
+  // `item_number`,`description`,
+  // SUM(`qty01`) As `qty01`,
+  // SUM(`qty02`) As `qty02`,
+  // SUM(`qty03`) As `qty03`,
+  // SUM(`qty04`) As `qty04`,
+  // SUM(`qty05`) As `qty05`,
+  // SUM(`qty06`) As `qty06`,
+  // SUM(`qty07`) As `qty07`,
+  // SUM(`qty08`) As `qty08`,
+  // SUM(`qty09`) As `qty09`,
+  // SUM(`qty10`) As `qty10`,
+  // SUM(`qty11`) As `qty11`,
+  // SUM(`qty12`) As `qty12`,
+  // SUM(`qty13`) As `qty13`,
+  // SUM(`qty14`) As `qty14`,
+  // SUM(`qty30`) As `qty30`,
+  // SUM(`totalsold`) As `totalsold` 
+  // FROM `daily_ship_con` Group By  `item_number`,`description`
+
+  
+  DB::table('daily_ship_con')->delete();
+
+  foreach ($invs as $key => $inv) 
+  {
+
+      $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);       
+      $qty01 = ((int)$date_1day <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
+      $qty02 = ((int)$date_2days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
+      $qty03 = ((int)$date_3days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
+      $qty04 = ((int)$date_4days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_4_days? $inv->lineItems_quantity: 0);        
+      $qty05 = ((int)$date_5days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_5_days? $inv->lineItems_quantity: 0);        
+      $qty06 = ((int)$date_6days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_6_days? $inv->lineItems_quantity: 0);        
+      $qty07 = ((int)$date_7days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_7_days? $inv->lineItems_quantity: 0); 
+      $qty08 = ((int)$date_8days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_8_days? $inv->lineItems_quantity: 0); 
+      $qty09 = ((int)$date_9days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_9_days? $inv->lineItems_quantity: 0); 
+      $qty10 = ((int)$date_10days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_10_days? $inv->lineItems_quantity: 0); 
+      $qty11 = ((int)$date_11days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_11_days? $inv->lineItems_quantity: 0); 
+      $qty12 = ((int)$date_12days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_12_days? $inv->lineItems_quantity: 0); 
+      $qty13 = ((int)$date_13days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
+      $qty14 = ((int)$date_14days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_14_days? $inv->lineItems_quantity: 0);
+
+      $totalsold = $inv->lineItems_quantity;
+
+      DB::table('daily_ship_con')->insert(
+      [
+          'item_number' => $inv->lineItems_itemNo, 
+          'description' => $inv->lineItems_productTitle, 
+          'qty01' => $qty01, 
+          'qty02' => $qty02, 
+          'qty03' => $qty03, 
+          'qty04' => $qty04, 
+          'qty05' => $qty05, 
+          'qty06' => $qty06, 
+          'qty07' => $qty07, 
+          'qty08' => $qty08, 
+          'qty09' => $qty09, 
+          'qty10' => $qty10,
+          'qty11' => $qty11, 
+          'qty12' => $qty12,
+          'qty13' => $qty13,
+          'qty14' => $qty14, 
+          'qty30' => $qty30,
+          'totalsold' => $totalsold
+      ]
+      );
+  }
+
+
+  // for IS
+  
+  $getrunning = DB::connection('mysql2')->table('vw_skus')
+                ->selectRaw(
+                      'vw_sku_running_qty.onhand_qty as onhand_qty,
+                      vw_new_report_qty.sold_qty as sold_qty,
+                      vw_skus.sku_link as onhand_sku_link,
+                      vw_skus.sku as onhand_sku,
+                      vw_skus.description as prodName_common'
+                 )
+                ->leftjoin('vw_new_report_qty', 'vw_new_report_qty.SKU1', '=', 'vw_skus.sku')
+                ->leftjoin('vw_sku_running_qty', 'vw_sku_running_qty.sku', '=', 'vw_skus.sku')
+                ->where('vw_skus.lyle_sku', '<>', '')
+                ->where('vw_skus.lyle_sku', '<>', 'b-priority')
+                ->where('vw_skus.status', '=', 'activated')
+                ->get();
+
+
+// SELECT 
+// `sku_link`,`sku`,`description`  As `description_is`,
+// SUM(`qty01`) As `qty01_is`,
+// SUM(`qty02`) As `qty02_is`,
+// SUM(`qty03`) As `qty03_is`,
+// SUM(`qty04`) As `qty04_is`,
+// SUM(`qty05`) As `qty05_is`,
+// SUM(`qty06`) As `qty06_is`,
+// SUM(`qty07`) As `qty07_is`,
+// SUM(`qty08`) As `qty08_is`,
+// SUM(`qty09`) As `qty09_is`,
+// SUM(`qty10`) As `qty10_is`,
+// SUM(`qty11`) As `qty11_is`,
+// SUM(`qty12`) As `qty12_is`,
+// SUM(`qty13`) As `qty13_is`,
+// SUM(`qty14`) As `qty14_is`,
+// SUM(`qty30`) As `qty30_is`,
+// SUM(`totalsold`) As `totalsold_is` 
+// FROM `daily_ship_is_con` Group By `sku_link`,`sku`,`description`
+
+
+  // SELECT 
+  // `item_number`,`description`,
+  // SUM(`qty01`) As `qty01`,
+  // SUM(`qty02`) As `qty02`,
+  // SUM(`qty03`) As `qty03`,
+  // SUM(`qty04`) As `qty04`,
+  // SUM(`qty05`) As `qty05`,
+  // SUM(`qty06`) As `qty06`,
+  // SUM(`qty07`) As `qty07`,
+  // SUM(`qty08`) As `qty08`,
+  // SUM(`qty09`) As `qty09`,
+  // SUM(`qty10`) As `qty10`,
+  // SUM(`qty11`) As `qty11`,
+  // SUM(`qty12`) As `qty12`,
+  // SUM(`qty13`) As `qty13`,
+  // SUM(`qty14`) As `qty14`,
+  // SUM(`qty30`) As `qty30`,
+  // SUM(`totalsold`) As `totalsold` 
+  // FROM `daily_ship_con` Group By  `item_number`,`description`
+
+
+
+//   Select 
+//   skus.prodCode_grp,
+//   skus.prodName_grp,
+//   SUM(vw_daily_ship_is_con.qty01_is) As q1_is,
+//   SUM(vw_daily_ship_is_con.qty02_is) As q2_is,
+//   SUM(vw_daily_ship_is_con.qty03_is) As q3_is,
+//   SUM(vw_daily_ship_is_con.qty04_is) As q4_is,
+//   SUM(vw_daily_ship_is_con.qty05_is) As q5_is,
+//   SUM(vw_daily_ship_is_con.qty06_is) As q6_is,
+//   SUM(vw_daily_ship_is_con.qty07_is) As q7_is,
+//   SUM(vw_daily_ship_is_con.qty08_is) As q8_is,
+//   SUM(vw_daily_ship_is_con.qty09_is) As q9_is,
+//   SUM(vw_daily_ship_is_con.qty10_is) As q10_is,
+//   SUM(vw_daily_ship_is_con.qty11_is) As q11_is,
+//   SUM(vw_daily_ship_is_con.qty12_is) As q12_is,
+//   SUM(vw_daily_ship_is_con.qty13_is) As q13_is,
+//   SUM(vw_daily_ship_is_con.qty14_is) As q14_is,
+//   SUM(vw_daily_ship_is_con.qty30_is) As q30_is,
+//   SUM(vw_daily_ship_con.qty01) As q1,
+//   SUM(vw_daily_ship_con.qty02) As q2,
+//   SUM(vw_daily_ship_con.qty03) As q3,
+//   SUM(vw_daily_ship_con.qty04) As q4,
+//   SUM(vw_daily_ship_con.qty05) As q5,
+//   SUM(vw_daily_ship_con.qty06) As q6,
+//   SUM(vw_daily_ship_con.qty07) As q7,
+//   SUM(vw_daily_ship_con.qty08) As q8,
+//   SUM(vw_daily_ship_con.qty09) As q9,
+//   SUM(vw_daily_ship_con.qty10) As q10,
+//   SUM(vw_daily_ship_con.qty11) As q11,
+//   SUM(vw_daily_ship_con.qty12) As q12,
+//   SUM(vw_daily_ship_con.qty13) As q13,
+//   SUM(vw_daily_ship_con.qty14) As q14,
+//   SUM(vw_daily_ship_con.qty30) As q30,
+//   SUM(skus_balance_is_con.onhand) As onhand,
+//   SUM(skus_balance_is_con.sold) As sold
+//   FROM skus
+//   left join vw_daily_ship_is_con on skus.prodCode = vw_daily_ship_is_con.sku
+//   left join vw_daily_ship_con on skus.prodCode = vw_daily_ship_con.item_number
+//   left join skus_balance_is_con on skus.prodCode = skus_balance_is_con.sku
+//   Group by 
+//   skus.prodCode_grp,
+//   skus.prodName_grp
+
+              
+
+  DB::table('skus_balance_is_con')->delete(); // delete old recored             
+  foreach ($getrunning as $key => $running)  // insert new recored
+  {
+      DB::table('skus_balance_is_con')->insert(
+      [
+          'onhand' => ($running->onhand_qty)? $running->onhand_qty:0, 
+          'sold' => ($running->sold_qty)? $running->sold_qty:0, 
+          'sku_link' => $running->onhand_sku_link, 
+          'sku' => $running->onhand_sku, 
+          'prodName_common' => $running->prodName_common 
+      ]
+      );
+  }
+
+  
+  $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
+  $date_now_front_num = strtotime($date_now_front);
+
+  $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
+  $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
+  $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
+  $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
+  $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
+  $date_5days = strtotime('-5 days' , strtotime($date_now_front)); 
+  $date_6days = strtotime('-6 days' , strtotime($date_now_front)); 
+  $date_7days = strtotime('-7 days' , strtotime($date_now_front)); 
+  $date_8days = strtotime('-8 days' , strtotime($date_now_front)); 
+  $date_9days = strtotime('-9 days' , strtotime($date_now_front)); 
+  $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
+  $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
+  $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
+  $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
+  $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
+
+  //to
+
+  $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
+  $date_now2_front_num = strtotime($date_now_front);
+
+  $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
+  $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
+  $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
+  $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
+  $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
+  $date_5_days = strtotime('-5 days' , strtotime($date_now2_front)); 
+  $date_6_days = strtotime('-6 days' , strtotime($date_now2_front)); 
+  $date_7_days = strtotime('-7 days' , strtotime($date_now2_front)); 
+  $date_8_days = strtotime('-8 days' , strtotime($date_now2_front)); 
+  $date_9_days = strtotime('-9 days' , strtotime($date_now2_front)); 
+  $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
+  $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
+  $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
+  $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
+  $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
+  
+  // join the skus and new_report here
+
+  /*
+  $periods = array(
+  'decade' => 315569260,
+  'year' => 31556926,
+  'month' => 2629744,
+  'week' => 604800,
+  'day' => 86400,
+  'hour' => 3600,
+  'minute' => 60,
+  'second' => 1
+  );
+
+  to get seconds: (UNIX_TIMESTAMP(mydate)*1000)
+ 
+ */
+
+
+  $invs = DB::connection('mysql2')->table('skus')
+                ->select(
+                      'new_report.createdAt as createdAt',
+                      'skus.lyle_sku as lyle_sku',
+                      'skus.sku as sku',
+                      'skus.description as description',
+                      'new_report.QTY1 as qty'
+                 )
+                ->leftjoin('new_report', 'skus.sku', '=', 'new_report.SKU1')
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '<=', $date_now_front_num)
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '>=', $inventory_date_30)
+                ->get();
+
+
+  DB::table('daily_ship_is_con')->delete();
+
+  foreach ($invs as $key => $inv) 
+  {
+
+      $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_now2_front_num? $inv->qty: 0);       
+      $qty01 = ((int)$date_1day <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_1_day? $inv->qty: 0);   
+      $qty02 = ((int)$date_2days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_2_days? $inv->qty: 0);   
+      $qty03 = ((int)$date_3days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_3_days? $inv->qty: 0);        
+      $qty04 = ((int)$date_4days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_4_days? $inv->qty: 0);        
+      $qty05 = ((int)$date_5days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_5_days? $inv->qty: 0);        
+      $qty06 = ((int)$date_6days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_6_days? $inv->qty: 0);        
+      $qty07 = ((int)$date_7days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_7_days? $inv->qty: 0); 
+      $qty08 = ((int)$date_8days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_8_days? $inv->qty: 0); 
+      $qty09 = ((int)$date_9days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_9_days? $inv->qty: 0); 
+      $qty10 = ((int)$date_10days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_10_days? $inv->qty: 0); 
+      $qty11 = ((int)$date_11days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_11_days? $inv->qty: 0); 
+      $qty12 = ((int)$date_12days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_12_days? $inv->qty: 0); 
+      $qty13 = ((int)$date_13days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_13_days? $inv->qty: 0);
+      $qty14 = ((int)$date_14days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_14_days? $inv->qty: 0);
+
+      $totalsold = $inv->qty;
+
+      DB::table('daily_ship_is_con')->insert(
+      [
+          'sku_link' => $inv->lyle_sku, 
+          'sku' => $inv->sku, 
+          'description' => $inv->description, 
+          'qty01' => $qty01, 
+          'qty02' => $qty02, 
+          'qty03' => $qty03, 
+          'qty04' => $qty04, 
+          'qty05' => $qty05, 
+          'qty06' => $qty06, 
+          'qty07' => $qty07, 
+          'qty08' => $qty08, 
+          'qty09' => $qty09, 
+          'qty10' => $qty10,
+          'qty11' => $qty11, 
+          'qty12' => $qty12,
+          'qty13' => $qty13,
+          'qty14' => $qty14, 
+          'qty30' => $qty30,
+          'totalsold' => $totalsold
+      ]
+      );
+  }
+
+}
 
 
 
