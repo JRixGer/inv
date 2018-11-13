@@ -94,8 +94,9 @@
                             <?php 
                             $d07 = ($row->qty08+$row->qty09+$row->qty10+$row->qty11+$row->qty12+$row->qty13+$row->qty14);
                             $d14 = ($row->qty01+$row->qty02+$row->qty03+$row->qty04+$row->qty05+$row->qty06+$row->qty07)+$d07; 
+                            
                             $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
-                            $sku_sold = (is_numeric($row->sold) && $row->sold > 0)? $row->sold:$row->totalsold;
+                            $sku_sold = is_numeric($row->sold)? $row->sold:0;
 
                             $running_bal = $sku_onhand - $sku_sold;
 

@@ -195,6 +195,47 @@ class SkuController extends Controller
 
     }
 
+    public function temp()
+    {
+
+        $check_sku = DB::table('skus')
+          ->select('prodCode')
+          ->groupby('prodCode')
+          ->get();
+
+        
+        $prodCodes = array();
+        foreach ($check_sku as $key => $p) 
+        {
+            $prodCodes[] = $p->prodCode; 
+        }         
+
+        $check_in_items = DB::table('temp')
+          ->select('item', 'name')
+          ->whereNotIn('item', $prodCodes)
+          ->groupby('item', 'name' )
+          ->get();
+
+
+        foreach ($check_in_items as $key => $i) 
+        {
+            DB::table('skus')->insert(
+            [
+                'prodCode' => $i->item, 
+                'prodName' => $i->name, 
+                'prodQty' => 0, 
+                'prodType' => 'IS',
+                'prodCode_grp' => $i->item, 
+                'prodName_grp' => $i->name,
+                'prodName_common' => ''
+            ]
+            );
+
+        }    
+
+
+    }
+
 
 
 }

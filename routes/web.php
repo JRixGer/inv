@@ -157,7 +157,12 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::get('/sku/temp', [
 
+		'uses' => 'SkuController@temp',
+		'as' => 'sku.temp'
+	]
+	);	
 
 	// Route::post('/post/store', [
 

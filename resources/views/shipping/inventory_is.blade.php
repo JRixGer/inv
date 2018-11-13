@@ -132,7 +132,7 @@
                                 <td>{{ $row->prodName_common }}</td>
 
  
-                                <td <?php echo $critical ?>>{{ number_format($running_bal) }}</td>
+                                <td <?php echo $critical ?>>{{ $running_bal }}</td>
 
                                 <td>{{ $qty30 }}</td>
                                 <td>{{ $d14 }}</td>
