@@ -95,9 +95,9 @@
 
                             <th scope="col" style="text-align: center;">CB</th>
                             <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
                             <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;">CB</th>
                             <th scope="col" style="text-align: center;">IS</th>
                             <th scope="col" style="text-align: center;">CB</th>
                             <th scope="col" style="text-align: center;">IS</th>

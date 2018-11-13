@@ -215,36 +215,32 @@ td {
 <body>
   <section id="wrapper"><!--id="wrapper"-->
       <section id="maincContent"><!--id="maincContent"-->
-          <header id="head"><!--header-->
-            <h1><a href="index.html" target="_blank">Inventory</a></h1>           
-          </header><!--End of header-->
           <section id="content"><!--id="content"-->
-                <h2> Hello Sir Joe,<br><br>Below is the inventory report on {{ $today }}: ({{ $d }}) <br><br>
+                <h2>Below is the inventory report on {{ $today }}: ({{ $d }}) 
                 </h2>
                 <div class="parpagraph" style="width:100%">
-                   <table class="table table-sm" cellpadding="1" cellspacing="1" border="1"> 
-                        <tr class="border_bottom">
-                          <td scope="col">CB SKU </td>
-                          <td scope="col">DESC</td>
-                          <td scope="col" style="color: rgb(0, 85, 255);">Bal</td>
-                         
-                          <td scope="col" style="color: rgb(255, 0, 0);">30D</td>
-                          <td scope="col" style="color: rgb(255, 0, 0);">14D</td>
-                          <td scope="col" style="background-color: rgba(220, 250, 215, 0.35)">{{$dt_last1}}</td>
-                          <td scope="col">{{$dt_last2}}</td>
-                          <td scope="col">{{$dt_last3}}</td>
-                          <td scope="col">{{$dt_last4}}</td>
-                          <td scope="col">{{$dt_last5}}</td>
-                          <td scope="col">{{$dt_last6}}</td>
-                          <td scope="col">{{$dt_last7}}</td>
-                          <td scope="col" style="color: rgb(255, 0, 0);">7D</td>
-                          <td scope="col">{{$dt_last8}}</td>
-                          <td scope="col">{{$dt_last9}}</td>
-                          <td scope="col">{{$dt_last10}}</td>
-                          <td scope="col">{{$dt_last11}}</td>
-                          <td scope="col">{{$dt_last12}}</td>
-                          <td scope="col">{{$dt_last13}}</td>
-                          <td scope="col">{{$dt_last14}}</td>
+                   <table style="border-collapse:collapse; text-align:left; width="100%">
+                        <tr style="background-color: #AED6F1;">
+                          <td style="border: 1px solid #dddddd; padding:8px;">CB SKU </td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">DESC</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">Bal</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">30D</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">14D</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last1}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last2}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last3}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last4}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last5}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last6}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last7}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">7D</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last8}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last9}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last10}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last11}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last12}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last13}}</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last14}}</td>
 
                         </tr>
                             @foreach($daily_ship_inv as $row)
@@ -281,56 +277,42 @@ td {
                             $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
                             $running_bal = ($running_bal==0)? "":number_format($running_bal);
 
-                            $critical = "";
+                            $critical = "style='border: 1px solid #dddddd; padding:9px;'";
                             if($running_bal < 50)
-                              $critical = "style='background-color:#ff00003d'";                              
+                              $critical = "style='background-color:#ff00003d;border: 1px solid #dddddd; padding:9px;'";                              
                             ?>
                             
-                            <tr class="border_bottom">
-                                <td>{{ $row->prodCode }}</td>
-                                <td>{{ $row->prodName_common }}</td>
+                           <tr>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $row->prodCode }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $row->prodName_common }}</td>
 
                                 <td <?php echo $critical ?>>{{ $running_bal }}</td>
 
-                                <td>{{ $qty30 }}</td>
-                                <td>{{ $d14 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $qty01 }}</td>
-                                <td>{{ $qty02 }}</td>
-                                <td>{{ $qty03 }}</td>
-                                <td>{{ $qty04 }}</td>
-                                <td>{{ $qty05 }}</td>
-                                <td>{{ $qty06 }}</td>
-                                <td>{{ $qty07 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty30 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $d14 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;background-color: rgba(220, 250, 215, 0.35)">{{ $qty01 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty02 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty03 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty04 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty05 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty06 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty07 }}</td>
 
-                                <td>{{ $d07 }}</td>
-                                <td>{{ $qty08 }}</td>
-                                <td>{{ $qty09 }}</td>
-                                <td>{{ $qty10 }}</td>
-                                <td>{{ $qty11 }}</td>
-                                <td>{{ $qty12 }}</td>
-                                <td>{{ $qty13 }}</td>
-                                <td>{{ $qty14 }}</td>
-
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $d07 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty08 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty09 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty10 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty11 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty12 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty13 }}</td>
+                                <td style="border: 1px solid #dddddd; padding:9px;">{{ $qty14 }}</td>
                               </tr>
                             @endforeach
                     </table>
 
                 </div>
-                <br>
-                <div class="parpagraphB">
-                 Thank you
-                </div>
-                <!-- <img src="../images/line.png" alt="#" /> -->
           </section><!--End of id="content"-->
-           
         </section><!--En dof id="maincContent"-->
-        <!-- <footer id="footer">
-          <ul>
-              <li><a href="#" target="_blank"  class="mail">mail</a></li>
-                <li><a href="#" target="_blank" class="fb">facebook</a></li>
-                <li><a href="#" target="_blank" class="link">link</a></li>
-            </ul>
-        </footer> -->
     </section><!--End of id="wrapper"-->
 </body>
 </html>
