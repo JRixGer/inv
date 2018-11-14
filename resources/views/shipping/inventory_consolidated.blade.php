@@ -64,68 +64,69 @@
 
                             <th scope="col" style="border-bottom: 0px solid #ffffff;"> </th>
                             <th scope="col" style="border-bottom: 0px solid #ffffff;"> </th>
+                            <th scope="col" style="border-bottom: 0px solid #ffffff;"> </th>
                             <th scope="col" style="color: rgb(0, 85, 255); border-bottom: 0px solid #ffffff;"></th>
 
-                            <th scope="col" colspan="2" style="color: rgb(255, 0, 0); text-align: center;">30D</th>
-                            <th scope="col" colspan="2" style="color: rgb(255, 0, 0); text-align: center;">14D</th>
+                            <th scope="col" colspan="2" style="color: rgb(255, 0, 0); text-align: center;background-color: rgba(220, 250, 215, 0.35)">30D</th>
+                            <th scope="col" colspan="2" style="color: rgb(255, 0, 0); text-align: center;background-color: rgba(178, 212, 255, 0.32)">14D</th>
                             <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last1 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last2 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last3 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last4 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last5 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last6 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last7 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">7D</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last8 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last9 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last10 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last11 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last12 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last13 }}</th>
-                            <th scope="col" colspan="2" style="text-align: center;">{{ $dt_last14 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last2 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last3 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last4 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last5 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last6 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last7 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">7D</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last8 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last9 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last10 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last11 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last12 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last13 }}</th>
+                            <th scope="col" colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last14 }}</th>
 
                         </tr>
                         <tr>
 
-                            <th scope="col" style="border-top: 0px solid #ffffff;">SKU</th>
+                            <th scope="col" style="border-top: 0px solid #ffffff;">CB SKU</th>
+                            <th scope="col" style="border-top: 0px solid #ffffff;">IS SKU</th>
                             <th scope="col" style="border-top: 0px solid #ffffff;">Product Name</th>
                             <th scope="col" style="border-top: 0px solid #ffffff;">Bal</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
                             <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
                             <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
-                            <th scope="col" style="text-align: center;">CB</th>
-                            <th scope="col" style="text-align: center;">IS</th>
 
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</th>
+                            <th scope="col" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -193,60 +194,61 @@
                             
                             <tr>
                                 <td>{{ $row->prodCode_grp }}</td>
+                                <td>{{ $row->is_sku }}</td>
                                 <td>{{ $row->prodName_grp }}</td>
  
                                 <td <?php echo $critical ?>>{{ $running_bal }}</td>
   
-                                <td>{{ $q30 }}</td>
-                                <td>{{ $q30_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q30 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q30_is }}</td>
 
-                                <td>{{ $d14 }}</td>
-                                <td>{{ $d14_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d14 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d14_is }}</td>
 
                                 <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q1 }}</td>
                                 <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q1_is }}</td>
 
-                                <td>{{ $q2 }}</td>
-                                <td>{{ $q2_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q2 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q2_is }}</td>
 
-                                <td>{{ $q3 }}</td>
-                                <td>{{ $q3_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q3 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q3_is }}</td>
 
-                                <td>{{ $q4 }}</td>
-                                <td>{{ $q4_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q4 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q4_is }}</td>
 
-                                <td>{{ $q5 }}</td>
-                                <td>{{ $q5_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q5 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q5_is }}</td>
 
-                                <td>{{ $q6 }}</td>
-                                <td>{{ $q6_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q6 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q6_is }}</td>
 
-                                <td>{{ $q7 }}</td>
-                                <td>{{ $q7_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q7 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q7_is }}</td>
 
-                                <td>{{ $d07 }}</td>
-                                <td>{{ $d07_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d07 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d07_is }}</td>
 
-                                <td>{{ $q8 }}</td>
-                                <td>{{ $q8_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q8 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q8_is }}</td>
 
-                                <td>{{ $q9 }}</td>
-                                <td>{{ $q9_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q9 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q9_is }}</td>
 
-                                <td>{{ $q10 }}</td>
-                                <td>{{ $q10_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q10 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q10_is }}</td>
 
-                                <td>{{ $q11 }}</td>
-                                <td>{{ $q11_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q11 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q11_is }}</td>
 
-                                <td>{{ $q12 }}</td>
-                                <td>{{ $q12_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q12 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q12_is }}</td>
 
-                                <td>{{ $q13 }}</td>
-                                <td>{{ $q13_is }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q13 }}</td>
+                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q13_is }}</td>
 
-                                <td>{{ $q14 }}</td>
-                                <td>{{ $q14_is }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q14 }}</td>
+                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q14_is }}</td>
 
                               </tr>
                             @endforeach

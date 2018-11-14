@@ -10,7 +10,6 @@
 function updateProd_fn()
 {
 
-
 	$check_sku = DB::table('skus')
       ->select('prodCode')
       ->groupby('prodCode')
@@ -770,49 +769,7 @@ function createShipInventoryConsolidated_fn()
 
 
 
-//   Select 
-//   skus.prodCode_grp,
-//   skus.prodName_grp,
-//   SUM(vw_daily_ship_is_con.qty01_is) As q1_is,
-//   SUM(vw_daily_ship_is_con.qty02_is) As q2_is,
-//   SUM(vw_daily_ship_is_con.qty03_is) As q3_is,
-//   SUM(vw_daily_ship_is_con.qty04_is) As q4_is,
-//   SUM(vw_daily_ship_is_con.qty05_is) As q5_is,
-//   SUM(vw_daily_ship_is_con.qty06_is) As q6_is,
-//   SUM(vw_daily_ship_is_con.qty07_is) As q7_is,
-//   SUM(vw_daily_ship_is_con.qty08_is) As q8_is,
-//   SUM(vw_daily_ship_is_con.qty09_is) As q9_is,
-//   SUM(vw_daily_ship_is_con.qty10_is) As q10_is,
-//   SUM(vw_daily_ship_is_con.qty11_is) As q11_is,
-//   SUM(vw_daily_ship_is_con.qty12_is) As q12_is,
-//   SUM(vw_daily_ship_is_con.qty13_is) As q13_is,
-//   SUM(vw_daily_ship_is_con.qty14_is) As q14_is,
-//   SUM(vw_daily_ship_is_con.qty30_is) As q30_is,
-//   SUM(vw_daily_ship_con.qty01) As q1,
-//   SUM(vw_daily_ship_con.qty02) As q2,
-//   SUM(vw_daily_ship_con.qty03) As q3,
-//   SUM(vw_daily_ship_con.qty04) As q4,
-//   SUM(vw_daily_ship_con.qty05) As q5,
-//   SUM(vw_daily_ship_con.qty06) As q6,
-//   SUM(vw_daily_ship_con.qty07) As q7,
-//   SUM(vw_daily_ship_con.qty08) As q8,
-//   SUM(vw_daily_ship_con.qty09) As q9,
-//   SUM(vw_daily_ship_con.qty10) As q10,
-//   SUM(vw_daily_ship_con.qty11) As q11,
-//   SUM(vw_daily_ship_con.qty12) As q12,
-//   SUM(vw_daily_ship_con.qty13) As q13,
-//   SUM(vw_daily_ship_con.qty14) As q14,
-//   SUM(vw_daily_ship_con.qty30) As q30,
-//   SUM(skus_balance_is_con.onhand) As onhand,
-//   SUM(skus_balance_is_con.sold) As sold
-//   FROM skus
-//   left join vw_daily_ship_is_con on skus.prodCode = vw_daily_ship_is_con.sku
-//   left join vw_daily_ship_con on skus.prodCode = vw_daily_ship_con.item_number
-//   left join skus_balance_is_con on skus.prodCode = skus_balance_is_con.sku
-//   Group by 
-//   skus.prodCode_grp,
-//   skus.prodName_grp
-
+// select `vw_daily_ship_is_con`.`sku` as is_sku, `skus`.`prodCode_grp` AS `prodCode_grp`,`skus`.`prodName_grp` AS `prodName_grp`,sum(`vw_daily_ship_is_con`.`qty01_is`) AS `q1_is`,sum(`vw_daily_ship_is_con`.`qty02_is`) AS `q2_is`,sum(`vw_daily_ship_is_con`.`qty03_is`) AS `q3_is`,sum(`vw_daily_ship_is_con`.`qty04_is`) AS `q4_is`,sum(`vw_daily_ship_is_con`.`qty05_is`) AS `q5_is`,sum(`vw_daily_ship_is_con`.`qty06_is`) AS `q6_is`,sum(`vw_daily_ship_is_con`.`qty07_is`) AS `q7_is`,sum(`vw_daily_ship_is_con`.`qty08_is`) AS `q8_is`,sum(`vw_daily_ship_is_con`.`qty09_is`) AS `q9_is`,sum(`vw_daily_ship_is_con`.`qty10_is`) AS `q10_is`,sum(`vw_daily_ship_is_con`.`qty11_is`) AS `q11_is`,sum(`vw_daily_ship_is_con`.`qty12_is`) AS `q12_is`,sum(`vw_daily_ship_is_con`.`qty13_is`) AS `q13_is`,sum(`vw_daily_ship_is_con`.`qty14_is`) AS `q14_is`,sum(`vw_daily_ship_is_con`.`qty30_is`) AS `q30_is`,sum(`vw_daily_ship_con`.`qty01`) AS `q1`,sum(`vw_daily_ship_con`.`qty02`) AS `q2`,sum(`vw_daily_ship_con`.`qty03`) AS `q3`,sum(`vw_daily_ship_con`.`qty04`) AS `q4`,sum(`vw_daily_ship_con`.`qty05`) AS `q5`,sum(`vw_daily_ship_con`.`qty06`) AS `q6`,sum(`vw_daily_ship_con`.`qty07`) AS `q7`,sum(`vw_daily_ship_con`.`qty08`) AS `q8`,sum(`vw_daily_ship_con`.`qty09`) AS `q9`,sum(`vw_daily_ship_con`.`qty10`) AS `q10`,sum(`vw_daily_ship_con`.`qty11`) AS `q11`,sum(`vw_daily_ship_con`.`qty12`) AS `q12`,sum(`vw_daily_ship_con`.`qty13`) AS `q13`,sum(`vw_daily_ship_con`.`qty14`) AS `q14`,sum(`vw_daily_ship_con`.`qty30`) AS `q30`,sum(`skus_balance_is_con`.`onhand`) AS `onhand`,sum(`skus_balance_is_con`.`sold`) AS `sold` from (((`skus` left join `vw_daily_ship_is_con` on((`skus`.`prodCode` = `vw_daily_ship_is_con`.`sku`))) left join `vw_daily_ship_con` on((`skus`.`prodCode` = `vw_daily_ship_con`.`item_number`))) left join `skus_balance_is_con` on((`skus`.`prodCode` = `skus_balance_is_con`.`sku`))) group by `skus`.`prodCode_grp`,`skus`.`prodName_grp`,`vw_daily_ship_is_con`.`sku`
               
 
   DB::table('skus_balance_is_con')->delete(); // delete old recored             

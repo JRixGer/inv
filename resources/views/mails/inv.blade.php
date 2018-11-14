@@ -216,7 +216,7 @@ td {
   <section id="wrapper"><!--id="wrapper"-->
       <section id="maincContent"><!--id="maincContent"-->
           <section id="content"><!--id="content"-->
-                <h2>Below is the inventory report on {{ $today }}: ({{ $d }}) 
+                <h2>Below is the CB inventory report on {{ $today }}: ({{ $d }}) 
                 </h2>
                 <div class="parpagraph" style="width:100%">
                    <table style="border-collapse:collapse; text-align:left; width="100%">

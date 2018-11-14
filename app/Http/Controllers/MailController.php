@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
  
 use App\Http\Controllers\Controller;
 use App\Mail\InvEmail;
+use App\Mail\InvConsolidatedEmail;
 use Illuminate\Support\Facades\Mail;
  
 class MailController extends Controller
@@ -21,5 +22,17 @@ class MailController extends Controller
         Mail::to('joe@totalpatriot.com')
         ->bcc(['jrixgeromo@gmail.com'])
         ->send(new InvEmail($obj));
+    }
+
+    public function send_consolidated()
+    {
+        $obj = new \stdClass();
+
+        $obj->sender = 'Rico';
+        $obj->receiver = 'Joe';
+ 
+        Mail::to('jrixcgeromo@gmail.com')
+        ->bcc(['jrixgeromo@gmail.com'])
+        ->send(new InvConsolidatedEmail($obj));
     }
 }
