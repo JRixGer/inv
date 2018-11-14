@@ -22,6 +22,7 @@ class MailController extends Controller
         Mail::to('joe@totalpatriot.com')
         ->bcc(['jrixgeromo@gmail.com'])
         ->send(new InvEmail($obj));
+        // http://cb.preparedpatriot.us/inv/mail/send
     }
 
     public function send_consolidated()
@@ -31,8 +32,9 @@ class MailController extends Controller
         $obj->sender = 'Rico';
         $obj->receiver = 'Joe';
  
-        Mail::to('jrixcgeromo@gmail.com')
+        Mail::to('joe@totalpatriot.com')
         ->bcc(['jrixgeromo@gmail.com'])
         ->send(new InvConsolidatedEmail($obj));
+        // http://cb.preparedpatriot.us/inv/mail/send_consolidated
     }
 }

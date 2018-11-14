@@ -91,17 +91,17 @@ img{border:0;}
 #wrapper{
   width:95%;
   max-width:95%;
-  padding:1%;
+  padding:0%;
   background:#fafafa url(../images/corner.png) no-repeat right bottom;
   background-size:auto 100%;
-  margin:10px auto; 
+  margin:1px auto; 
 }
 #maincContent{
   -webkit-box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.24);
   -moz-box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.24);
   box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.24);
   background-color:#fff;
-  margin-bottom:13px;
+  margin-bottom:7px;
   position:relative;
   clear:both;
   overflow:hidden;
@@ -126,8 +126,8 @@ img{border:0;}
   background: url(../images/logo.png) no-repeat center center;  
 }
 #content{
-  width:95%;
-  max-width:95%;
+  width:98%;
+  max-width:98%;
   margin:1px auto;
 }
 #content h2{
@@ -155,7 +155,7 @@ img{border:0;}
 }
 #content img{
   display:block;
-  margin:2%;
+  margin:0%;
 }
 #maincContent::after {
   content: "";
@@ -220,72 +220,70 @@ td {
                 </h2>
                 <div class="parpagraph" style="width:100%">
                    <table style="border-collapse:collapse; text-align:left; width="100%">
-                        <tr style="background-color: #AED6F1;">
-                          <td style="border-bottom: 0px solid #ffffff;"> </td>
-                          <td style="border-bottom: 0px solid #ffffff;"> </td>
-                          <td style="border-bottom: 0px solid #ffffff;"> </td>
-                          <td style="color: rgb(0, 85, 255); border-bottom: 0px solid #ffffff;"></td>
+                        <tr style="background-color: rgba(245, 253, 122, 0.35);">
+                          <td style="border-top: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-bottom: 0px solid #ffffff;"> </td>
+                          <td style="border-top: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-bottom: 0px solid #ffffff;"> </td>
+                          <td style="border-top: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-bottom: 0px solid #ffffff;"> </td>
+                          <td style="border-top: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;color: rgb(0, 85, 255); border-bottom: 0px solid #ffffff;"></td>
 
-                          <td colspan="2" style="color: rgb(255, 0, 0); text-align: center;background-color: rgba(220, 250, 215, 0.35)">30D</td>
-                          <td colspan="2" style="color: rgb(255, 0, 0); text-align: center;background-color: rgba(178, 212, 255, 0.32)">14D</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last1 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last2 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last3 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last4 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last5 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last6 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last7 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">7D</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last8 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last9 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last10 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last11 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last12 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last13 }}</td>
-                          <td colspan="2" style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last14 }}</td>
-
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; color: rgb(255, 0, 0); text-align: center;background-color: rgba(220, 250, 215, 0.35)">30D</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; color: rgb(255, 0, 0); text-align: center;background-color: rgba(178, 212, 255, 0.32)">14D</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last1 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last2 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last3 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last4 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last5 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last6 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last7 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">7D</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last8 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last9 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last10 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last11 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last12 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">{{ $dt_last13 }}</td>
+                          <td colspan="2"  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">{{ $dt_last14 }}</td>
                       </tr>
-                      <tr>
+                      <tr style="background-color: rgba(245, 253, 122, 0.35);">
+                          <td  style="font-size: 14px; padding: 5px;border-bottom: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-top: 0px solid #ffffff;">CB SKU</td>
+                          <td  style="font-size: 14px; padding: 5px;border-bottom: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-top: 0px solid #ffffff;">IS SKU</td>
+                          <td  style="font-size: 14px; padding: 5px;border-bottom: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-top: 0px solid #ffffff;">Product Name</td>
+                          <td  style="font-size: 14px; padding: 5px;border-bottom: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-top: 0px solid #ffffff;">Bal</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
 
-                          <td style="border-top: 0px solid #ffffff;">CB SKU</td>
-                          <td style="border-top: 0px solid #ffffff;">IS SKU</td>
-                          <td style="border-top: 0px solid #ffffff;">Product Name</td>
-                          <td style="border-top: 0px solid #ffffff;">Bal</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
-                          <td style="text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
-                          <td style="text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32)">IS</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">CB</td>
+                          <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35)">IS</td>
                       </tr>
                       <tr>
 
@@ -341,72 +339,74 @@ td {
                             $q14_is = ($row->q14_is=="" || $row->q14_is==0)? "":$row->q14_is;
                             $q30_is = ($row->q30_is=="" || $row->q30_is==0)? "":$row->q30_is;
 
-                            $critical = "";
+                            $critical = "style='font-size: 12px; border: 1px solid #dddddd;'";
                             if((int)$running_bal < 50)
-                              $critical = "style='background-color:#ff00003d'";     
+                              $critical = "style='font-size: 12px; background-color:#F1948A; border: 1px solid #dddddd;'";     
 
                             $sku_sold = ($sku_sold==0)? "":number_format($sku_sold);
                             $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
                             $running_bal = ($running_bal==0)? "":number_format($running_bal);                          
+                            
+
                             ?>
                             
                             <tr>
-                                <td>{{ $row->prodCode_grp }}</td>
-                                <td>{{ $row->is_sku }}</td>
-                                <td>{{ $row->prodName_grp }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd;">{{ $row->prodCode_grp }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd;">{{ $row->is_sku }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd;">{{ $row->prodName_grp }}</td>
  
                                 <td <?php echo $critical ?>>{{ $running_bal }}</td>
   
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q30 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q30_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q30 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q30_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d14 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d14_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $d14 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $d14_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q1 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q1_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q1 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q1_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q2 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q2_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q2 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q2_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q3 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q3_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q3 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q3_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q4 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q4_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q4 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q4_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q5 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q5_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q5 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q5_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q6 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q6_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q6 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q6_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q7 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q7_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q7 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q7_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d07 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $d07_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $d07 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $d07_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q8 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q8_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q8 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q8_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q9 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q9_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q9 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q9_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q10 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q10_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q10 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q10_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q11 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q11_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q11 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q11_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q12 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q12_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q12 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q12_is }}</td>
 
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q13 }}</td>
-                                <td style="background-color: rgba(178, 212, 255, 0.32)">{{ $q13_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q13 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(178, 212, 255, 0.32)">{{ $q13_is }}</td>
 
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q14 }}</td>
-                                <td style="background-color: rgba(220, 250, 215, 0.35)">{{ $q14_is }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q14 }}</td>
+                                <td  style="font-size: 14px; padding: 5px;border: 1px solid #dddddd; background-color: rgba(220, 250, 215, 0.35)">{{ $q14_is }}</td>
 
                               </tr>
                             @endforeach

@@ -33,7 +33,9 @@ Route::get('/', function () {
 });
 
 Route::get('mail/send', 'MailController@send');
+Route::get('mail/send_consolidated', 'MailController@send_consolidated');
 Route::get('sku/update_product', 'SkuController@update_product');
+
 
 Auth::routes();
 

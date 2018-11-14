@@ -273,11 +273,20 @@ td {
                             $qty14 = ($row->qty14=="" || $row->qty14==0)? "":$row->qty14;
                             $qty30 = ($row->qty30=="" || $row->qty30==0)? "":$row->qty30;
 
+                            if ($running_bal < $qty30 && $running_bal > $qty14 && $running_bal > $qty07) 
+                                $critical = "style='background-color:#FFFF00; border: 1px solid #dddddd; padding:9px; font-weight:bold;'";
+                            else if ($running_bal < $qty30 && $running_bal < $qty14 && $running_bal > $qty07)
+                                $critical = "style='background-color:#FFCCCC; border: 1px solid #dddddd; padding:9px; font-weight:bold;'";
+                            else if ($running_bal < $qty30 && $running_bal < $qty14 && $running_bal <= $qty07)
+                                $critical = "style='background-color:#F1948A; border: 1px solid #dddddd; padding:9px; font-weight:bold;'"; 
+                            else if ($running_bal < 50)
+                                $critical = "style='background-color:#F1948A;border: 1px solid #dddddd; padding:9px;'";
+                            else 
+                                $critical = "style='border: 1px solid #dddddd; padding:9px;'";
 
-
-                            $critical = "style='border: 1px solid #dddddd; padding:9px;'";
-                            if($running_bal < 50)
-                              $critical = "style='background-color:#ff00003d;border: 1px solid #dddddd; padding:9px;'";                              
+                            // $critical = "style='border: 1px solid #dddddd; padding:9px;'";
+                            // if($running_bal < 50)
+                            //   $critical = "style='background-color:#F1948A;border: 1px solid #dddddd; padding:9px;'";                              
 
                             $sku_sold = ($sku_sold==0)? "":number_format($sku_sold);
                             $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
