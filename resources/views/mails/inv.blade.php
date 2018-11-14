@@ -222,8 +222,8 @@ td {
                    <table style="border-collapse:collapse; text-align:left; width="100%">
                         <tr style="background-color: #AED6F1;">
                           <td style="border: 1px solid #dddddd; padding:8px;">CB SKU </td>
-                          <td style="border: 1px solid #dddddd; padding:9px;">DESC</td>
-                          <td style="border: 1px solid #dddddd; padding:9px;">Bal</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">DESCRIPTION</td>
+                          <td style="border: 1px solid #dddddd; padding:9px;">BAL</td>
                           <td style="border: 1px solid #dddddd; padding:9px;">30D</td>
                           <td style="border: 1px solid #dddddd; padding:9px;">14D</td>
                           <td style="border: 1px solid #dddddd; padding:9px;">{{$dt_last1}}</td>
@@ -273,13 +273,16 @@ td {
                             $qty14 = ($row->qty14=="" || $row->qty14==0)? "":$row->qty14;
                             $qty30 = ($row->qty30=="" || $row->qty30==0)? "":$row->qty30;
 
-                            $sku_sold = ($sku_sold==0)? "":number_format($sku_sold);
-                            $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
-                            $running_bal = ($running_bal==0)? "":number_format($running_bal);
+
 
                             $critical = "style='border: 1px solid #dddddd; padding:9px;'";
                             if($running_bal < 50)
                               $critical = "style='background-color:#ff00003d;border: 1px solid #dddddd; padding:9px;'";                              
+
+                            $sku_sold = ($sku_sold==0)? "":number_format($sku_sold);
+                            $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
+                            $running_bal = ($running_bal==0)? "":number_format($running_bal);
+
                             ?>
                             
                            <tr>

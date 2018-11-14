@@ -163,11 +163,115 @@ function updateProd_fn()
 
     }    
 
-    
-// Here is how you do in Eloquent
-// $users = User::whereIn('id', array(1, 2, 3))->get();
-// And if you are using Query builder then :
-// $users = DB::table('users')->whereIn('id', array(1, 2, 3))->get();
+/////////////////////////////////////////////
+
+  $recheck_sku1 = DB::table('skus_is')
+      ->select('sku')
+      ->groupby('sku')
+      ->get();
+ 
+  $prodCodes_other1 = array();
+  foreach ($recheck_sku1 as $key => $p) 
+    {
+      $prodCodes_other1[] = $p->sku;
+    }         
+
+  $check_in_items1 = DB::connection('mysql2')->table('vw_skus')
+      ->select('sku', 'lyle_sku', 'item_number', 'description')
+      ->whereNotIn('sku', $prodCodes_other1)
+      ->where('sku', '<>', '')
+      ->where('status', '=', 'activated')
+      ->groupby('sku', 'lyle_sku', 'item_number', 'description')
+      ->get();
+
+
+  foreach ($check_in_items1 as $key => $i) 
+    {
+        DB::table('skus_is')->insert(
+        [
+            'sku' => $i->sku, 
+            'lyle_sku' => $i->lyle_sku, 
+            'description' => $i->description, 
+            'item_number' => $i->item_number
+        ]
+        );
+
+    }   
+
+  //////////////  
+
+  $recheck_sku2 = DB::table('skus_is')
+      ->select('lyle_sku')
+      ->groupby('lyle_sku')
+      ->get();
+ 
+  $prodCodes_other2 = array();
+  foreach ($recheck_sku2 as $key => $p) 
+    {
+      $prodCodes_other2[] = $p->lyle_sku;
+    }
+
+  $check_in_items2 = DB::connection('mysql2')->table('vw_skus')
+      ->select('sku', 'lyle_sku', 'item_number', 'description')
+      ->whereNotIn('lyle_sku', $prodCodes_other2)
+      ->where('lyle_sku', '<>', '')
+      ->where('status', '=', 'activated')
+      ->groupby('sku', 'lyle_sku', 'item_number', 'description')
+      ->get();
+
+
+
+
+  foreach ($check_in_items2 as $key => $i) 
+    {
+        DB::table('skus_is')->insert(
+        [
+            'sku' => $i->sku, 
+            'lyle_sku' => $i->lyle_sku, 
+            'description' => $i->description, 
+            'item_number' => $i->item_number
+        ]
+        );
+
+    }   
+
+///////////////////////
+
+  $recheck_sku3 = DB::table('skus_is')
+      ->select('item_number')
+      ->groupby('item_number')
+      ->get();
+ 
+  $prodCodes_other3 = array();
+  foreach ($recheck_sku3 as $key => $p) 
+    {
+
+      $prodCodes_other3[] = $p->item_number; 
+    }         
+
+
+  $check_in_items3 = DB::connection('mysql2')->table('vw_skus')
+      ->select('sku', 'lyle_sku', 'item_number', 'description')
+      ->whereNotIn('item_number', $prodCodes_other3)
+      ->where('item_number', '<>', '')
+      ->where('status', '=', 'activated')
+      ->groupby('sku', 'lyle_sku', 'item_number', 'description')
+      ->get();
+
+
+  foreach ($check_in_items3 as $key => $i) 
+    {
+        DB::table('skus_is')->insert(
+        [
+            'sku' => $i->sku, 
+            'lyle_sku' => $i->lyle_sku, 
+            'description' => $i->description, 
+            'item_number' => $i->item_number
+        ]
+        );
+
+    }   
+
 }
 
 
@@ -477,15 +581,6 @@ function retrieveShipInventory_fn()
 
 function createShipInventoryConsolidated_fn()
 {
-
-
-  // todo later (important):
-  // update the sku_is table here to get the latest sku in the shipping
-  // 
-  // must be here, at the top
-  //
-  //
-
 
   // for CB
 
