@@ -51,7 +51,7 @@ class InventoryController extends Controller
         updateInventory_fn();
         createShipInventoryConsolidated_fn();
 
-        $daily_ship_con = InventoryConsolidated::where('prodCode_grp','<>','1')->orderby('prodName_grp')->paginate(17);
+        $daily_ship_con = InventoryConsolidated::where('prodCode_grp','<>','1')->where('prodCode_grp','<>','b-priority')->orderby('prodName_grp')->paginate(17);
 
         return view('shipping.inventory_consolidated', ['daily_ship' => $daily_ship_con]);
 
