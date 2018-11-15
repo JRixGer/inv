@@ -67,139 +67,30 @@
   document.createElement("section")
 </script>
 <style>
-*{ margin:0; padding:0}
-html, body{width:100%; min-height:100%;}
-a{ text-decoration:none;}
-li{ list-style-type:none;}
-img{border:0;}
-@font-face {
-  font-family: 'Conv_BPG DejaVu Sans ExtraLight 2012';
-  src: url('fonts/BPG DejaVu Sans ExtraLight 2012.eot');
-  src: local('☺'), url('fonts/BPG DejaVu Sans ExtraLight 2012.ttf') format('truetype'), url('../fonts/BPG DejaVu Sans ExtraLight 2012.svg') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Conv_BPG DejaVu Sans ExtraLight Caps 2012';
-  src: url('fonts/BPG DejaVu Sans ExtraLight Caps 2012.eot');
-  src: local('☺'), url('fonts/BPG DejaVu Sans ExtraLight Caps 2012.ttf') format('truetype'), url('../fonts/BPG DejaVu Sans ExtraLight Caps 2012.svg') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
-
+html, body{width:100%; min-height:100%; font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif !important;}
 /*main css*/
 #wrapper{
-  width:95%;
-  max-width:95%;
-  padding:1%;
-  background:#fafafa url(../images/corner.png) no-repeat right bottom;
+  width:99%;
+  padding:0%;
   background-size:auto 100%;
-  margin:10px auto; 
 }
 #maincContent{
-  -webkit-box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.24);
-  -moz-box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.24);
-  box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.24);
   background-color:#fff;
-  margin-bottom:13px;
   position:relative;
   clear:both;
   overflow:hidden;
-  border-bottom-right-radius:10px;
-}
-#head{
-  width:95%;
-  max-width:95%;
-  margin:2px auto;
-}
-#head h1{
-  width:95%;
-  height:47px;
-  margin:2%; 
-
-}
-#head h1 a{
-  display:block;
-  text-indent:-9999px;
-  width:95%;
-  height:100%;
-  background: url(../images/logo.png) no-repeat center center;  
 }
 #content{
-  width:95%;
-  max-width:95%;
-  margin:1px auto;
+  width:98%;
+  max-width:98%;
 }
 #content h2{
   color:#5c5c5c;
   font-size:15px; 
   margin-bottom:5px;
   font-family: 'Conv_BPG DejaVu Sans ExtraLight 2012';
-  margin:1%; 
 }
-#content .parpagraph{
-  color:#5c5c5c;
-  font-size:15px; 
-  margin-bottom:5px;
-  font-family: 'Conv_BPG DejaVu Sans ExtraLight 2012';
-  font-weight:600;
-  margin:1%;
-}
-#content .parpagraphB{
-  color:#5c5c5c;
-  font-size:14px; 
-  margin-bottom:5px;
-  font-family: 'Conv_BPG DejaVu Sans ExtraLight Caps 2012';
-  font-weight:600;
-  margin:1%;
-}
-#content img{
-  display:block;
-  margin:2%;
-}
-#maincContent::after {
-  content: "";
-  position: absolute;
-  z-index:2;
-  bottom: 0;
-  right: 0%;
-  width: 0px;
-  height: 0px;
-  border-top:35px solid #dbdbdb;
-  border-right: 35px solid #dbdbdb;
-}  
-#footer{
-  width:95%;
-  max-width:95%;
-  margin:0 auto;
-}
-#footer ul{
-  margin-left:7%;
-  overflow:hidden;  
-}
-#footer ul li{
-  display:inline-block;
-  float:left;
-  width:  31px;
-  height:35px;
-  margin-right:2%;
-}
-#footer ul li a{
-  display:block;
-  width:95%;
-  height:100%;
-  text-indent:-9999px;  
-  margin-bottom:8px;
-}
-#footer ul li a.mail{
-  background:url(../images/mail.png) no-repeat center center;
-}
-#footer ul li a.fb{
-  background:url(../images/fb.png) no-repeat center center;
-}
-#footer ul li a.link{
-  background:url(../images/link.png) no-repeat center center;
-}
+
 tr.border_bottom td {
   border:1pt solid #cccccc;
   font-size: 12px;
