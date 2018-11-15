@@ -28,7 +28,6 @@ class InventoryController extends Controller
             updateProd_fn();
 
         updateInventory_fn();
-
         $daily_ship = Inventory::sortable()->orderby('prodName_common')->paginate(17);
 
         return view('shipping.inventory', ['daily_ship' => $daily_ship]);
@@ -43,7 +42,6 @@ class InventoryController extends Controller
             updateProd_fn();
 
         retrieveShipInventory_fn();
-
         $daily_ship = InventoryIS::sortable()->where('prodName_common','<>','')->orderby('prodName_common')->paginate(17);
 
         return view('shipping.inventory_is', ['daily_ship' => $daily_ship]);

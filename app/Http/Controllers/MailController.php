@@ -32,7 +32,7 @@ class MailController extends Controller
         $obj->sender = 'Rico';
         $obj->receiver = 'Joe';
  
-        Mail::to('jrixcgeromo@gmail.com')
+        Mail::to('joe@totalpatriot.com')
         ->bcc(['jrixgeromo@gmail.com'])
         ->send(new InvConsolidatedEmail($obj));
         // http://cb.preparedpatriot.us/inv/mail/send_consolidated
