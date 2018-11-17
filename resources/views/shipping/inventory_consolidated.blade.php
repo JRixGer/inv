@@ -198,7 +198,7 @@
                             ?>
                             
                             <tr>
-                                <td>{{ $row->prodCode_grp }}</td>
+                                <td>{{ $row->prodCode_other }}</td>
                                 <td>{{ $row->is_sku }}</td>
                                 <td>{{ $row->prodName_grp }}</td>
  
