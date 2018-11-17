@@ -130,7 +130,7 @@
         $("#pid_update").val(id);
         $("#pcode_update").val(pcode);
         $("#cbpcode_grp_update").val(cbpcode_grp);
-        $("#iscode_grp_update").val(ispcode_grp);
+        $("#ispcode_grp_update").val(ispcode_grp);
         $("#pname_update").val(pname);
         $("#pname_grp_update").val(pname_grp);
         $("#pname_common_update").val(pname_common);
