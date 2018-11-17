@@ -197,7 +197,7 @@ html, body{width:100%; min-height:100%; font-family: -apple-system,system-ui,Bli
                             $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
                             $sku_sold = is_numeric($row->sold)? $row->sold:0;
                             $is_running_bal = $sku_onhand - $sku_sold;
-                            
+
                             $cb_totalsold = is_numeric($row->cb_totalsold)? $row->cb_totalsold:0;     
                             $running_bal = ($is_running_bal-$cb_totalsold);  
 
