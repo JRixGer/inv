@@ -44,7 +44,7 @@ class InvConsolidatedEmail extends Mailable
       updateProd_fn();
       createShipInventoryConsolidated_fn();
 
-      $daily_ship_con = InventoryConsolidated::where('prodCode_grp','<>','1')->where('prodCode_grp','<>','b-priority')->orderby('prodName_grp')->get();
+      $daily_ship_con = InventoryConsolidated::where('prodCode_grp','<>','1')->where('prodCode_grp','<>','b-priority')->orderby('q30_is', 'desc')->get();
       return $this->from('sales@cb.preparedpatriot.us')
                   ->view('mails.inv_consolidated')
                   ->subject("Daily Consolidated Inventory Report")

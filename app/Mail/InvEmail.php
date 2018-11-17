@@ -44,7 +44,7 @@ class InvEmail extends Mailable
       updateProd_fn();
       updateInventory_fn();
       
-      $daily_ship = Inventory::orderBy('prodName_common')->get();
+      $daily_ship = Inventory::orderBy('qty30', 'desc')->get();
       
       return $this->from('sales@cb.preparedpatriot.us')
                   ->view('mails.inv')
