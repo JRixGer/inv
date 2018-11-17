@@ -97,8 +97,10 @@
                             
                             $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
                             $sku_sold = is_numeric($row->sold)? $row->sold:0;
+                            $totalsold = is_numeric($row->totalsold)? $row->totalsold:0;   
 
                             $running_bal = $sku_onhand - $sku_sold;
+                            $running_bal = ($running_bal-$totalsold);  
 
                             $d07 = ($d07=="" || $d07==0)? "":$d07; 
                             $d14 = ($d14=="" || $d14==0)? "":$d14; 

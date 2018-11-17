@@ -134,7 +134,7 @@
                         @if($daily_ship->count() > 0)
                             @foreach($daily_ship as $row)
 
-                            <?php 
+                             <?php 
                             $d07 = ($row->q8+$row->q9+$row->q10+$row->q11+$row->q12+$row->q13+$row->q14);
                             $d14 = ($row->q1+$row->q2+$row->q3+$row->q4+$row->q5+$row->q6+$row->q7)+$d07; 
 
@@ -144,8 +144,8 @@
                             $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
                             $sku_sold = is_numeric($row->sold)? $row->sold:0;
                             $is_running_bal = $sku_onhand - $sku_sold;
-                            
-                            $cb_totalsold = ($row->cb_totalsold==0)? 0:$cb_totalsold;     
+
+                            $cb_totalsold = is_numeric($row->cb_totalsold)? $row->cb_totalsold:0;     
                             $running_bal = ($is_running_bal-$cb_totalsold);  
 
                             $d07 = ($d07=="" || $d07==0)? "":$d07; 
@@ -186,14 +186,14 @@
                             $q14_is = ($row->q14_is=="" || $row->q14_is==0)? "":$row->q14_is;
                             $q30_is = ($row->q30_is=="" || $row->q30_is==0)? "":$row->q30_is;
 
-                            $critical = "";
+                            $critical = "style='padding:7px; font-size: 12px; border: 1px solid #dddddd;'";
                             if((int)$running_bal < 50)
-                              $critical = "style='background-color:#ff00003d'";     
+                              $critical = "style='padding:7px; font-size: 12px; background-color:#F1948A; border: 1px solid #dddddd;'";     
 
                             $sku_sold = ($sku_sold==0)? "":number_format($sku_sold);
                             $sku_onhand = ($sku_onhand==0)? "":number_format($sku_onhand);
-                            $running_bal = ($running_bal==0)? "":number_format($running_bal);     
-   
+                            $running_bal = ($running_bal==0)? "":number_format($running_bal);                          
+                            
 
                             ?>
                             
