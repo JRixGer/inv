@@ -47,7 +47,7 @@ class InvConsolidatedEmail extends Mailable
       $daily_ship_con = InventoryConsolidated::where('prodCode_grp','<>','1')->where('prodCode_grp','<>','b-priority')->orderby('q30_is', 'desc')->get();
       return $this->from('sales@cb.preparedpatriot.us')
                   ->view('mails.inv_consolidated')
-                  ->subject("Daily Consolidated Inventory Report")
+                  ->subject("IS & CB Daily Consolidated Inventory Report")
                   ->with('daily_ship', $daily_ship_con);
 
     }
