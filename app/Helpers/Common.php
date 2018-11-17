@@ -996,8 +996,19 @@ function maroPost_fn($receipt)
         $tag = 'swt';
     } if (strpos($m->itemNo, 'tclsr') !== false) {
         $tag = 'tclsr';
+    } if (strpos($m->itemNo, 'cpslbag') !== false) {
+        $tag = 'cpslbag';
+    } if (strpos($m->itemNo, 'cpusbat') !== false) {
+        $tag = 'cpusbat';
+    } if (strpos($m->itemNo, 'backpk') !== false) {
+        $tag = 'backpk';
+    } if (strpos($m->itemNo, 'gbgknf') !== false) {
+        $tag = 'gbgknf';
+    } if (strpos($m->itemNo, 'stflpkn') !== false) {
+        $tag = 'stflpkn';
     }
-    
+
+   
     $first_name=$m->firstName;
     $email=$m->email;
     $page="";
