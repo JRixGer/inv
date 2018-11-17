@@ -31,6 +31,9 @@
         margin-right: auto;
         display: block;
     }
+    .modal-header {
+        background-color: rgb(227, 242, 253);
+    }
      </style>
 </head>
 <body>
@@ -147,7 +150,7 @@
         var cbpcode_grp = $("#cbpcode_grp_update").val();
         var ispcode_grp = $("#ispcode_grp_update").val();
         var pname_grp = $("#pname_grp_update").val();
-        var pcode_common = $("#pname_common_update").val();
+        var pname_common = $("#pname_common_update").val();
 
         //$("#update_sku_model").modal('hide');
 
@@ -160,7 +163,7 @@
         $.ajax({
            type:'POST',
            url:'/inv/shipping/sku/effect_update',
-           data:{id:pid, pcode:pcode, cbpcode_grp:cbpcode_grp, ispcode_grp:ispcode_grp, pname_grp:pname_grp, pcode_common:pcode_common},
+           data:{id:pid, pcode:pcode, cbpcode_grp:cbpcode_grp, ispcode_grp:ispcode_grp, pname_grp:pname_grp, pname_common:pname_common},
            success:function(data){
               window.location.reload();
            },

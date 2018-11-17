@@ -137,6 +137,15 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::post('/sku/update_v/{id}', [
+
+		'uses' => 'SkuController@update_v',
+		'as' => 'sku.update_v'
+	]
+	);
+
+
+
 	Route::post('/sku/delete', [
 
 		'uses' => 'SkuController@delete',

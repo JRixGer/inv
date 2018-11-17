@@ -512,7 +512,7 @@ module.exports = defaults;
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function(global) {/**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.14.4
+ * @version 1.14.5
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -609,7 +609,8 @@ function getStyleComputedProperty(element, property) {
     return [];
   }
   // NOTE: 1 DOM access here
-  var css = getComputedStyle(element, null);
+  var window = element.ownerDocument.defaultView;
+  var css = window.getComputedStyle(element, null);
   return property ? css[property] : css;
 }
 
@@ -697,7 +698,7 @@ function getOffsetParent(element) {
   var noOffsetParent = isIE(10) ? document.body : null;
 
   // NOTE: 1 DOM access here
-  var offsetParent = element.offsetParent;
+  var offsetParent = element.offsetParent || null;
   // Skip hidden elements which don't have an offsetParent
   while (offsetParent === noOffsetParent && element.nextElementSibling) {
     offsetParent = (element = element.nextElementSibling).offsetParent;
@@ -709,9 +710,9 @@ function getOffsetParent(element) {
     return element ? element.ownerDocument.documentElement : document.documentElement;
   }
 
-  // .offsetParent will return the closest TD or TABLE in case
+  // .offsetParent will return the closest TH, TD or TABLE in case
   // no offsetParent is present, I hate this job...
-  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+  if (['TH', 'TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
     return getOffsetParent(offsetParent);
   }
 
@@ -1259,7 +1260,8 @@ function getReferenceOffsets(state, popper, reference) {
  * @returns {Object} object containing width and height properties
  */
 function getOuterSizes(element) {
-  var styles = getComputedStyle(element);
+  var window = element.ownerDocument.defaultView;
+  var styles = window.getComputedStyle(element);
   var x = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
   var y = parseFloat(styles.marginLeft) + parseFloat(styles.marginRight);
   var result = {
@@ -13903,21 +13905,13 @@ window.Vue = __webpack_require__(36);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.config.devtools = false;
-
+Vue.config.devtools = false;
 
 Vue.component('skuslist', __webpack_require__(39));
 
 var app = new Vue({
   el: '#app'
 });
-
-// import App from './components/SkuMaintain.vue';
-// import Vue from 'vue';
-// new Vue({
-//   el: '#app',
-//   render: h => h(App)
-// });
 
 /***/ }),
 /* 13 */
@@ -47860,25 +47854,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
-//toastr.options.timeOut = 1000; 
-//toastr.options.closeButton = true;
+toastr.options.timeOut = 1000;
+toastr.options.closeButton = true;
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             sku: {
                 prodCode: '',
+                prodCode_grp: '',
+                prodCode_other: '',
                 prodName: '',
-                prodQty: '',
-                prodType: ''
+                prodName_grp: '',
+                prodName_common: ''
             },
             errors: [],
             skus: [],
@@ -47892,9 +47882,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         reset: function reset() {
             this.sku.prodCode = '';
+            this.sku.prodCode_grp = '';
+            this.sku.prodCode_other = '';
             this.sku.prodName = '';
-            this.sku.prodQty = '';
-            this.sku.prodType = '';
+            this.sku.prodName_grp = '';
+            this.sku.prodName_common = '';
         },
         initUpdate: function initUpdate(index) {
             this.errors = [];
@@ -47912,13 +47904,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateSku: function updateSku() {
             var _this2 = this;
 
-            axios.post('/inv/shipping/sku/update/' + this.update_sku.id, {
-                prodQty: this.update_sku.prodQty
+            axios.post('/inv/shipping/sku/update_v/' + this.update_sku.id, {
+                cbpcode_grp: this.update_sku.prodCode_grp,
+                ispcode_grp: this.update_sku.prodCode_other,
+                pname_grp: this.update_sku.prodName_grp,
+                pname_common: this.update_sku.prodName_common
             }).then(function (response) {
-
+                toastr.success("Successfully updated.");
                 $("#update_sku_model").modal("hide");
             }).catch(function (error) {
                 _this2.errors = [];
+                console.log(error.response.data.message);
+
                 if (error.response.data.errors.name) {
                     _this2.errors.push('errors');
                 }
@@ -47926,6 +47923,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (error.response.data.errors.description) {
                     _this2.errors.push('errors');
                 }
+                toastr.error(error.response.data.message);
             });
         },
         deleteSku: function deleteSku(index) {
@@ -47999,6 +47997,22 @@ var render = function() {
                                 _c("td", [
                                   _vm._v(
                                     "\n                                    " +
+                                      _vm._s(sku.prodCode_grp) +
+                                      "\n                                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(sku.prodCode_other) +
+                                      "\n                                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    "\n                                    " +
                                       _vm._s(sku.prodName) +
                                       "\n                                "
                                   )
@@ -48007,7 +48021,7 @@ var render = function() {
                                 _c("td", [
                                   _vm._v(
                                     "\n                                    " +
-                                      _vm._s(sku.prodQty) +
+                                      _vm._s(sku.prodName_grp) +
                                       "\n                                "
                                   )
                                 ]),
@@ -48015,38 +48029,46 @@ var render = function() {
                                 _c("td", [
                                   _vm._v(
                                     "\n                                    " +
-                                      _vm._s(sku.prodType) +
+                                      _vm._s(sku.prodName_common) +
                                       "\n                                "
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("td", [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-success btn-sm",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.initUpdate(index)
+                                _c(
+                                  "td",
+                                  { staticStyle: { "min-width": "100px" } },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-success btn-sm",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.initUpdate(index)
+                                          }
                                         }
-                                      }
-                                    },
-                                    [_vm._v("Edit Qty")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-danger btn-sm",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.deleteSku(index)
+                                      },
+                                      [_c("i", { staticClass: "fa fa-edit" })]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-danger btn-sm",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.deleteSku(index)
+                                          }
                                         }
-                                      }
-                                    },
-                                    [_vm._v("Delete")]
-                                  )
-                                ])
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-trash-alt"
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
                               ])
                             })
                           ],
@@ -48119,7 +48141,67 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Name:")]),
+                  _c("label", [_vm._v("CB Code:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.update_sku.prodCode_grp,
+                        expression: "update_sku.prodCode_grp"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.update_sku.prodCode_grp },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.update_sku,
+                          "prodCode_grp",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("IS Code:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.update_sku.prodCode_other,
+                        expression: "update_sku.prodCode_other"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.update_sku.prodCode_other },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.update_sku,
+                          "prodCode_other",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Raw Name:")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -48149,20 +48231,20 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Type:")]),
+                  _c("label", [_vm._v("Group Name:")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.update_sku.prodType,
-                        expression: "update_sku.prodType"
+                        value: _vm.update_sku.prodName_grp,
+                        expression: "update_sku.prodName_grp"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", disabled: "" },
-                    domProps: { value: _vm.update_sku.prodType },
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.update_sku.prodName_grp },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
@@ -48170,7 +48252,7 @@ var render = function() {
                         }
                         _vm.$set(
                           _vm.update_sku,
-                          "prodType",
+                          "prodName_grp",
                           $event.target.value
                         )
                       }
@@ -48179,26 +48261,30 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Qty:")]),
+                  _c("label", [_vm._v("Group Name (from shipping):")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.update_sku.prodQty,
-                        expression: "update_sku.prodQty"
+                        value: _vm.update_sku.prodName_common,
+                        expression: "update_sku.prodName_common"
                       }
                     ],
                     staticClass: "form-control",
                     attrs: { type: "text" },
-                    domProps: { value: _vm.update_sku.prodQty },
+                    domProps: { value: _vm.update_sku.prodName_common },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.update_sku, "prodQty", $event.target.value)
+                        _vm.$set(
+                          _vm.update_sku,
+                          "prodName_common",
+                          $event.target.value
+                        )
                       }
                     }
                   })
@@ -48254,41 +48340,21 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", [
-        _vm._v(
-          "\n                                    #\n                                "
-        )
-      ]),
+      _c("th", [_vm._v("#")]),
       _vm._v(" "),
-      _c("th", [
-        _vm._v(
-          "\n                                    Product Code\n                                "
-        )
-      ]),
+      _c("th", [_vm._v("CB SKU Raw")]),
       _vm._v(" "),
-      _c("th", [
-        _vm._v(
-          "\n                                    Description\n                                "
-        )
-      ]),
+      _c("th", [_vm._v("CB SKU Grouping")]),
       _vm._v(" "),
-      _c("th", [
-        _vm._v(
-          "\n                                    Qty\n                                "
-        )
-      ]),
+      _c("th", [_vm._v("IS SKU Grouping")]),
       _vm._v(" "),
-      _c("th", [
-        _vm._v(
-          "\n                                    Type\n                                "
-        )
-      ]),
+      _c("th", [_vm._v("Description Raw")]),
       _vm._v(" "),
-      _c("th", [
-        _vm._v(
-          "\n                                    Action\n                                "
-        )
-      ])
+      _c("th", [_vm._v("Description Grouping")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Description (Shipping)")]),
+      _vm._v(" "),
+      _c("th", { attrs: { colspan: "2" } }, [_vm._v("ACTION")])
     ])
   },
   function() {

@@ -156,8 +156,12 @@ class SkuController extends Controller
     public function mount(Request $request)
     {
         
- 
-        $skus = Sku::get();
+         $skus = DB::table('skus')
+        ->select('*')
+        ->Where('prodCode', '<>', '1')
+        ->orderby('prodName')->get();
+
+        //$skus = Sku::all()->where('prodCode', '<>', '1')->get();
         return response()->json([
             'skus'    => $skus,
         ], 200);        
@@ -174,26 +178,61 @@ class SkuController extends Controller
         ]);
 
         $data = $request->all();
+
         $id = $data['id'];  
         $pcode = $data['pcode'];        
         $cbpcode_grp = $data['cbpcode_grp'];
         $ispcode_grp = $data['ispcode_grp'];
         $pname_grp = $data['pname_grp'];
-        $pcode_common = $data['pcode_common'];
+        $pname_common = $data['pname_common'];
 
         $sku = Sku::find($id);
 
         $sku->prodName_grp = $pname_grp; 
-        $sku->prodName_common = $pcode_common; 
         $sku->prodCode_grp = $cbpcode_grp; 
         $sku->prodCode_other = $ispcode_grp; 
-
+        $sku->prodName_common = $pname_common; 
+ 
         $sku->save();
         //updateProd_fn();
         //Session::flash('success','You successfully updated a category');
         //return redirect()->route('categories');
 
     }
+
+
+
+    public function update_v(Request $request, $id)
+    {
+
+        $this->validate($request, [
+            'cbpcode_grp' => 'required',
+            'ispcode_grp' => 'required',
+            'pname_grp' => 'required'
+        ]);
+
+        $data = $request->all();
+        
+        $cbpcode_grp = $data['cbpcode_grp'];
+        $ispcode_grp = $data['ispcode_grp'];
+        $pname_grp = $data['pname_grp'];
+        $pname_common = $data['pname_common'];
+
+        $sku = Sku::find($id);
+
+        $sku->prodName_grp = $pname_grp; 
+        $sku->prodCode_grp = $cbpcode_grp; 
+        $sku->prodCode_other = $ispcode_grp; 
+        $sku->prodName_common = $pname_common; 
+  
+        $sku->save();
+
+        return response()->json([
+            'message' => 'Product updated successfully!'
+        ], 200);
+
+    }
+
 
     public function temp()
     {
