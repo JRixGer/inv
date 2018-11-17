@@ -171,25 +171,28 @@ class SkuController extends Controller
     {
 
         $this->validate($request, [
-            'pcode_grp' => 'required',
+            'cbpcode_grp' => 'required',
+            'ispcode_grp' => 'required',
             'pname_grp' => 'required'
         ]);
 
         $data = $request->all();
         $id = $data['id'];  
         $pcode = $data['pcode'];        
+        $cbpcode_grp = $data['cbpcode_grp'];
+        $ispcode_grp = $data['ispcode_grp'];
         $pname_grp = $data['pname_grp'];
-        $pcode_grp = $data['pcode_grp'];
         $pcode_common = $data['pcode_common'];
 
         $sku = Sku::find($id);
 
         $sku->prodName_grp = $pname_grp; 
         $sku->prodName_common = $pcode_common; 
-        $sku->prodCode_grp = $pcode_grp; 
+        $sku->prodCode_grp = $cbpcode_grp; 
+        $sku->prodCode_other = $ispcode_grp; 
 
         $sku->save();
-        updateProd_fn();
+        //updateProd_fn();
         //Session::flash('success','You successfully updated a category');
         //return redirect()->route('categories');
 

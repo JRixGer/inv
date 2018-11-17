@@ -35,6 +35,7 @@
                         <tr>
                           <th scope="col">@sortablelink('prodCode','CB SKU Raw')</th>
                           <th scope="col">@sortablelink('prodCode_grp','CB SKU Grouping')</th>
+                          <th scope="col">@sortablelink('prodCode_grp','IS SKU Grouping')</th>
                           <th scope="col">@sortablelink('prodName','Description Raw')</th>
                           <th scope="col">@sortablelink('prodName_grp','Description Grouping')</th>
                           <th scope="col">@sortablelink('prodName_common','Description (from shipping)')</th>
@@ -51,7 +52,10 @@
                                 </td>
                                 <td>
                                   {{ $sku->prodCode_grp }}
-                                </td>                                
+                                </td>          
+                                <td>
+                                  {{ $sku->prodCode_other }}
+                                </td>          
                                 <td>
                                   {{ $sku->prodName }}
                                 </td>
@@ -62,7 +66,7 @@
                                   {{ $sku->prodName_common }}
                                 </td>
                                 <td>
-                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')"><i class="fa fa-edit"></i></a>
+                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodCode_other ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')"><i class="fa fa-edit"></i></a>
                                 </td>
                                 <td>
                                   <a class="btn btn-sm btn-warning"><i class="fa fa-trash-alt"></i></a>
@@ -112,8 +116,12 @@
                         <input type="hidden" id="pid_update">
                     </div>
                     <div class="form-group">
-                        <label>Group Code:</label>
-                        <input type="text" class="form-control" id="pcode_grp_update">
+                        <label>CB Code:</label>
+                        <input type="text" class="form-control" id="cbpcode_grp_update">
+                    </div>
+                    <div class="form-group">
+                        <label>IS Code:</label>
+                        <input type="text" class="form-control" id="ispcode_grp_update">
                     </div>
                     <div class="form-group">
                         <label>Raw Name:</label>

@@ -125,14 +125,16 @@
     }  
 
 
-    function load_sku(id, pcode, pname, pcode_grp, pname_grp, pname_common)
+    function load_sku(id, pcode, cbpcode_grp, ispcode_grp, pname, pname_grp, pname_common)
     {
         $("#pid_update").val(id);
         $("#pcode_update").val(pcode);
+        $("#cbpcode_grp_update").val(cbpcode_grp);
+        $("#iscode_grp_update").val(ispcode_grp);
         $("#pname_update").val(pname);
-        $("#pcode_grp_update").val(pcode_grp);
         $("#pname_grp_update").val(pname_grp);
         $("#pname_common_update").val(pname_common);
+
         $("#update_sku_model").modal('show');
     }  
 
@@ -142,8 +144,9 @@
 
         var pid = $("#pid_update").val();
         var pcode = $("#pcode_update").val();
+        var cbpcode_grp = $("#cbpcode_grp_update").val();
+        var ispcode_grp = $("#ispcode_grp_update").val();
         var pname_grp = $("#pname_grp_update").val();
-        var pcode_grp = $("#pcode_grp_update").val();
         var pcode_common = $("#pname_common_update").val();
 
         //$("#update_sku_model").modal('hide');
@@ -157,7 +160,7 @@
         $.ajax({
            type:'POST',
            url:'/inv/shipping/sku/effect_update',
-           data:{id:pid, pcode:pcode, pname_grp:pname_grp, pcode_grp:pcode_grp, pcode_common:pcode_common},
+           data:{id:pid, pcode:pcode, cbpcode_grp:cbpcode_grp, ispcode_grp:ispcode_grp, pname_grp:pname_grp, pcode_common:pcode_common},
            success:function(data){
               window.location.reload();
            },
