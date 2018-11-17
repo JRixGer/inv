@@ -44,17 +44,10 @@ class SkuController extends Controller
         
         updateProd_fn();
 
-        // $skus = DB::connection('mysql')->table('skus')
-        // ->select('*')
-        // ->where('prodCode', '<>', '1')
-        // ->orderby('prodName')
-        // ->paginate(17);
-        // return view('shipping.sku', compact('skus'));
-        $skus = Sku::sortable()->where('prodCode', '<>', '1')->paginate(17);
-        return view('shipping.sku', ['skus' => $skus]);
+/*        $skus = Sku::sortable()->where('prodCode', '<>', '1')->paginate(17);
+        return view('shipping.sku', ['skus' => $skus]);*/
 
-        //return view('shipping.sku')->with('skus', Sku::all()->where('prodCode', '<>', '1')->sortBy("prodName"));
-        //return view('shipping.sku_vue'); // for vuejs
+        return view('shipping.sku_vue'); // for vuejs
     }
 
 
