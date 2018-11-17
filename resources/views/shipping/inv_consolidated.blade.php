@@ -251,8 +251,8 @@ html, body{width:100%; min-height:100%; font-family: -apple-system,system-ui,Bli
                             ?>
                             
                             <tr>
+                                <td  style="padding:7px; font-size: 14px; border: 1px solid #dddddd;">{{ $row->prodCode_grp }}</td>
                                 <td  style="padding:7px; font-size: 14px; border: 1px solid #dddddd;">{{ $row->prodCode_other }}</td>
-                                <td  style="padding:7px; font-size: 14px; border: 1px solid #dddddd;">{{ $row->is_sku }}</td>
                                 <td  style="padding:7px; font-size: 14px; border: 1px solid #dddddd;">{{ $row->prodName_grp }}</td>
  
                                 <td <?php echo $critical ?>>{{ $running_bal }}</td>
