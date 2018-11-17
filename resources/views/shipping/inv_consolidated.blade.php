@@ -95,25 +95,33 @@ html, body{width:100%; min-height:100%; font-family: -apple-system,system-ui,Bli
   font-weight: bold;
 }
 .fortd1 {
-  font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35);
+  font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32);
 }
 .fortd2 {
   font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32);
 }
 .fortop {
-  height: 1.5em; background:rgba(220, 250, 215, 0.35); 
+  background:rgba(250, 248, 215); 
+  height: 2em;
+  padding-top: 7px;
+}
+.forlowh {
+  height: 1.5em;
+  background: rgba(178, 212, 255, 0.32); 
 }
 .forlow {
-  height: 1.5em; background: rgba(178, 212, 255, 0.32); 
+  height: 2em;
+  padding-top: 7px;
+  background: rgba(178, 212, 255, 0.32); 
 }
 .fortd1_top {
-  font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35);padding: 10px;
+  font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32);padding: 10px;
 }
 .fortd2_top {
   font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: #AED6F1;padding: 10px;
 }
 .fortd1_ {
-  font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(220, 250, 215, 0.35); min-width: 50px;
+  font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32); min-width: 50px;
 }
 .fortd2_ {
   font-size: 14px; border: 1px solid #dddddd; text-align: center;background-color: rgba(178, 212, 255, 0.32); min-width: 50px;
@@ -156,23 +164,23 @@ html, body{width:100%; min-height:100%; font-family: -apple-system,system-ui,Bli
                           <td  style="padding:7px; font-size: 14px; border-bottom: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-top: 0px solid #ffffff;">IS SKU</td>
                           <td  style="padding:7px; font-size: 14px; border-bottom: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-top: 0px solid #ffffff;">Product Name</td>
                           <td  style="padding:7px; font-size: 14px; border-bottom: 1px solid #dddddd;border-left: 1px solid #dddddd;border-right: 1px solid #dddddd;border-top: 0px solid #ffffff;">Bal</td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd2_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
-                          <td  class="fortd1_"><div class="fortop">CB</div><div class="forlow">IS</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd2_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
+                          <td  class="fortd1_"><div class="forlowh">IS</div><div class="forlowh">CB</div></td>
                        </tr>
                       <tr>
 
@@ -245,23 +253,23 @@ html, body{width:100%; min-height:100%; font-family: -apple-system,system-ui,Bli
                                 <td  style="padding:7px; font-size: 14px; border: 1px solid #dddddd;">{{ $row->prodName_grp }}</td>
  
                                 <td <?php echo $critical ?>>{{ $running_bal }}</td>
-                                <td class="fortd1"><div class="fortop">{{ $q30 }}</div><div class="forlow">{{ $q30_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $d14 }}</div><div class="forlow">{{ $d14_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q1 }}</div><div class="forlow">{{ $q1_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $q2 }}</div><div class="forlow">{{ $q2_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q3 }}</div><div class="forlow">{{ $q3_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $q4 }}</div><div class="forlow">{{ $q4_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q5 }}</div><div class="forlow">{{ $q5_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $q6 }}</div><div class="forlow">{{ $q6_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q7 }}</div><div class="forlow">{{ $q7_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $d07 }}</div><div class="forlow">{{ $d07_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q8 }}</div><div class="forlow">{{ $q8_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $q9 }}</div><div class="forlow">{{ $q9_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q10 }}</div><div class="forlow">{{ $q10_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $q11 }}</div><div class="forlow">{{ $q11_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q12 }}</div><div class="forlow">{{ $q12_is }}</div></td>
-                                <td class="fortd2"><div class="fortop">{{ $q13 }}</div><div class="forlow">{{ $q13_is }}</div></td>
-                                <td class="fortd1"><div class="fortop">{{ $q14 }}</div><div class="forlow">{{ $q14_is }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q30_is}}</div><div class="forlow">{{ $q30 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $d14_is }}</div><div class="forlow">{{ $d14 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q1_is }}</div><div class="forlow">{{ $q1 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $q2_is }}</div><div class="forlow">{{ $q2 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q3_is }}</div><div class="forlow">{{ $q3 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $q4_is }}</div><div class="forlow">{{ $q4 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q5_is }}</div><div class="forlow">{{ $q5 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $q6_is }}</div><div class="forlow">{{ $q6 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q7_is }}</div><div class="forlow">{{ $q7 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $d07_is }}</div><div class="forlow">{{ $d07 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q8_is }}</div><div class="forlow">{{ $q8 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $q9_is }}</div><div class="forlow">{{ $q9 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q10_is }}</div><div class="forlow">{{ $q10 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $q11_is }}</div><div class="forlow">{{ $q11 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q12_is }}</div><div class="forlow">{{ $q12 }}</div></td>
+                                <td class="fortd2"><div class="fortop">{{ $q13_is }}</div><div class="forlow">{{ $q13 }}</div></td>
+                                <td class="fortd1"><div class="fortop">{{ $q14_is }}</div><div class="forlow">{{ $q14 }}</div></td>
 
                               </tr>
                             @endforeach
