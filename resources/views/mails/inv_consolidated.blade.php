@@ -196,7 +196,10 @@ html, body{width:100%; min-height:100%; font-family: -apple-system,system-ui,Bli
 
                             $sku_onhand = is_numeric($row->onhand)? $row->onhand:0;
                             $sku_sold = is_numeric($row->sold)? $row->sold:0;
-                            $running_bal = $sku_onhand - $sku_sold;
+                            $is_running_bal = $sku_onhand - $sku_sold;
+                            
+                            $cb_totalsold = ($row->cb_totalsold==0)? 0:$cb_totalsold;     
+                            $running_bal = ($is_running_bal-$cb_totalsold);  
 
                             $d07 = ($d07=="" || $d07==0)? "":$d07; 
                             $d14 = ($d14=="" || $d14==0)? "":$d14; 
