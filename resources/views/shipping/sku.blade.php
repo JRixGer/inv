@@ -121,7 +121,7 @@
                     </div>
                     <div class="form-group">
                         <label>IS Code:</label>
-                        <input type="text" class="form-control" id="ispcode_grp_update">
+                        <input type="text" class="form-control" disabled id="ispcode_grp_update">
                     </div>
                     <div class="form-group">
                         <label>Raw Name:</label>

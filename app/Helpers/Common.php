@@ -987,13 +987,24 @@ function maroPost_fn($receipt)
   foreach ($maro as $key => $m) 
   {
 
+    $tag = "";  
+    if (strpos($m->itemNo, 'cptbook') !== false) {
+        $tag = 'cptbook';
+    } else if (strpos($m->itemNo, 'sgfl') !== false) {
+        $tag = 'sgfl';
+    } if (strpos($m->itemNo, 'swt') !== false) {
+        $tag = 'swt';
+    } if (strpos($m->itemNo, 'tclsr') !== false) {
+        $tag = 'tclsr';
+    }
+    
     $first_name=$m->firstName;
     $email=$m->email;
     $page="";
     $affiliate=(empty($m->affiliate)? "":$m->affiliate);
     $updatedTimeUtc = gmdate("Y-m-d\\TH:i:s\\Z");
 
-    $contactData= ["contact"=>["email"=>$email,"first_name"=>$first_name,"custom_field"=>["opt_source_drm"=>$page,"affiliate"=>$affiliate,"updated" => $updatedTimeUtc],"add_tags"=>[$m->itemNo]]];
+    $contactData= ["contact"=>["email"=>$email,"first_name"=>$first_name,"custom_field"=>["opt_source_drm"=>$page,"affiliate"=>$affiliate,"updated" => $updatedTimeUtc],"add_tags"=>[$tag]]];
     $newcontact = $mp->request('POST','lists/8/contacts',  $contactData); // 18 is he original value 
 
     DB::table('notifications')
