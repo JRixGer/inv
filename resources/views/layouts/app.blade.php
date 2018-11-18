@@ -213,7 +213,39 @@
             });
 
         }); 
+
     });
+
+    function send_mail(m)
+    {
+        $.ajaxSetup({
+            headers: {
+
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
+        if(m == 'cb_inv')
+        {
+            $.ajax({
+               type:'GET',
+               url:"{{ route('mail.send') }}",
+               success: function (data) {
+                    toastr.success("Email successfully Sent.");
+               }
+            });  
+        }
+        else
+        {
+            $.ajax({
+               type:'GET',
+               url:"{{ route('mail.send_consolidated') }}",
+               success: function (data) {
+                    toastr.success("Email successfully Sent.");
+               }
+            });  
+        }
+    }
 
 </script>
 <!-- {"message":"The given data was invalid.","errors":{"pqty":["The pqty must be a number."]}} -->

@@ -175,6 +175,19 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);	
 
+	Route::get('/mail/send', [
+
+		'uses' => 'MailController@send',
+		'as' => 'mail.send'
+	]
+	);	
+
+	Route::get('/mail/send_consolidated', [
+
+		'uses' => 'MailController@send_consolidated',
+		'as' => 'mail.send_consolidated'
+	]
+	);	
 	// Route::post('/post/store', [
 
 	// 	'uses' => 'PostsController@store',

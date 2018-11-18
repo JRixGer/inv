@@ -49,7 +49,18 @@
     <div class="row no-gutters justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header title_">Inventory</div>
+                <div class="card-header title_">
+                  <div class="row">
+                        <div class="col-md-6" style="padding-top: 9px;">
+                             <span>Inventory</span>
+                        </div>
+                        <div class="col-md-6 text-right">
+                          <span class="float-right">
+                            <a href="javascript:void(0)" class="btn btn-sm btn-outline-success my-2 my-sm-0" onclick="send_mail('cb_inv')"><i class="fa fa-envelope"></i></a>
+                          </span>
+                        </div>
+                  </div>        
+                </div>
                 <div class="card-body">
                    <!--  @if (session('status'))
                         <div class="alert alert-success">
