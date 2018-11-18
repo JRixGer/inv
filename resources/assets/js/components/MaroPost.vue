@@ -64,6 +64,7 @@
 }
 td {
   font-size: 12px;
+  padding: 4px;
 }
 </style>
 

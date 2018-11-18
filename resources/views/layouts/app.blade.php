@@ -26,6 +26,14 @@
     
     <link href="{{ asset('public/css/style.css') }}" rel="stylesheet">
     <style>
+    html, body {
+        color: #636b6f;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 100;
+        height: 100vh;
+        margin: 0;
+        background: url("/inv/public/images/fba7da61.png") repeat;
+    }    
     #imgcenter img {
         margin-left: auto;
         margin-right: auto;
@@ -34,14 +42,22 @@
     .modal-header {
         background-color: rgb(227, 242, 253);
     }
+    .panel-lnk {
+        color: #686868;
+        text-decoration: none;
+        background-color: transparent;
+        -webkit-text-decoration-skip: objects;
+        font-weight: 700;
+    }
      </style>
 </head>
+
 <body>
     <div id="app">
         <!-- <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top" style="background-color: #e3f2fd;"> -->
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color: #e3f2fd;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('shipping/dashboard') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
