@@ -7,7 +7,7 @@
 
                       <div class="row justify-content-between">
                         <div class="col-6">
-                         SKU Maintenance
+                         SKU Management
                         </div>
                         <div class="col-6"></div>
                       </div>

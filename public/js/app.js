@@ -48330,7 +48330,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "row justify-content-between" }, [
         _c("div", { staticClass: "col-6" }, [
           _vm._v(
-            "\n                         SKU Maintenance\n                        "
+            "\n                         SKU Management\n                        "
           )
         ]),
         _vm._v(" "),
