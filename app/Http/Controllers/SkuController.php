@@ -44,10 +44,9 @@ class SkuController extends Controller
         
         updateProd_fn();
 
-        $skus = Sku::sortable()->where('prodCode', '<>', '1')->paginate(17);
-        return view('shipping.sku', ['skus' => $skus]);
-
-        //return view('shipping.sku_vue'); // for vuejs
+        //$skus = Sku::sortable()->where('prodCode', '<>', '1')->paginate(17);
+        //return view('shipping.sku', ['skus' => $skus]); // laravel way
+        return view('shipping.sku_vue'); // for vuejs way
     }
 
 
@@ -159,7 +158,7 @@ class SkuController extends Controller
          $skus = DB::table('skus')
         ->select('*')
         ->Where('prodCode', '<>', '1')
-        ->orderby('prodName')->get();
+        ->orderby('prodName_grp')->get();
 
         //$skus = Sku::all()->where('prodCode', '<>', '1')->get();
         return response()->json([
