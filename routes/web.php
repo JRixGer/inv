@@ -129,6 +129,33 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::get('/notifications/mount', [
+
+		'uses' => 'NotificationsController@mount',
+		'as' => 'notifications.mount'
+	]
+	);
+
+	Route::get('/maropost/mount', [
+
+		'uses' => 'MaropostController@mount',
+		'as' => 'maropost.mount'
+	]
+	);
+
+	Route::get('/inventory/mount', [
+
+		'uses' => 'InventoryController@mount',
+		'as' => 'inventory.mount'
+	]
+	);
+
+	Route::get('/notifications/mount', [
+
+		'uses' => 'NotificationsController@mount',
+		'as' => 'notifications.mount'
+	]
+	);
 
 	Route::post('/sku/update', [
 

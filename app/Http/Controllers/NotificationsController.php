@@ -203,5 +203,14 @@ class NotificationsController extends Controller
     {
         //
     }
+    // below are for vuejs
+    public function mount()
+    {
+        
+        $raw = Notifications::orderby('notifications_transactionTime', 'desc')->limit(15)->get();
+        return response()->json([
+            'raw'    => $raw,
+        ], 200);        
 
+    }
 }

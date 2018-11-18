@@ -61,4 +61,15 @@ class InventoryController extends Controller
         //return view('shipping.inv_consolidated', ['daily_ship' => $daily_ship_con]);
 
     }
+
+    // below are for vuejs
+    public function mount()
+    {
+        
+         $inv = Inventory::where('prodCode', '<>', '1')->orderby('prodName_common')->limit(15)->get();
+        return response()->json([
+            'inv'    => $inv,
+        ], 200);        
+
+    }    
 }

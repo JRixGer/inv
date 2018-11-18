@@ -215,7 +215,7 @@
 
     }
 
-</script>
+</script scoped>
 <style>
 .table-responsive {
     display: table;

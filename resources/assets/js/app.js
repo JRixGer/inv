@@ -18,6 +18,9 @@ window.Vue = require('vue');
 Vue.config.devtools = false;
 
 Vue.component('skuslist', require('./components/SkuMaintain.vue'));
+Vue.component('rawlist', require('./components/InsRaw.vue'));
+Vue.component('reorderlist', require('./components/ReOrder.vue'));
+Vue.component('marolist', require('./components/MaroPost.vue'));
 
 const app = new Vue({
     el: '#app'
