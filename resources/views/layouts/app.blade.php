@@ -54,8 +54,10 @@
 
 <body>
     <div id="app">
-        <!-- <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top" style="background-color: #e3f2fd;"> -->
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel" style="background-color: #e3f2fd;">
+      
+      <!-- bg-light, bg-dark, bg-info, bg-danger, bg-primary, bg-warning, or bg-success -->
+         <!-- <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top" style="background-color: #e3f2fd;"> -->
+        <nav class="navbar navbar-dark py-0 bg-dark navbar-expand-lg py-md-0 navbar-laravel" style="background-color: #e3f2fd;">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('shipping/dashboard') }}">
                    
@@ -73,9 +75,9 @@
                                 Inventory<span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="nav-link" href="{{ route('inventory.list') }}">Click Bank</a>
-                              <a class="nav-link" href="{{ route('inventory.list_is') }}">Infusion Soft</a>
-                              <a class="nav-link" href="{{ route('inventory.list_consolidated') }}">Consolidated</a>
+                              <a class="dropdown-item" href="{{ route('inventory.list') }}">Click Bank</a>
+                              <a class="dropdown-item" href="{{ route('inventory.list_is') }}">Infusion Soft</a>
+                              <a class="dropdown-item" href="{{ route('inventory.list_consolidated') }}">Consolidated</a>
                             </div>
                         </li>
                         <li><a class="nav-link" href="{{ route('sku.list') }}">SKU</a></li>
