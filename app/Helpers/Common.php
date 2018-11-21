@@ -321,67 +321,67 @@ function updateInventory_fn()
                 ->orderby('notifications.id', 'desc')
                 ->get();
 
-
   $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
   $date_now_front_num = strtotime($date_now_front);
 
   $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
-  $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
-  $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
-  $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
-  $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
-  $date_5days = strtotime('-5 days' , strtotime($date_now_front)); 
-  $date_6days = strtotime('-6 days' , strtotime($date_now_front)); 
-  $date_7days = strtotime('-7 days' , strtotime($date_now_front)); 
-  $date_8days = strtotime('-8 days' , strtotime($date_now_front)); 
-  $date_9days = strtotime('-9 days' , strtotime($date_now_front)); 
-  $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
-  $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
-  $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
-  $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
-  $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
-
+  $date_1day = strtotime($date_now_front); 
+  $date_2days = strtotime('-1 day' , strtotime($date_now_front)); 
+  $date_3days = strtotime('-2 days' , strtotime($date_now_front)); 
+  $date_4days = strtotime('-3 days' , strtotime($date_now_front)); 
+  $date_5days = strtotime('-4 days' , strtotime($date_now_front)); 
+  $date_6days = strtotime('-5 days' , strtotime($date_now_front)); 
+  $date_7days = strtotime('-6 days' , strtotime($date_now_front)); 
+  $date_8days = strtotime('-7 days' , strtotime($date_now_front)); 
+  $date_9days = strtotime('-8 days' , strtotime($date_now_front)); 
+  $date_10days = strtotime('-9 days' , strtotime($date_now_front)); 
+  $date_11days = strtotime('-10 days' , strtotime($date_now_front)); 
+  $date_12days = strtotime('-11 days' , strtotime($date_now_front)); 
+  $date_13days = strtotime('-12 days' , strtotime($date_now_front)); 
+  $date_14days = strtotime('-13 days' , strtotime($date_now_front)); 
   //to
 
   $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
   $date_now2_front_num = strtotime($date_now_front);
 
   $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
-  $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
-  $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
-  $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
-  $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
-  $date_5_days = strtotime('-5 days' , strtotime($date_now2_front)); 
-  $date_6_days = strtotime('-6 days' , strtotime($date_now2_front)); 
-  $date_7_days = strtotime('-7 days' , strtotime($date_now2_front)); 
-  $date_8_days = strtotime('-8 days' , strtotime($date_now2_front)); 
-  $date_9_days = strtotime('-9 days' , strtotime($date_now2_front)); 
-  $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
-  $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
-  $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
-  $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
-  $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
+  $date_1_day = strtotime($date_now2_front); 
+  $date_2_days = strtotime('-1 day' , strtotime($date_now2_front)); 
+  $date_3_days = strtotime('-2 days' , strtotime($date_now2_front)); 
+  $date_4_days = strtotime('-3 days' , strtotime($date_now2_front)); 
+  $date_5_days = strtotime('-4 days' , strtotime($date_now2_front)); 
+  $date_6_days = strtotime('-5 days' , strtotime($date_now2_front)); 
+  $date_7_days = strtotime('-6 days' , strtotime($date_now2_front)); 
+  $date_8_days = strtotime('-7 days' , strtotime($date_now2_front)); 
+  $date_9_days = strtotime('-8 days' , strtotime($date_now2_front)); 
+  $date_10_days = strtotime('-9 days' , strtotime($date_now2_front)); 
+  $date_11_days = strtotime('-10 days' , strtotime($date_now2_front)); 
+  $date_12_days = strtotime('-11 days' , strtotime($date_now2_front)); 
+  $date_13_days = strtotime('-12 days' , strtotime($date_now2_front)); 
+  $date_14_days = strtotime('-13 days' , strtotime($date_now2_front)); 
+
   
   DB::table('daily_ship')->delete();
 
   foreach ($invs as $key => $inv) 
   {
+      
+      $qty30 = ((int)strtotime($inv->notifications_date) >= (int)$inventory_date30  && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);     
+      $qty01 = ((int)strtotime($inv->notifications_date) >= (int)$date_1day && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
+      $qty02 = ((int)strtotime($inv->notifications_date) >= (int)$date_2days && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
+      $qty03 = ((int)strtotime($inv->notifications_date) >= (int)$date_3days && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
+      $qty04 = ((int)strtotime($inv->notifications_date) >= (int)$date_4days && (int)strtotime($inv->notifications_date) <= (int)$date_4_days? $inv->lineItems_quantity: 0);        
+      $qty05 = ((int)strtotime($inv->notifications_date) >= (int)$date_5days && (int)strtotime($inv->notifications_date) <= (int)$date_5_days? $inv->lineItems_quantity: 0);        
+      $qty06 = ((int)strtotime($inv->notifications_date) >= (int)$date_6days && (int)strtotime($inv->notifications_date) <= (int)$date_6_days? $inv->lineItems_quantity: 0);        
+      $qty07 = ((int)strtotime($inv->notifications_date) >= (int)$date_7days && (int)strtotime($inv->notifications_date) <= (int)$date_7_days? $inv->lineItems_quantity: 0); 
+      $qty08 = ((int)strtotime($inv->notifications_date) >= (int)$date_8days && (int)strtotime($inv->notifications_date) <= (int)$date_8_days? $inv->lineItems_quantity: 0); 
+      $qty09 = ((int)strtotime($inv->notifications_date) >= (int)$date_9days && (int)strtotime($inv->notifications_date) <= (int)$date_9_days? $inv->lineItems_quantity: 0); 
+      $qty10 = ((int)strtotime($inv->notifications_date) >= (int)$date_10days && (int)strtotime($inv->notifications_date) <= (int)$date_10_days? $inv->lineItems_quantity: 0); 
+      $qty11 = ((int)strtotime($inv->notifications_date) >= (int)$date_11days && (int)strtotime($inv->notifications_date) <= (int)$date_11_days? $inv->lineItems_quantity: 0); 
+      $qty12 = ((int)strtotime($inv->notifications_date) >= (int)$date_12days && (int)strtotime($inv->notifications_date) <= (int)$date_12_days? $inv->lineItems_quantity: 0); 
+      $qty13 = ((int)strtotime($inv->notifications_date) >= (int)$date_13days && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
+      $qty14 = ((int)strtotime($inv->notifications_date) >= (int)$date_14days && (int)strtotime($inv->notifications_date) <= (int)$date_14_days? $inv->lineItems_quantity: 0);
 
-      $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);       
-      $qty01 = ((int)$date_1day <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
-      $qty02 = ((int)$date_2days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
-      $qty03 = ((int)$date_3days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
-      $qty04 = ((int)$date_4days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_4_days? $inv->lineItems_quantity: 0);        
-      $qty05 = ((int)$date_5days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_5_days? $inv->lineItems_quantity: 0);        
-      $qty06 = ((int)$date_6days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_6_days? $inv->lineItems_quantity: 0);        
-      $qty07 = ((int)$date_7days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_7_days? $inv->lineItems_quantity: 0); 
-      $qty08 = ((int)$date_8days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_8_days? $inv->lineItems_quantity: 0); 
-      $qty09 = ((int)$date_9days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_9_days? $inv->lineItems_quantity: 0); 
-      $qty10 = ((int)$date_10days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_10_days? $inv->lineItems_quantity: 0); 
-      $qty11 = ((int)$date_11days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_11_days? $inv->lineItems_quantity: 0); 
-      $qty12 = ((int)$date_12days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_12_days? $inv->lineItems_quantity: 0); 
-      $qty13 = ((int)$date_13days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
-      $qty14 = ((int)$date_14days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_14_days? $inv->lineItems_quantity: 0);
 
       $totalsold = $inv->lineItems_quantity;
 
@@ -455,43 +455,45 @@ function retrieveShipInventory_fn()
   
   $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
   $date_now_front_num = strtotime($date_now_front);
-
+  $date_now_front_num_unix = (int)$date_now_front_num+86400;
   $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
-  $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
-  $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
-  $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
-  $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
-  $date_5days = strtotime('-5 days' , strtotime($date_now_front)); 
-  $date_6days = strtotime('-6 days' , strtotime($date_now_front)); 
-  $date_7days = strtotime('-7 days' , strtotime($date_now_front)); 
-  $date_8days = strtotime('-8 days' , strtotime($date_now_front)); 
-  $date_9days = strtotime('-9 days' , strtotime($date_now_front)); 
-  $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
-  $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
-  $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
-  $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
-  $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
+
+  $date_1day = strtotime($date_now_front); 
+  $date_2days = strtotime('-1 day' , strtotime($date_now_front)); 
+  $date_3days = strtotime('-2 days' , strtotime($date_now_front)); 
+  $date_4days = strtotime('-3 days' , strtotime($date_now_front)); 
+  $date_5days = strtotime('-4 days' , strtotime($date_now_front)); 
+  $date_6days = strtotime('-5 days' , strtotime($date_now_front)); 
+  $date_7days = strtotime('-6 days' , strtotime($date_now_front)); 
+  $date_8days = strtotime('-7 days' , strtotime($date_now_front)); 
+  $date_9days = strtotime('-8 days' , strtotime($date_now_front)); 
+  $date_10days = strtotime('-9 days' , strtotime($date_now_front)); 
+  $date_11days = strtotime('-10 days' , strtotime($date_now_front)); 
+  $date_12days = strtotime('-11 days' , strtotime($date_now_front)); 
+  $date_13days = strtotime('-12 days' , strtotime($date_now_front)); 
+  $date_14days = strtotime('-13 days' , strtotime($date_now_front)); 
 
   //to
 
   $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
-  $date_now2_front_num = strtotime($date_now_front);
-
+  $date_now2_front_num = strtotime($date_now2_front);
   $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
-  $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
-  $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
-  $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
-  $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
-  $date_5_days = strtotime('-5 days' , strtotime($date_now2_front)); 
-  $date_6_days = strtotime('-6 days' , strtotime($date_now2_front)); 
-  $date_7_days = strtotime('-7 days' , strtotime($date_now2_front)); 
-  $date_8_days = strtotime('-8 days' , strtotime($date_now2_front)); 
-  $date_9_days = strtotime('-9 days' , strtotime($date_now2_front)); 
-  $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
-  $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
-  $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
-  $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
-  $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
+  $inventory_date_30_unix = (int)$inventory_date_30-86400;
+  
+  $date_1_day = strtotime($date_now2_front); 
+  $date_2_days = strtotime('-1 day' , strtotime($date_now2_front)); 
+  $date_3_days = strtotime('-2 days' , strtotime($date_now2_front)); 
+  $date_4_days = strtotime('-3 days' , strtotime($date_now2_front)); 
+  $date_5_days = strtotime('-4 days' , strtotime($date_now2_front)); 
+  $date_6_days = strtotime('-5 days' , strtotime($date_now2_front)); 
+  $date_7_days = strtotime('-6 days' , strtotime($date_now2_front)); 
+  $date_8_days = strtotime('-7 days' , strtotime($date_now2_front)); 
+  $date_9_days = strtotime('-8 days' , strtotime($date_now2_front)); 
+  $date_10_days = strtotime('-9 days' , strtotime($date_now2_front)); 
+  $date_11_days = strtotime('-10 days' , strtotime($date_now2_front)); 
+  $date_12_days = strtotime('-11 days' , strtotime($date_now2_front)); 
+  $date_13_days = strtotime('-12 days' , strtotime($date_now2_front)); 
+  $date_14_days = strtotime('-13 days' , strtotime($date_now2_front)); 
   
   // join the skus and new_report here
 
@@ -512,6 +514,7 @@ function retrieveShipInventory_fn()
  */
 
 
+
   $invs = DB::connection('mysql2')->table('skus')
                 ->select(
                       'new_report.createdAt as createdAt',
@@ -521,9 +524,20 @@ function retrieveShipInventory_fn()
                       'new_report.QTY1 as qty'
                  )
                 ->leftjoin('new_report', 'skus.sku', '=', 'new_report.SKU1')
-                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '<=', $date_now_front_num)
-                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '>=', $inventory_date_30)
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '<=', $date_now_front_num_unix)
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '>=', $inventory_date_30_unix)
                 ->get();
+
+  // $invs = DB::connection('mysql2')->table('skus')
+  //               ->select(
+  //                     'new_report.createdAt as createdAt',
+  //                     'skus.lyle_sku as lyle_sku',
+  //                     'skus.sku as sku',
+  //                     'skus.description as description',
+  //                     'new_report.QTY1 as qty'
+  //                )
+  //               ->leftjoin('new_report', 'skus.sku', '=', 'new_report.SKU1')
+  //               ->get();
 
 
   DB::table('daily_ship_is')->delete();
@@ -531,21 +545,21 @@ function retrieveShipInventory_fn()
   foreach ($invs as $key => $inv) 
   {
 
-      $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_now2_front_num? $inv->qty: 0);       
-      $qty01 = ((int)$date_1day <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_1_day? $inv->qty: 0);   
-      $qty02 = ((int)$date_2days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_2_days? $inv->qty: 0);   
-      $qty03 = ((int)$date_3days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_3_days? $inv->qty: 0);        
-      $qty04 = ((int)$date_4days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_4_days? $inv->qty: 0);        
-      $qty05 = ((int)$date_5days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_5_days? $inv->qty: 0);        
-      $qty06 = ((int)$date_6days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_6_days? $inv->qty: 0);        
-      $qty07 = ((int)$date_7days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_7_days? $inv->qty: 0); 
-      $qty08 = ((int)$date_8days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_8_days? $inv->qty: 0); 
-      $qty09 = ((int)$date_9days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_9_days? $inv->qty: 0); 
-      $qty10 = ((int)$date_10days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_10_days? $inv->qty: 0); 
-      $qty11 = ((int)$date_11days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_11_days? $inv->qty: 0); 
-      $qty12 = ((int)$date_12days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_12_days? $inv->qty: 0); 
-      $qty13 = ((int)$date_13days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_13_days? $inv->qty: 0);
-      $qty14 = ((int)$date_14days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_14_days? $inv->qty: 0);
+      $qty30 = ((int)strtotime($inv->createdAt) >= (int)$inventory_date_30  && (int)strtotime($inv->createdAt) <= (int)$date_now2_front_num? $inv->qty: 0);     
+      $qty01 = ((int)strtotime($inv->createdAt) >= (int)$date_1day && (int)strtotime($inv->createdAt) <= (int)$date_1_day? $inv->qty: 0);   
+      $qty02 = ((int)strtotime($inv->createdAt) >= (int)$date_2days && (int)strtotime($inv->createdAt) <= (int)$date_2_days? $inv->qty: 0);   
+      $qty03 = ((int)strtotime($inv->createdAt) >= (int)$date_3days && (int)strtotime($inv->createdAt) <= (int)$date_3_days? $inv->qty: 0);        
+      $qty04 = ((int)strtotime($inv->createdAt) >= (int)$date_4days && (int)strtotime($inv->createdAt) <= (int)$date_4_days? $inv->qty: 0);        
+      $qty05 = ((int)strtotime($inv->createdAt) >= (int)$date_5days && (int)strtotime($inv->createdAt) <= (int)$date_5_days? $inv->qty: 0);        
+      $qty06 = ((int)strtotime($inv->createdAt) >= (int)$date_6days && (int)strtotime($inv->createdAt) <= (int)$date_6_days? $inv->qty: 0);        
+      $qty07 = ((int)strtotime($inv->createdAt) >= (int)$date_7days && (int)strtotime($inv->createdAt) <= (int)$date_7_days? $inv->qty: 0); 
+      $qty08 = ((int)strtotime($inv->createdAt) >= (int)$date_8days && (int)strtotime($inv->createdAt) <= (int)$date_8_days? $inv->qty: 0); 
+      $qty09 = ((int)strtotime($inv->createdAt) >= (int)$date_9days && (int)strtotime($inv->createdAt) <= (int)$date_9_days? $inv->qty: 0); 
+      $qty10 = ((int)strtotime($inv->createdAt) >= (int)$date_10days && (int)strtotime($inv->createdAt) <= (int)$date_10_days? $inv->qty: 0); 
+      $qty11 = ((int)strtotime($inv->createdAt) >= (int)$date_11days && (int)strtotime($inv->createdAt) <= (int)$date_11_days? $inv->qty: 0); 
+      $qty12 = ((int)strtotime($inv->createdAt) >= (int)$date_12days && (int)strtotime($inv->createdAt) <= (int)$date_12_days? $inv->qty: 0); 
+      $qty13 = ((int)strtotime($inv->createdAt) >= (int)$date_13days && (int)strtotime($inv->createdAt) <= (int)$date_13_days? $inv->qty: 0);
+      $qty14 = ((int)strtotime($inv->createdAt) >= (int)$date_14days && (int)strtotime($inv->createdAt) <= (int)$date_14_days? $inv->qty: 0);
 
       $totalsold = $inv->qty;
 
@@ -603,41 +617,40 @@ function createShipInventoryConsolidated_fn()
   $date_now_front_num = strtotime($date_now_front);
 
   $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
-  $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
-  $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
-  $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
-  $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
-  $date_5days = strtotime('-5 days' , strtotime($date_now_front)); 
-  $date_6days = strtotime('-6 days' , strtotime($date_now_front)); 
-  $date_7days = strtotime('-7 days' , strtotime($date_now_front)); 
-  $date_8days = strtotime('-8 days' , strtotime($date_now_front)); 
-  $date_9days = strtotime('-9 days' , strtotime($date_now_front)); 
-  $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
-  $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
-  $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
-  $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
-  $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
-
+  $date_1day = strtotime($date_now_front); 
+  $date_2days = strtotime('-1 day' , strtotime($date_now_front)); 
+  $date_3days = strtotime('-2 days' , strtotime($date_now_front)); 
+  $date_4days = strtotime('-3 days' , strtotime($date_now_front)); 
+  $date_5days = strtotime('-4 days' , strtotime($date_now_front)); 
+  $date_6days = strtotime('-5 days' , strtotime($date_now_front)); 
+  $date_7days = strtotime('-6 days' , strtotime($date_now_front)); 
+  $date_8days = strtotime('-7 days' , strtotime($date_now_front)); 
+  $date_9days = strtotime('-8 days' , strtotime($date_now_front)); 
+  $date_10days = strtotime('-9 days' , strtotime($date_now_front)); 
+  $date_11days = strtotime('-10 days' , strtotime($date_now_front)); 
+  $date_12days = strtotime('-11 days' , strtotime($date_now_front)); 
+  $date_13days = strtotime('-12 days' , strtotime($date_now_front)); 
+  $date_14days = strtotime('-13 days' , strtotime($date_now_front)); 
   //to
 
   $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
   $date_now2_front_num = strtotime($date_now_front);
 
   $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
-  $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
-  $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
-  $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
-  $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
-  $date_5_days = strtotime('-5 days' , strtotime($date_now2_front)); 
-  $date_6_days = strtotime('-6 days' , strtotime($date_now2_front)); 
-  $date_7_days = strtotime('-7 days' , strtotime($date_now2_front)); 
-  $date_8_days = strtotime('-8 days' , strtotime($date_now2_front)); 
-  $date_9_days = strtotime('-9 days' , strtotime($date_now2_front)); 
-  $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
-  $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
-  $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
-  $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
-  $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
+  $date_1_day = strtotime($date_now2_front); 
+  $date_2_days = strtotime('-1 day' , strtotime($date_now2_front)); 
+  $date_3_days = strtotime('-2 days' , strtotime($date_now2_front)); 
+  $date_4_days = strtotime('-3 days' , strtotime($date_now2_front)); 
+  $date_5_days = strtotime('-4 days' , strtotime($date_now2_front)); 
+  $date_6_days = strtotime('-5 days' , strtotime($date_now2_front)); 
+  $date_7_days = strtotime('-6 days' , strtotime($date_now2_front)); 
+  $date_8_days = strtotime('-7 days' , strtotime($date_now2_front)); 
+  $date_9_days = strtotime('-8 days' , strtotime($date_now2_front)); 
+  $date_10_days = strtotime('-9 days' , strtotime($date_now2_front)); 
+  $date_11_days = strtotime('-10 days' , strtotime($date_now2_front)); 
+  $date_12_days = strtotime('-11 days' , strtotime($date_now2_front)); 
+  $date_13_days = strtotime('-12 days' , strtotime($date_now2_front)); 
+  $date_14_days = strtotime('-13 days' , strtotime($date_now2_front)); 
 
   // SELECT 
   // `item_number`,`description`,
@@ -665,21 +678,21 @@ function createShipInventoryConsolidated_fn()
   foreach ($invs as $key => $inv) 
   {
 
-      $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);       
-      $qty01 = ((int)$date_1day <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
-      $qty02 = ((int)$date_2days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
-      $qty03 = ((int)$date_3days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
-      $qty04 = ((int)$date_4days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_4_days? $inv->lineItems_quantity: 0);        
-      $qty05 = ((int)$date_5days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_5_days? $inv->lineItems_quantity: 0);        
-      $qty06 = ((int)$date_6days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_6_days? $inv->lineItems_quantity: 0);        
-      $qty07 = ((int)$date_7days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_7_days? $inv->lineItems_quantity: 0); 
-      $qty08 = ((int)$date_8days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_8_days? $inv->lineItems_quantity: 0); 
-      $qty09 = ((int)$date_9days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_9_days? $inv->lineItems_quantity: 0); 
-      $qty10 = ((int)$date_10days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_10_days? $inv->lineItems_quantity: 0); 
-      $qty11 = ((int)$date_11days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_11_days? $inv->lineItems_quantity: 0); 
-      $qty12 = ((int)$date_12days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_12_days? $inv->lineItems_quantity: 0); 
-      $qty13 = ((int)$date_13days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
-      $qty14 = ((int)$date_14days <= (int)strtotime($inv->notifications_date) && (int)strtotime($inv->notifications_date) <= (int)$date_14_days? $inv->lineItems_quantity: 0);
+      $qty30 = ((int)strtotime($inv->notifications_date) >= (int)$inventory_date_30  && (int)strtotime($inv->notifications_date) <= (int)$date_now2_front_num? $inv->lineItems_quantity: 0);     
+      $qty01 = ((int)strtotime($inv->notifications_date) >= (int)$date_1day && (int)strtotime($inv->notifications_date) <= (int)$date_1_day? $inv->lineItems_quantity: 0);   
+      $qty02 = ((int)strtotime($inv->notifications_date) >= (int)$date_2days && (int)strtotime($inv->notifications_date) <= (int)$date_2_days? $inv->lineItems_quantity: 0);   
+      $qty03 = ((int)strtotime($inv->notifications_date) >= (int)$date_3days && (int)strtotime($inv->notifications_date) <= (int)$date_3_days? $inv->lineItems_quantity: 0);        
+      $qty04 = ((int)strtotime($inv->notifications_date) >= (int)$date_4days && (int)strtotime($inv->notifications_date) <= (int)$date_4_days? $inv->lineItems_quantity: 0);        
+      $qty05 = ((int)strtotime($inv->notifications_date) >= (int)$date_5days && (int)strtotime($inv->notifications_date) <= (int)$date_5_days? $inv->lineItems_quantity: 0);        
+      $qty06 = ((int)strtotime($inv->notifications_date) >= (int)$date_6days && (int)strtotime($inv->notifications_date) <= (int)$date_6_days? $inv->lineItems_quantity: 0);        
+      $qty07 = ((int)strtotime($inv->notifications_date) >= (int)$date_7days && (int)strtotime($inv->notifications_date) <= (int)$date_7_days? $inv->lineItems_quantity: 0); 
+      $qty08 = ((int)strtotime($inv->notifications_date) >= (int)$date_8days && (int)strtotime($inv->notifications_date) <= (int)$date_8_days? $inv->lineItems_quantity: 0); 
+      $qty09 = ((int)strtotime($inv->notifications_date) >= (int)$date_9days && (int)strtotime($inv->notifications_date) <= (int)$date_9_days? $inv->lineItems_quantity: 0); 
+      $qty10 = ((int)strtotime($inv->notifications_date) >= (int)$date_10days && (int)strtotime($inv->notifications_date) <= (int)$date_10_days? $inv->lineItems_quantity: 0); 
+      $qty11 = ((int)strtotime($inv->notifications_date) >= (int)$date_11days && (int)strtotime($inv->notifications_date) <= (int)$date_11_days? $inv->lineItems_quantity: 0); 
+      $qty12 = ((int)strtotime($inv->notifications_date) >= (int)$date_12days && (int)strtotime($inv->notifications_date) <= (int)$date_12_days? $inv->lineItems_quantity: 0); 
+      $qty13 = ((int)strtotime($inv->notifications_date) >= (int)$date_13days && (int)strtotime($inv->notifications_date) <= (int)$date_13_days? $inv->lineItems_quantity: 0);
+      $qty14 = ((int)strtotime($inv->notifications_date) >= (int)$date_14days && (int)strtotime($inv->notifications_date) <= (int)$date_14_days? $inv->lineItems_quantity: 0);
 
       $totalsold = $inv->lineItems_quantity;
 
@@ -790,44 +803,45 @@ function createShipInventoryConsolidated_fn()
   
   $date_now_front = date('n/j/Y', strtotime('now')).' 00:00:00';
   $date_now_front_num = strtotime($date_now_front);
-
+  $date_now_front_num_unix = (int)$date_now_front_num+86400;
   $inventory_date30 = strtotime('-30 days' , strtotime($date_now_front));
-  $date_1day = strtotime('-1 day' , strtotime($date_now_front)); 
-  $date_2days = strtotime('-2 days' , strtotime($date_now_front)); 
-  $date_3days = strtotime('-3 days' , strtotime($date_now_front)); 
-  $date_4days = strtotime('-4 days' , strtotime($date_now_front)); 
-  $date_5days = strtotime('-5 days' , strtotime($date_now_front)); 
-  $date_6days = strtotime('-6 days' , strtotime($date_now_front)); 
-  $date_7days = strtotime('-7 days' , strtotime($date_now_front)); 
-  $date_8days = strtotime('-8 days' , strtotime($date_now_front)); 
-  $date_9days = strtotime('-9 days' , strtotime($date_now_front)); 
-  $date_10days = strtotime('-10 days' , strtotime($date_now_front)); 
-  $date_11days = strtotime('-11 days' , strtotime($date_now_front)); 
-  $date_12days = strtotime('-12 days' , strtotime($date_now_front)); 
-  $date_13days = strtotime('-13 days' , strtotime($date_now_front)); 
-  $date_14days = strtotime('-14 days' , strtotime($date_now_front)); 
+
+  $date_1day = strtotime($date_now_front); 
+  $date_2days = strtotime('-1 day' , strtotime($date_now_front)); 
+  $date_3days = strtotime('-2 days' , strtotime($date_now_front)); 
+  $date_4days = strtotime('-3 days' , strtotime($date_now_front)); 
+  $date_5days = strtotime('-4 days' , strtotime($date_now_front)); 
+  $date_6days = strtotime('-5 days' , strtotime($date_now_front)); 
+  $date_7days = strtotime('-6 days' , strtotime($date_now_front)); 
+  $date_8days = strtotime('-7 days' , strtotime($date_now_front)); 
+  $date_9days = strtotime('-8 days' , strtotime($date_now_front)); 
+  $date_10days = strtotime('-9 days' , strtotime($date_now_front)); 
+  $date_11days = strtotime('-10 days' , strtotime($date_now_front)); 
+  $date_12days = strtotime('-11 days' , strtotime($date_now_front)); 
+  $date_13days = strtotime('-12 days' , strtotime($date_now_front)); 
+  $date_14days = strtotime('-13 days' , strtotime($date_now_front)); 
 
   //to
 
   $date_now2_front = date('n/j/Y', strtotime('now')).' 23:59:59';
-  $date_now2_front_num = strtotime($date_now_front);
-
+  $date_now2_front_num = strtotime($date_now2_front);
   $inventory_date_30 = strtotime('-30 days' , strtotime($date_now2_front));
-  $date_1_day = strtotime('-1 day' , strtotime($date_now2_front)); 
-  $date_2_days = strtotime('-2 days' , strtotime($date_now2_front)); 
-  $date_3_days = strtotime('-3 days' , strtotime($date_now2_front)); 
-  $date_4_days = strtotime('-4 days' , strtotime($date_now2_front)); 
-  $date_5_days = strtotime('-5 days' , strtotime($date_now2_front)); 
-  $date_6_days = strtotime('-6 days' , strtotime($date_now2_front)); 
-  $date_7_days = strtotime('-7 days' , strtotime($date_now2_front)); 
-  $date_8_days = strtotime('-8 days' , strtotime($date_now2_front)); 
-  $date_9_days = strtotime('-9 days' , strtotime($date_now2_front)); 
-  $date_10_days = strtotime('-10 days' , strtotime($date_now2_front)); 
-  $date_11_days = strtotime('-11 days' , strtotime($date_now2_front)); 
-  $date_12_days = strtotime('-12 days' , strtotime($date_now2_front)); 
-  $date_13_days = strtotime('-13 days' , strtotime($date_now2_front)); 
-  $date_14_days = strtotime('-14 days' , strtotime($date_now2_front)); 
+  $inventory_date_30_unix = (int)$inventory_date_30-86400;
   
+  $date_1_day = strtotime($date_now2_front); 
+  $date_2_days = strtotime('-1 day' , strtotime($date_now2_front)); 
+  $date_3_days = strtotime('-2 days' , strtotime($date_now2_front)); 
+  $date_4_days = strtotime('-3 days' , strtotime($date_now2_front)); 
+  $date_5_days = strtotime('-4 days' , strtotime($date_now2_front)); 
+  $date_6_days = strtotime('-5 days' , strtotime($date_now2_front)); 
+  $date_7_days = strtotime('-6 days' , strtotime($date_now2_front)); 
+  $date_8_days = strtotime('-7 days' , strtotime($date_now2_front)); 
+  $date_9_days = strtotime('-8 days' , strtotime($date_now2_front)); 
+  $date_10_days = strtotime('-9 days' , strtotime($date_now2_front)); 
+  $date_11_days = strtotime('-10 days' , strtotime($date_now2_front)); 
+  $date_12_days = strtotime('-11 days' , strtotime($date_now2_front)); 
+  $date_13_days = strtotime('-12 days' , strtotime($date_now2_front)); 
+  $date_14_days = strtotime('-13 days' , strtotime($date_now2_front)); 
   // join the skus and new_report here
 
   /*
@@ -846,7 +860,6 @@ function createShipInventoryConsolidated_fn()
  
  */
 
-
   $invs = DB::connection('mysql2')->table('skus')
                 ->select(
                       'new_report.createdAt as createdAt',
@@ -856,8 +869,8 @@ function createShipInventoryConsolidated_fn()
                       'new_report.QTY1 as qty'
                  )
                 ->leftjoin('new_report', 'skus.sku', '=', 'new_report.SKU1')
-                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '<=', $date_now_front_num)
-                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '>=', $inventory_date_30)
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '<=', $date_now_front_num_unix)
+                ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '>=', $inventory_date_30_unix)
                 ->get();
 
 
@@ -866,21 +879,22 @@ function createShipInventoryConsolidated_fn()
   foreach ($invs as $key => $inv) 
   {
 
-      $qty30 = ((int)$inventory_date30 <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_now2_front_num? $inv->qty: 0);       
-      $qty01 = ((int)$date_1day <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_1_day? $inv->qty: 0);   
-      $qty02 = ((int)$date_2days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_2_days? $inv->qty: 0);   
-      $qty03 = ((int)$date_3days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_3_days? $inv->qty: 0);        
-      $qty04 = ((int)$date_4days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_4_days? $inv->qty: 0);        
-      $qty05 = ((int)$date_5days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_5_days? $inv->qty: 0);        
-      $qty06 = ((int)$date_6days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_6_days? $inv->qty: 0);        
-      $qty07 = ((int)$date_7days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_7_days? $inv->qty: 0); 
-      $qty08 = ((int)$date_8days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_8_days? $inv->qty: 0); 
-      $qty09 = ((int)$date_9days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_9_days? $inv->qty: 0); 
-      $qty10 = ((int)$date_10days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_10_days? $inv->qty: 0); 
-      $qty11 = ((int)$date_11days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_11_days? $inv->qty: 0); 
-      $qty12 = ((int)$date_12days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_12_days? $inv->qty: 0); 
-      $qty13 = ((int)$date_13days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_13_days? $inv->qty: 0);
-      $qty14 = ((int)$date_14days <= (int)strtotime($inv->createdAt) && (int)strtotime($inv->createdAt) <= (int)$date_14_days? $inv->qty: 0);
+      $qty30 = ((int)strtotime($inv->createdAt) >= (int)$inventory_date_30  && (int)strtotime($inv->createdAt) <= (int)$date_now2_front_num? $inv->qty: 0);     
+      $qty01 = ((int)strtotime($inv->createdAt) >= (int)$date_1day && (int)strtotime($inv->createdAt) <= (int)$date_1_day? $inv->qty: 0);   
+      $qty02 = ((int)strtotime($inv->createdAt) >= (int)$date_2days && (int)strtotime($inv->createdAt) <= (int)$date_2_days? $inv->qty: 0);   
+      $qty03 = ((int)strtotime($inv->createdAt) >= (int)$date_3days && (int)strtotime($inv->createdAt) <= (int)$date_3_days? $inv->qty: 0);        
+      $qty04 = ((int)strtotime($inv->createdAt) >= (int)$date_4days && (int)strtotime($inv->createdAt) <= (int)$date_4_days? $inv->qty: 0);        
+      $qty05 = ((int)strtotime($inv->createdAt) >= (int)$date_5days && (int)strtotime($inv->createdAt) <= (int)$date_5_days? $inv->qty: 0);        
+      $qty06 = ((int)strtotime($inv->createdAt) >= (int)$date_6days && (int)strtotime($inv->createdAt) <= (int)$date_6_days? $inv->qty: 0);        
+      $qty07 = ((int)strtotime($inv->createdAt) >= (int)$date_7days && (int)strtotime($inv->createdAt) <= (int)$date_7_days? $inv->qty: 0); 
+      $qty08 = ((int)strtotime($inv->createdAt) >= (int)$date_8days && (int)strtotime($inv->createdAt) <= (int)$date_8_days? $inv->qty: 0); 
+      $qty09 = ((int)strtotime($inv->createdAt) >= (int)$date_9days && (int)strtotime($inv->createdAt) <= (int)$date_9_days? $inv->qty: 0); 
+      $qty10 = ((int)strtotime($inv->createdAt) >= (int)$date_10days && (int)strtotime($inv->createdAt) <= (int)$date_10_days? $inv->qty: 0); 
+      $qty11 = ((int)strtotime($inv->createdAt) >= (int)$date_11days && (int)strtotime($inv->createdAt) <= (int)$date_11_days? $inv->qty: 0); 
+      $qty12 = ((int)strtotime($inv->createdAt) >= (int)$date_12days && (int)strtotime($inv->createdAt) <= (int)$date_12_days? $inv->qty: 0); 
+      $qty13 = ((int)strtotime($inv->createdAt) >= (int)$date_13days && (int)strtotime($inv->createdAt) <= (int)$date_13_days? $inv->qty: 0);
+      $qty14 = ((int)strtotime($inv->createdAt) >= (int)$date_14days && (int)strtotime($inv->createdAt) <= (int)$date_14_days? $inv->qty: 0);
+
 
       $totalsold = $inv->qty;
 
