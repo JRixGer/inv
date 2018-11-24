@@ -528,18 +528,6 @@ function retrieveShipInventory_fn()
                 ->where(DB::raw('UNIX_TIMESTAMP(new_report.createdAt)'), '>=', $inventory_date_30_unix)
                 ->get();
 
-  // $invs = DB::connection('mysql2')->table('skus')
-  //               ->select(
-  //                     'new_report.createdAt as createdAt',
-  //                     'skus.lyle_sku as lyle_sku',
-  //                     'skus.sku as sku',
-  //                     'skus.description as description',
-  //                     'new_report.QTY1 as qty'
-  //                )
-  //               ->leftjoin('new_report', 'skus.sku', '=', 'new_report.SKU1')
-  //               ->get();
-
-
   DB::table('daily_ship_is')->delete();
 
   foreach ($invs as $key => $inv) 
