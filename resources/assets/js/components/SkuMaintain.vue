@@ -67,7 +67,7 @@
             <div class="modal-content">
                 <div class="modal-header">
 
-                    <h5 class="modal-title">Update SKU Qty</h5>
+                    <h5 class="modal-title">Update SKU Grouping</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -83,23 +83,23 @@
 
 
                     <div class="form-group">
-                        <label>Code:</label>
+                        <label>CB SKU Raw:</label>
                         <input type="text" class="form-control" v-model="update_sku.prodCode" disabled>
                     </div>
                     <div class="form-group">
-                        <label>CB Code:</label>
+                        <label>CB SKU Grouping:</label>
                         <input type="text" class="form-control" v-model="update_sku.prodCode_grp">
                     </div>
                     <div class="form-group">
-                        <label>IS Code:</label>
+                        <label>IS SKU Code:</label>
                         <input type="text" class="form-control" v-model="update_sku.prodCode_other">
                     </div>
                     <div class="form-group">
-                        <label>Raw Name:</label>
+                        <label>Raw Product Name:</label>
                         <input type="text" class="form-control" v-model="update_sku.prodName" disabled>
                     </div>
                     <div class="form-group">
-                        <label>Group Name:</label>
+                        <label>Product Group Name:</label>
                         <input type="text" class="form-control" v-model="update_sku.prodName_grp">
                     </div>
 

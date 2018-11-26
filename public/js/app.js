@@ -48114,7 +48114,7 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Code:")]),
+                  _c("label", [_vm._v("CB SKU Raw:")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -48144,7 +48144,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("CB Code:")]),
+                  _c("label", [_vm._v("CB SKU Grouping:")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -48174,7 +48174,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("IS Code:")]),
+                  _c("label", [_vm._v("IS SKU Code:")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -48204,7 +48204,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Raw Name:")]),
+                  _c("label", [_vm._v("Raw Product Name:")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -48234,7 +48234,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Group Name:")]),
+                  _c("label", [_vm._v("Product Group Name:")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -48365,7 +48365,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Update SKU Qty")]),
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Update SKU Grouping")]),
       _vm._v(" "),
       _c(
         "button",
