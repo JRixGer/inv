@@ -47692,7 +47692,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.table-responsive {\n    display: table;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive {\r\n    display: table;\n}\r\n", ""]);
 
 // exports
 
@@ -48477,7 +48477,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.table-responsive[data-v-52485d5e] {\n    display: table;\n}\ntd[data-v-52485d5e] {\n  font-size: 12px;\n  padding:4px;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive[data-v-52485d5e] {\r\n    display: table;\n}\ntd[data-v-52485d5e] {\r\n  font-size: 12px;\r\n  padding:4px;\n}\r\n", ""]);
 
 // exports
 
@@ -48561,17 +48561,17 @@ var render = function() {
                   return _c("tr", [
                     _c("td", [
                       _vm._v(
-                        "\n                    " +
+                        "\r\n                    " +
                           _vm._s(i.billing_fullName) +
-                          "\n                "
+                          "\r\n                "
                       )
                     ]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
-                        "\n                    " +
+                        "\r\n                    " +
                           _vm._s(i.billing_email) +
-                          "\n                "
+                          "\r\n                "
                       )
                     ])
                   ])
@@ -48692,7 +48692,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.table-responsive[data-v-5032a774] {\n    display: table;\n}\ntd[data-v-5032a774] {\n  font-size: 12px;\n  padding:4px;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive[data-v-5032a774] {\r\n    display: table;\n}\ntd[data-v-5032a774] {\r\n  font-size: 12px;\r\n  padding:4px;\n}\r\n", ""]);
 
 // exports
 
@@ -48776,17 +48776,17 @@ var render = function() {
                   return _c("tr", [
                     _c("td", [
                       _vm._v(
-                        "\n                " +
+                        "\r\n                " +
                           _vm._s(i.prodCode) +
-                          "\n            "
+                          "\r\n            "
                       )
                     ]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
-                        "\n                " +
+                        "\r\n                " +
                           _vm._s(i.prodName_common) +
-                          "\n            "
+                          "\r\n            "
                       )
                     ])
                   ])
@@ -48907,7 +48907,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.table-responsive[data-v-43ac6870] {\n    display: table;\n}\ntd[data-v-43ac6870] {\n  font-size: 12px;\n  padding: 4px;\n}\n", ""]);
+exports.push([module.i, "\n.table-responsive[data-v-43ac6870] {\r\n    display: table;\n}\ntd[data-v-43ac6870] {\r\n  font-size: 12px;\r\n  padding: 4px;\n}\r\n", ""]);
 
 // exports
 
@@ -48996,25 +48996,25 @@ var render = function() {
                   return _c("tr", [
                     _c("td", [
                       _vm._v(
-                        "\n                " +
+                        "\r\n                " +
                           _vm._s(m.billing_fullName) +
-                          "\n            "
+                          "\r\n            "
                       )
                     ]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
-                        "\n                " +
+                        "\r\n                " +
                           _vm._s(m.billing_email) +
-                          "\n            "
+                          "\r\n            "
                       )
                     ]),
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(
-                        "\n                " +
+                        "\r\n                " +
                           _vm._s(m.notifications_posted) +
-                          "\n            "
+                          "\r\n            "
                       )
                     ])
                   ])

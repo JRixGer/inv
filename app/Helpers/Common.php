@@ -956,30 +956,45 @@ class MP {
 }
 
 
+
+
 function maroPost_fn($receipt)
 {
 
   $maro = DB::table('notifications')
         ->select(
-              'notifications.dt', 
               'notifications.receipt', 
               'lineItems.itemNo', 
-              'billing.email',
-              'billing.firstName', 
-              'billing.lastName', 
+              'lineItems.productTitle', 
+              'shipping.email', 
+              'shipping.firstName', 
+              'shipping.lastName', 
+              'shipping_address.address1', 
+              'shipping_address.address2', 
+              'shipping_address.city', 
+              'shipping_address.state', 
+              'shipping_address.country', 
+              'shipping_address.postalCode', 
               'lineItems.downloadUrl', 
               'notifications.affiliate', 
               'notifications.vendor'
               )
         ->leftjoin('lineItems', 'lineItems.lnkid', '=', 'notifications.id')
-        ->leftjoin('billing', 'billing.lnkid', '=', 'notifications.id')
+        ->leftjoin('shipping', 'shipping.lnkid', '=', 'notifications.id')
+        ->leftjoin('shipping_address', 'shipping_address.lnkid', '=', 'notifications.id')
         ->where('notifications.receipt', '=', $receipt)
-        ->groupby('notifications.dt', 
-              'notifications.receipt', 
+        ->groupby('notifications.receipt', 
               'lineItems.itemNo', 
-              'billing.email',
-              'billing.firstName', 
-              'billing.lastName', 
+              'lineItems.productTitle', 
+              'shipping.email', 
+              'shipping.firstName', 
+              'shipping.lastName', 
+              'shipping_address.address1', 
+              'shipping_address.address2', 
+              'shipping_address.city', 
+              'shipping_address.state', 
+              'shipping_address.country', 
+              'shipping_address.postalCode', 
               'lineItems.downloadUrl', 
               'notifications.affiliate', 
               'notifications.vendor'
@@ -992,42 +1007,69 @@ function maroPost_fn($receipt)
     $tag = "";  
     if (strpos($m->itemNo, 'cptbook') !== false) {
         $tag = 'cptbook';
+        $welcomeid = '6863';
     } else if (strpos($m->itemNo, 'sgfl') !== false) {
         $tag = 'sgfl';
-    } if (strpos($m->itemNo, 'swt') !== false) {
+        $welcomeid = '6869';
+    } else if (strpos($m->itemNo, 'swt') !== false) {
         $tag = 'swt';
-    } if (strpos($m->itemNo, 'tclsr') !== false) {
+        $welcomeid = '6862';
+    } else if (strpos($m->itemNo, 'tclsr') !== false) {
         $tag = 'tclsr';
-    } if (strpos($m->itemNo, 'cpslbag') !== false) {
+        $welcomeid = '6861';
+    } else if (strpos($m->itemNo, 'cpslbag') !== false) {
         $tag = 'cpslbag';
-    } if (strpos($m->itemNo, 'cpusbat') !== false) {
+        $welcomeid = '6864';
+    } else if (strpos($m->itemNo, 'cpusbat') !== false) {
         $tag = 'cpusbat';
-    } if (strpos($m->itemNo, 'backpk') !== false) {
+        $welcomeid = '6857';
+    } else if (strpos($m->itemNo, 'backpk') !== false) {
         $tag = 'backpk';
-    } if (strpos($m->itemNo, 'gbgknf') !== false) {
+        $welcomeid = '6865';
+    } else if (strpos($m->itemNo, 'gbgknf') !== false) {
         $tag = 'gbgknf';
-    } if (strpos($m->itemNo, 'stflpkn') !== false) {
+        $welcomeid = '6866';
+    } else if (strpos($m->itemNo, 'stflpkn') !== false) {
         $tag = 'stflpkn';
+        $welcomeid = '6867';
+    } else if (strpos($m->itemNo, 'extbpk') !== false) {
+        $tag = 'extbpk';
+        $welcomeid = '6868';
     }
-
    
     $first_name=$m->firstName;
+    
+    $last_name=$m->lastName;
+    $address1=$m->address1;
+    $address2=$m->address2;
+    $city=$m->city;
+    $state=$m->state;
+    $country=$m->country;
+    $postalCode=$m->postalCode;
+    $productTitle=$m->productTitle;
+
     $email=$m->email;
     $page="";
     $affiliate=(empty($m->affiliate)? "":$m->affiliate);
     $updatedTimeUtc = gmdate("Y-m-d\\TH:i:s\\Z");
 
-    $contactData= ["contact"=>["email"=>$email,"first_name"=>$first_name,"custom_field"=>["opt_source_drm"=>$page,"affiliate"=>$affiliate,"updated" => $updatedTimeUtc],"add_tags"=>[$tag]]];
-    $newcontact = $mp->request('POST','lists/8/contacts',  $contactData); // 18 is he original value 
+
+    // $contactData= ["contact"=>["email"=>$email,"first_name"=>$first_name,"custom_field"=>["opt_source_drm"=>$page,"affiliate"=>$affiliate,"updated" => $updatedTimeUtc],"add_tags"=>[$tag]]];
+    // $newcontact = $mp->request('POST','lists/8/contacts',  $contactData); // 18 is he original value 
+
+    $contactData= ["contact"=>["email"=>$email,"first_name"=>$first_name,"last_name"=>$last_name,"custom_field"=>["opt_source_drm"=>$page,"affiliate"=>$affiliate,"updated" => $updatedTimeUtc, "product" => $productTitle, "address_1" => $address1, "address_2" => $address2, "city" => $city,
+                "country" => $country, "zip_code" => $postalCode, "state" => $state],"add_tags"=>[$tag]]];   
+    $mp->request('POST','lists/8/contacts',  $contactData); // 18 is he original value 
 
     DB::table('notifications')
             ->where('receipt', $receipt)
             ->update(['posted' => 1]);
 
+     
 
-
-    file_put_contents('ins_maro.txt', ">>>> result: ".print_r($contactData , true), FILE_APPEND);
-
+     /*Sending Campaign */ 
+    $contactData1= ["email"=>["campaign_id"=>$welcomeid, "contact"=>["email"=>$email, "custom_field"=>["opt_source_drm"=>$page,"affiliate"=>$affliate,"updated" => $updatedTimeUtc]]]];
+    $mp->request('POST','emails/deliver',$contactData1);
 
   }  
 }

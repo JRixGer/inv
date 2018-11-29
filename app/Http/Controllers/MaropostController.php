@@ -80,15 +80,16 @@ class MaropostController extends Controller
             ->where(
               function($query){
                 return $query
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'cptbook%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'sgfl%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%cptbook%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%sgfl%')
                   ->orWhere('lineItems.itemNo', 'LIKE', 'swt%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'tclsr%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'cpslbag%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'cpusbat%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'backpk%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'gbgknf%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'stflpkn%');
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%tclsr%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%cpslbag%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%cpusbat%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%backpk%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%gbgknf%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%extbpk%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%stflpkn%');
               }
             )
             ->orderby('notifications.id', 'desc')
@@ -168,15 +169,16 @@ class MaropostController extends Controller
           ->where(
             function($query){
               return $query
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'cptbook%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'sgfl%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%cptbook%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%sgfl%')
                   ->orWhere('lineItems.itemNo', 'LIKE', 'swt%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'tclsr%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'cpslbag%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'cpusbat%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'backpk%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'gbgknf%')
-                  ->orWhere('lineItems.itemNo', 'LIKE', 'stflpkn%');
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%tclsr%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%cpslbag%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%cpusbat%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%backpk%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%gbgknf%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%extbpk%')
+                  ->orWhere('lineItems.itemNo', 'LIKE', '%stflpkn%');
             }
           )
           ->orderby('notifications.id', 'desc')
