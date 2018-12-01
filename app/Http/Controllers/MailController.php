@@ -20,7 +20,8 @@ class MailController extends Controller
         //jrixcgeromo@gmail.com
 
         Mail::to('joe@totalpatriot.com')
-        ->bcc(['jrixgeromo@gmail.com'])
+        ->cc(['tim@concernedpatriot.com'])
+        ->bcc(['jrixgeromo@gmail.com','mcclellands2017@gmail.com'])
         ->send(new InvEmail($obj));
         // http://cb.preparedpatriot.us/inv/mail/send
     }
@@ -32,9 +33,9 @@ class MailController extends Controller
         $obj->sender = 'Rico';
         $obj->receiver = 'Joe';
  
-        Mail::to('fulfillment@concernedpatriot.com')
-        //->cc(['tim@concernedpatriot.com'])
-        ->bcc(['jrixgeromo@gmail.com'])
+        Mail::to('joe@totalpatriot.com')
+        ->cc(['tim@concernedpatriot.com'])
+        ->bcc(['jrixgeromo@gmail.com','mcclellands2017@gmail.com'])
         ->send(new InvConsolidatedEmail($obj));
         // http://cb.preparedpatriot.us/inv/mail/send_consolidated
     }
