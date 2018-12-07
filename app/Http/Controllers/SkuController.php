@@ -6,6 +6,7 @@ use App\Sku;
 //use App\SkuRunningQty;
 use Illuminate\Http\Request;
 use DB;
+use Session;
 
 class SkuController extends Controller
 {
@@ -41,14 +42,65 @@ class SkuController extends Controller
 
     public function list()
     {
-        
+
+        $input = \Request::all();
+        $n = 25;
+        if(!empty(Session::get('show_n')))
+            $n = Session::get('show_n');
+
+        if(isset($input['n']))
+        {
+           $n = $input['n'];
+           if($n == 'All')
+           {
+                $skus = DB::table('skus')
+                ->select('*')
+                ->Where('prodCode', '<>', '1')
+                ->orderby('prodName_grp')->get();
+
+                $n = $skus->count();
+           }
+        }
+
+        Session::put('show_n', $n);
+
         updateProd_fn();
 
-        $skus = Sku::sortable()->where('prodCode', '<>', '1')->paginate(17);
+        $skus = Sku::sortable()->where('prodCode', '<>', '1')->paginate($n);
         return view('shipping.sku', ['skus' => $skus]); // laravel way
         //return view('shipping.sku_vue'); // for vuejs way
     }
 
+    public function mapping()
+    {
+
+        $input = \Request::all();
+        $n = 25;
+        if(!empty(Session::get('show_n')))
+            $n = Session::get('show_n');
+
+        if(isset($input['n']))
+        {
+           $n = $input['n'];
+           if($n == 'All')
+           {
+                $skus = DB::table('skus')
+                ->select('*')
+                ->Where('prodCode', '<>', '1')
+                ->orderby('prodName_grp')->get();
+
+                $n = $skus->count();
+           }
+        }
+
+        Session::put('show_n', $n);
+
+        updateProd_fn();
+
+        $skus = Sku::sortable()->where('prodCode', '<>', '1')->paginate($n);
+        return view('shipping.sku', ['skus' => $skus]); // laravel way
+        //return view('shipping.sku_vue'); // for vuejs way
+    }
 
     // Route::any ( '/search', function () {
     //     $q = Input::get ( 'q' );

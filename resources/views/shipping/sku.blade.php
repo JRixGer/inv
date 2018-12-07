@@ -16,6 +16,16 @@
                           <form class="form-inline text-right">
                             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"  id="search_key">
                             <button class="btn btn-outline-success my-2 my-sm-0" id="search_sku" type="button"><i class="fa fa-search"></i></button>
+                              
+                            <select class="form-control" style="width: auto; margin-left: 10px" onchange="reload_sku()" id="show_n">
+                                <option <?php echo (Session::get('show_n') == 15 ? "selected":"") ?>>15</option>
+                                <option <?php echo (Session::get('show_n') == 25 ? "selected":"") ?>>25</option>
+                                <option <?php echo (Session::get('show_n') == 35 ? "selected":"") ?>>35</option>
+                                <option <?php echo (Session::get('show_n') == 'All' ? "selected":"") ?>>All</option>
+                            </select>
+                                
+
+
                           </form>
                         </span>
                         </div>
@@ -74,7 +84,8 @@
 	                           </tr>
                               @endforeach
                             <tr>
-                              <td colspan="7">
+
+                              <td colspan="8">
                                 
                                 {{ $skus->appends(\Request::except('page'))->render() }}
 
@@ -82,7 +93,7 @@
                             </tr>                              
                             @else
                             <tr>
-                              <th colspan="7">No Records</th>
+                              <th colspan="8">No Records</th>
                             </tr>
                             @endif
                       </tbody>
@@ -121,7 +132,7 @@
                     </div>
                     <div class="form-group">
                         <label>IS Code:</label>
-                        <input type="text" class="form-control" disabled id="ispcode_grp_update">
+                        <input type="text" class="form-control" id="ispcode_grp_update">
                     </div>
                     <div class="form-group">
                         <label>Raw Name:</label>

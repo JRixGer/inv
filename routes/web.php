@@ -113,6 +113,13 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::get('/sku/mapping', [
+
+		'uses' => 'SkuController@mapping',
+		'as' => 'sku.mapping'
+	]
+	);
+
 	Route::post('/sku/effect_update', [
 
 		'uses' => 'SkuController@update',

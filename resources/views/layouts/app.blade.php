@@ -80,7 +80,18 @@
                               <a class="dropdown-item" href="{{ route('inventory.list_consolidated') }}">Consolidated</a>
                             </div>
                         </li>
-                        <li><a class="nav-link" href="{{ route('sku.list') }}">SKU</a></li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                SKU Mgmt<span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{{ route('sku.mapping') }}">Mapping</a>
+                              <a class="dropdown-item" href="{{ route('sku.list') }}">Consolidated</a>
+
+                            </div>
+                        </li>
+
                         <li><a class="nav-link" href="{{ route('maropost.list') }}">Maropost</a></li>
                         <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
                     </ul>
@@ -265,6 +276,12 @@
             });  
         }
     }
+    
+    function reload_sku()
+    {
+        document.location = "{{ route('sku.list') }}?n="+$("#show_n").val();
+    }
+
 
 </script>
 <!-- {"message":"The given data was invalid.","errors":{"pqty":["The pqty must be a number."]}} -->
