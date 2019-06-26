@@ -49,6 +49,9 @@
                           <th scope="col">@sortablelink('prodName','Description Raw')</th>
                           <th scope="col">@sortablelink('prodName_grp','Description Grouping')</th>
                           <th scope="col">@sortablelink('prodName_common','Description (from shipping)')</th>
+                          <th scope="col">@sortablelink('campaign_id','Campaign ID')</th>
+                          <th scope="col">@sortablelink('tag_name','Tag Name')</th>
+                          <th scope="col">@sortablelink('goal_id','Goal ID')</th>
                           <th scope="col" colspan="2">ACTION</th>
                          </tr>
                       </thead>
@@ -76,7 +79,17 @@
                                   {{ $sku->prodName_common }}
                                 </td>
                                 <td>
-                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodCode_other ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>')"><i class="fa fa-edit"></i></a>
+                                  {{ $sku->campaign_id }}
+                                </td>
+
+                                <td>
+                                  {{ $sku->tag_name }}
+                                </td>
+                                <td>
+                                  {{ $sku->goal_id }}
+                                </td>                             
+                                <td>
+                                  <a class="btn btn-sm btn-info" onclick="load_sku('<?php echo $sku->id ?>', '<?php echo $sku->prodCode ?>','<?php echo $sku->prodCode_grp ?>','<?php echo $sku->prodCode_other ?>','<?php echo $sku->prodName ?>', '<?php echo $sku->prodName_grp ?>','<?php echo $sku->prodName_common ?>','<?php echo $sku->campaign_id ?>','<?php echo $sku->tag_name ?>','<?php echo $sku->goal_id ?>')"><i class="fa fa-edit"></i></a>
                                 </td>
                                 <td>
                                   <a class="btn btn-sm btn-warning"><i class="fa fa-trash-alt"></i></a>
@@ -147,6 +160,21 @@
                         <label>Name (from shipping):</label>
                         <input type="text" class="form-control" id="pname_common_update">
                     </div>
+
+
+                    <div class="form-group">
+                      <label>Campaign ID:</label>
+                      <input type="text" class="form-control" id="campaign_id">
+                  </div>
+                  <div class="form-group">
+                    <label>Tag Name:</label>
+                    <input type="text" class="form-control" id="tag_name">
+                  </div>
+                  <div class="form-group">
+                    <label>HasOffer Goal ID:</label>
+                    <input type="text" class="form-control" id="goal_id">
+                  </div>                 
+                  
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>

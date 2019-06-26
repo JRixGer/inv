@@ -88,12 +88,17 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="{{ route('sku.mapping') }}">Mapping</a>
                               <a class="dropdown-item" href="{{ route('sku.list') }}">Consolidated</a>
+                              <a class="dropdown-item" href="{{ route('sku.goals') }}">HasOffers Goals</a>
 
                             </div>
                         </li>
 
                         <li><a class="nav-link" href="{{ route('maropost.list') }}">Maropost</a></li>
                         <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
+                        @auth
+                        <li><a class="nav-link" href="http://ship.preparedpatriot.us/index.php?l=ea7a8e98f1a61b0ae181ba1cf22a5333">Shipping</a></li>                                                
+                        @endauth
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -158,7 +163,7 @@
     }  
 
 
-    function load_sku(id, pcode, cbpcode_grp, ispcode_grp, pname, pname_grp, pname_common)
+    function load_sku(id, pcode, cbpcode_grp, ispcode_grp, pname, pname_grp, pname_common, campaign_id, tag_name, goal_id)
     {
         $("#pid_update").val(id);
         $("#pcode_update").val(pcode);
@@ -167,7 +172,9 @@
         $("#pname_update").val(pname);
         $("#pname_grp_update").val(pname_grp);
         $("#pname_common_update").val(pname_common);
-
+        $("#campaign_id").val(campaign_id);
+        $("#tag_name").val(tag_name);
+        $("#goal_id").val(goal_id);
         $("#update_sku_model").modal('show');
     }  
 
@@ -181,6 +188,9 @@
         var ispcode_grp = $("#ispcode_grp_update").val();
         var pname_grp = $("#pname_grp_update").val();
         var pname_common = $("#pname_common_update").val();
+        var campaign_id = $("#campaign_id").val();
+        var tag_name = $("#tag_name").val();
+        var goal_id = $("#goal_id").val();
 
         //$("#update_sku_model").modal('hide');
 
@@ -193,7 +203,7 @@
         $.ajax({
            type:'POST',
            url:'/inv/shipping/sku/effect_update',
-           data:{id:pid, pcode:pcode, cbpcode_grp:cbpcode_grp, ispcode_grp:ispcode_grp, pname_grp:pname_grp, pname_common:pname_common},
+           data:{id:pid, pcode:pcode, cbpcode_grp:cbpcode_grp, ispcode_grp:ispcode_grp, pname_grp:pname_grp, pname_common:pname_common, campaign_id:campaign_id, tag_name:tag_name, goal_id:goal_id},
            success:function(data){
               window.location.reload();
            },
@@ -284,5 +294,7 @@
 
 
 </script>
+@yield('scripts')
+
 <!-- {"message":"The given data was invalid.","errors":{"pqty":["The pqty must be a number."]}} -->
 </html>

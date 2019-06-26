@@ -120,6 +120,35 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::get('/sku/goals', [
+
+		'uses' => 'SkuController@goals',
+		'as' => 'sku.goals'
+	]
+	);
+
+	Route::post('/sku/goals/save', [
+
+		'uses' => 'SkuController@save_goals',
+		'as' => 'sku.save_goals'
+	]
+	);
+
+	Route::get('/sku/goals/tbl', [
+
+		'uses' => 'SkuController@tbl_goals',
+		'as' => 'sku.tbl_goals'
+	]
+	);
+
+	Route::get('/sku/goals/delete', [
+
+		'uses' => 'SkuController@delete_goals',
+		'as' => 'sku.delete_goals'
+	]
+	);
+
+
 	Route::post('/sku/effect_update', [
 
 		'uses' => 'SkuController@update',

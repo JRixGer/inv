@@ -9,6 +9,6 @@ class Sku extends Model
 {
     //
     use Sortable;
-	public $sortable = ['prodCode','prodName','prodCode_grp','prodName_grp','prodName_common'];
+	public $sortable = ['prodCode','prodName','prodCode_grp','prodName_grp','prodName_common','campaign_id','tag_name'];
 
 }

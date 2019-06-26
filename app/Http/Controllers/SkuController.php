@@ -102,6 +102,54 @@ class SkuController extends Controller
         //return view('shipping.sku_vue'); // for vuejs way
     }
 
+    public function goals()
+    {
+
+        $data = DB::select('select * from sku_ho_goal order by offer_id, type, goal_id');
+
+
+        return view('shipping.sku_goals', compact('data')); // laravel way
+        //return view('shipping.sku_vue'); // for vuejs way
+    }
+
+    public function save_goals(Request $request)
+    {
+
+        foreach ($request->sku as $key => $row) {
+            if( $request->record_id[$key] === 'NA' ){
+                $result = DB::table('sku_ho_goal')->insert([
+                        'prodCode' => $row, 
+                        'goal_id' => $request->goal_id[$key],
+                        'offer_id' => $request->offer_id[$key],
+                        'type' => $request->type[$key]
+                    ]);
+            }else{
+                $result = DB::table('sku_ho_goal')
+                    ->where('id', $request->record_id[$key])
+                    ->update([
+                        'prodCode' => $row, 
+                        'goal_id' => $request->goal_id[$key],
+                        'offer_id' => $request->offer_id[$key],
+                        'type' => $request->type[$key]
+                    ]);
+            }
+        }
+
+        return json_encode(['status'=>$result]);
+    }
+
+    public function tbl_goals()
+    {
+        $data = DB::select('select * from sku_ho_goal order by offer_id, type, goal_id');
+        return view('shipping.sku_goals_table', compact('data'));
+    }
+
+    public function delete_goals(Request $request)
+    {
+        $result = DB::table('sku_ho_goal')->where('id',$request->id)->delete();
+        return json_encode(['status'=>true]);
+    }
+
     // Route::any ( '/search', function () {
     //     $q = Input::get ( 'q' );
     //     if($q != ""){
@@ -129,6 +177,8 @@ class SkuController extends Controller
         ->orWhere('prodCode_grp', 'LIKE', '%'.$search_key.'%')
         ->orWhere('prodName_grp', 'LIKE', '%'.$search_key.'%')
         ->orWhere('prodName_common', 'LIKE', '%'.$search_key.'%')
+        ->orWhere('campaign_id', 'LIKE', '%'.$search_key.'%')
+        ->orWhere('tag_name', 'LIKE', '%'.$search_key.'%')
         ->orderby('prodName')->get();
 
 
@@ -142,6 +192,9 @@ class SkuController extends Controller
                   <th scope=\"col\">Description Raw</th>
                   <th scope=\"col\">Description Grouping</th>
                   <th scope=\"col\">Description (from shipping)</th>
+                  <th scope=\"col\">Campaign ID</th>
+                  <th scope=\"col\">Tag Name</th>
+                  <th scope=\"col\">Goal ID</th>
                   <th scope=\"col\" colspan=\"2\">ACTION</th>
                  </tr>
               </thead>
@@ -172,7 +225,17 @@ class SkuController extends Controller
                           ". $sku->prodName_common ."
                         </td>
                         <td>
-                          <a class=\"btn btn-sm btn-info\" onclick=\"load_sku('".$sku->id."', '".$sku->prodCode."', '".$sku->prodCode_grp."', '".$sku->prodCode_other."','".$sku->prodName."', '".$sku->prodCode_grp."','".$sku->prodName_grp."','".$sku->prodName_common."')\"><i class=\"fa fa-edit\"></i></a>
+                          ". $sku->campaign_id ."
+                        </td>
+                        <td>
+                        ". $sku->tag_name ."
+                      </td>
+                        <td>
+                        ". $sku->goal_id ."
+                      </td>
+                        <td>
+                          <a class=\"btn btn-sm btn-info\" onclick=\"load_sku('".$sku->id."', '".$sku->prodCode."', '".$sku->prodCode_grp."', '".$sku->prodCode_other."','".$sku->prodName."', '".$sku->prodCode_grp."','".$sku->prodName_common."','".$sku->campaign_id."','".$sku->tag_name."','".$sku->goal_id."')\"><i class=\"fa fa-edit\"></i></a>
+                         
                         </td>
                         <td>
                           <a class=\"btn btn-sm btn-warning\"><i class=\"fa fa-trash-alt\"></i></a>
@@ -236,13 +299,20 @@ class SkuController extends Controller
         $ispcode_grp = $data['ispcode_grp'];
         $pname_grp = $data['pname_grp'];
         $pname_common = $data['pname_common'];
+        $campaign_id = $data['campaign_id'];
+        $tag_name= $data['tag_name'];
+        $goal_id= $data['goal_id'];
+
 
         $sku = Sku::find($id);
 
         $sku->prodName_grp = $pname_grp; 
         $sku->prodCode_grp = $cbpcode_grp; 
         $sku->prodCode_other = $ispcode_grp; 
-        $sku->prodName_common = $pname_common; 
+        $sku->prodName_common = $pname_common;
+        $sku->campaign_id = $campaign_id; 
+        $sku->tag_name = $tag_name; 
+        $sku->goal_id = $goal_id;
  
         $sku->save();
         //updateProd_fn();
@@ -268,6 +338,8 @@ class SkuController extends Controller
         $ispcode_grp = $data['ispcode_grp'];
         $pname_grp = $data['pname_grp'];
         $pname_common = $data['pname_common'];
+        $campaign_id = $data['campaign_id'];
+        $tag_name = $data['tag_name'];
 
         $sku = Sku::find($id);
 
@@ -275,7 +347,9 @@ class SkuController extends Controller
         $sku->prodCode_grp = $cbpcode_grp; 
         $sku->prodCode_other = $ispcode_grp; 
         $sku->prodName_common = $pname_common; 
-  
+        $sku->campaign_id = $campaign_id; 
+        $sku->tag_name = $tag_name; 
+        
         $sku->save();
 
         return response()->json([
@@ -317,7 +391,9 @@ class SkuController extends Controller
                 'prodType' => 'IS',
                 'prodCode_grp' => $i->item, 
                 'prodName_grp' => $i->name,
-                'prodName_common' => ''
+                'prodName_common' => '',
+                'campaign_id' => '',
+                'tag_name' => ''
             ]
             );
 
