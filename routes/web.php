@@ -231,6 +231,22 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
+	Route::get('/report/options', [
+
+		'uses' => 'ReportsController@options',
+		'as' => 'report.options'
+	]
+	);
+	
+	Route::get('/report/datamine', [
+
+		'uses' => 'ReportsController@datamine',
+		'as' => 'report.datamine'
+	]
+	);
+
+	
+
 	Route::get('/sku/temp', [
 
 		'uses' => 'SkuController@temp',

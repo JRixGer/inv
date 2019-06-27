@@ -17,8 +17,18 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>   -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>  
+
+    
+
     <script src="{{ asset('public/js/toastr.js') }}"></script>
+  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    
+    
+    
 
     <!-- Styles -->
     <link href="{{ asset('public/css/toastr.css') }}" rel="stylesheet" />
@@ -30,7 +40,7 @@
         color: #636b6f;
         font-family: 'Raleway', sans-serif;
         font-weight: 100;
-        height: 100vh;
+        /* height: 100vh; */
         margin: 0;
         background: url("/inv/public/images/fba7da61.png") repeat;
     }    
@@ -49,7 +59,17 @@
         -webkit-text-decoration-skip: objects;
         font-weight: 700;
     }
+    .datefrom {
+        display: none;
+        width:100%
+    }
+    .dateto {
+        display: none;
+        width:100%
+    }
+
      </style>
+
 </head>
 
 <body>
@@ -95,6 +115,7 @@
 
                         <li><a class="nav-link" href="{{ route('maropost.list') }}">Maropost</a></li>
                         <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
+                        <li><a class="nav-link" href="{{ route('report.options') }}">DB Mining</a></li>
                         @auth
                         <li><a class="nav-link" href="http://ship.preparedpatriot.us/index.php?l=ea7a8e98f1a61b0ae181ba1cf22a5333">Shipping</a></li>                                                
                         @endauth
@@ -292,7 +313,66 @@
         document.location = "{{ route('sku.list') }}?n="+$("#show_n").val();
     }
 
+    function showHide()
+    {
+        if($("#reportOpt").val() == '2')                                
+        {
+            $(".datefrom").show();
+            $(".dateto").show();
+        }
+        else
+        {
+            $(".datefrom").hide();
+            $(".dateto").hide();
+        }
+    }
 
+    function dataMine()
+    {
+        $("#dataList").html('<div id="imgcenter" style="width:100%; height:100%"><img src="../../public/images/loading.gif"></div>');
+
+        var repOption = $("#reportOpt").val();
+        var fromDt = $("#datepicker1").val();
+        var toDt = $("#datepicker2").val();
+
+        $.ajaxSetup({
+            headers: {
+
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+           type:'GET',
+           url:'/inv/shipping/report/datamine',
+           data:{repOption:repOption, fromDt:fromDt, toDt:toDt},
+           success:function(data){
+               
+                if(repOption == 1)
+                {
+                    var data = JSON.parse(data);
+                    var h = "<h3>"+$("#reportOpt option:selected").html()+"</h3><br><br>";
+                    var totMember = "<h5><b>Total Members To Date:</b> "+data.members+"</h5><br>";
+                    var memberYesterday = "<h5><b>Members Added Yesterday:</b> "+data.membersYesterday+"</h5><br>";
+                    var member7DaysAgo = "<h5><b>Members Added in last 7 Days:</b> "+data.membersLast7Days+"</h5>";
+
+                    $("#dataList").html(h+totMember+memberYesterday+member7DaysAgo);
+
+                }
+            
+           }
+        });  
+    }
+    
+
+    jQuery(document).ready(function($) {
+        $('#datepicker1').datepicker({
+            dateFormat: "mm-dd-yyyy", autoclose: true
+        });
+        $('#datepicker2').datepicker({
+            dateFormat: "mm-dd-yyyy", autoclose: true
+        });        
+    });
+    
 </script>
 @yield('scripts')
 
