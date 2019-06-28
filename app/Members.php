@@ -80,9 +80,9 @@ class Members extends Model
 
 	protected $table = 'notifications';
 
-    public function lineitems()
+    public function lineItems()
     {
-    	return $this->hasMany('App\lineitems');
+    	return $this->hasMany('App\LineItems','lnkid','id');
     }
 
 }

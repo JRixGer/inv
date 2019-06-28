@@ -18,12 +18,38 @@
                                 <option value='6'>Display Affiliates and the Amount of Members Added</option>
                             </select>   
                         </div>  
-                        <div class="col-md-2 datefrom">
+
+                        <div class="col-md-2 transactiontype">
+                            <div class="input-group date">
+                                <select class="form-control" id="transactionType">
+
+                                    @foreach($transtypes as $transtype)
+                                        <option value="{{$transtype->transactionType}}">{{$transtype->transactionType}}</option>                                    
+                                    @endforeach
+
+                                </select>   
+                                
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 datefilter">
+                            <div class="input-group date">
+
+                                <select class="form-control" id="dateFilter">
+                                    <option value='ToDate'>To Date</option>
+                                    <option value='Yesterday'>Yesterday</option>
+                                    <option value='7Days'>Last 7 Days</option>                                    
+                                </select>   
+
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-1 datefrom">
                             <div class="input-group date">
                                 <input type="text" class="form-control" id="datepicker1" placeholder="From date">
                             </div>
                         </div>
-                        <div class="col-md-2 dateto">
+                        <div class="col-md-1 dateto">
                             <div class="input-group date">
                                 <input type="text" class="form-control" id="datepicker2" placeholder="To date">
                             </div>

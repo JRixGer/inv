@@ -67,7 +67,14 @@
         display: none;
         width:100%
     }
-
+    .transactiontype {
+        display: none;
+        width:100%
+    }
+    .datefilter{
+        display: none;
+        width:100%
+    }
      </style>
 
 </head>
@@ -319,11 +326,16 @@
         {
             $(".datefrom").show();
             $(".dateto").show();
+            $(".transactiontype").show();
+            $(".datefilter").show();
         }
         else
         {
             $(".datefrom").hide();
             $(".dateto").hide();
+            $(".transactiontype").hide();
+            $(".datefilter").hide();
+
         }
     }
 
@@ -334,6 +346,8 @@
         var repOption = $("#reportOpt").val();
         var fromDt = $("#datepicker1").val();
         var toDt = $("#datepicker2").val();
+        var transType = $("#transactionType").val();
+        var dateFltr = $("#dateFilter").val();
 
         $.ajaxSetup({
             headers: {
@@ -341,22 +355,34 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+
         $.ajax({
            type:'GET',
            url:'/inv/shipping/report/datamine',
-           data:{repOption:repOption, fromDt:fromDt, toDt:toDt},
-           success:function(data){
-               
+           data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr},
+           success:function(data){               
+
+
+
                 if(repOption == 1)
-                {
-                    var data = JSON.parse(data);
+                {                                
+                    
+                    var data = JSON.parse(data);                    
                     var h = "<h3>"+$("#reportOpt option:selected").html()+"</h3><br><br>";
                     var totMember = "<h5><b>Total Members To Date:</b> "+data.members+"</h5><br>";
                     var memberYesterday = "<h5><b>Members Added Yesterday:</b> "+data.membersYesterday+"</h5><br>";
-                    var member7DaysAgo = "<h5><b>Members Added in last 7 Days:</b> "+data.membersLast7Days+"</h5>";
+                    var member7DaysAgo = "<h5><b>Members Added in Last 7 Days:</b> "+data.membersLast7Days+"</h5>";
 
                     $("#dataList").html(h+totMember+memberYesterday+member7DaysAgo);
 
+                }
+
+                if(repOption == 2)
+                {                    
+                    var data = JSON.parse(data);
+                    var members ="<h5><b>Found</b> "+ data.searchTransType+" member(s) To Date.</h5><br>";
+                    //alert(transType);
+                    $("#dataList").html(members);
                 }
             
            }
