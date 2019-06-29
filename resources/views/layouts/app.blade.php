@@ -11,24 +11,36 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('public/js/app.js') }}" defer></script>
+    <!-- <script src="{{ asset('public/js/app.js') }}" defer></script> -->
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
     
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>   -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>  
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>  
 
     
 
     <script src="{{ asset('public/js/toastr.js') }}"></script>
-  
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+
+    <!-- <link href="{{ asset('public/dyna_tbl/jquery.dynatable.css') }}" rel="stylesheet">
+    <script src="{{ asset('public/dyna_tbl/jquery.dynatable.js') }}"></script> -->
+
     
+
+
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/scroller/2.0.0/css/scroller.dataTables.min.css" rel="stylesheet">
+
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script>
+
     
-    
+
+
 
     <!-- Styles -->
     <link href="{{ asset('public/css/toastr.css') }}" rel="stylesheet" />
@@ -76,8 +88,6 @@
         width:100%
     }
      </style>
-
-</head>
 
 <body>
     <div id="app">
@@ -167,6 +177,7 @@
         </main>
    
     </div>
+    @yield('javascripts')
 </body>
 
 <script type="text/javascript">
@@ -339,10 +350,12 @@
         }
     }
 
+      
     function dataMine()
     {
-        $("#dataList").html('<div id="imgcenter" style="width:100%; height:100%"><img src="../../public/images/loading.gif"></div>');
 
+        $("#spinner").html('<div id="imgcenter" style="width:100%; height:100%"><img src="../../public/images/loading.gif"><p style="text-align:center; color:#ccc; font-size:10px">please wait</p></div>');
+        $("#dataList").hide();
         var repOption = $("#reportOpt").val();
         var fromDt = $("#datepicker1").val();
         var toDt = $("#datepicker2").val();
@@ -361,19 +374,17 @@
            url:'/inv/shipping/report/datamine',
            data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr},
            success:function(data){               
-
-
-
                 if(repOption == 1)
-                {                                
-                    
-                    var data = JSON.parse(data);                    
-                    var h = "<h3>"+$("#reportOpt option:selected").html()+"</h3><br><br>";
-                    var totMember = "<h5><b>Total Members To Date:</b> "+data.members+"</h5><br>";
-                    var memberYesterday = "<h5><b>Members Added Yesterday:</b> "+data.membersYesterday+"</h5><br>";
-                    var member7DaysAgo = "<h5><b>Members Added in Last 7 Days:</b> "+data.membersLast7Days+"</h5>";
+                {                
 
-                    $("#dataList").html(h+totMember+memberYesterday+member7DaysAgo);
+                    $("#spinner").html('');
+                    $("#dataList").show();
+                    var data = JSON.parse(data);
+                    var totMember = "<h5><span>Total Members To Date: <b>"+data.members+"</b>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    var memberYesterday = "<span>Members Added Yesterday: <b>"+data.membersYesterday+"</b>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    var member7DaysAgo = "<span>Members Added in Last 7 Days: <b>"+data.membersLast7Days+"</b></span></h5>";
+                    $("#summary").html(totMember+memberYesterday+member7DaysAgo);
+                    list(data.listAll);
 
                 }
 
@@ -387,8 +398,31 @@
             
            }
         });  
+
+        
     }
-    
+
+    function list(data)
+    {
+  
+        $('#datatable').DataTable( {
+            lengthMenu: [ 10, 25, 50, 75, 100 ],
+            data: data,
+            retrieve: true,
+            "columns": [
+              { "data": "firstName" },
+              { "data": "lastName" },
+              { "data": "email" },
+              { "data": "Dates" },
+              { "data": "SKUs" },
+              { "data": "ProductNames" },
+              { "data": "Receipts" },
+              { "data": "NoOfReBills" }
+
+            ]
+        } );
+    }
+
 
     jQuery(document).ready(function($) {
         $('#datepicker1').datepicker({

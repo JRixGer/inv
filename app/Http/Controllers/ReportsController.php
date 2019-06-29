@@ -31,6 +31,7 @@ class ReportsController extends Controller
 
     $para = $request->toArray();
     
+    $listAll = null;
     $AllMembers = 0;
     $MembersYesterday = 0;
     $MembersLast7Days = 0;
@@ -48,23 +49,38 @@ class ReportsController extends Controller
     if($para["repOption"] == "1")
     {
     
-        $AllMembers = Members::whereHas('lineItems', function ($query) {
-              $query->where('itemNo', 'like', '%pwcp%');
-            })->count();
+        $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')->where('lineItems.itemNo', 'like', '%pwcp%')->where('notifications.transactionType', '<>', 'ABANDONED_ORDER')->where('notifications.transactionType', '<>', 'CANCEL-REBILL')->where('notifications.transactionType', '<>', 'CGBK')->where('notifications.transactionType', '<>', 'TEST')->where('notifications.transactionType', '<>', 'TEST_BILL')->where('notifications.transactionType', '<>', 'TEST_SALE')->where('billing.firstName', '<>', '')->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+  
+        $membersYesterday = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')->where('lineItems.itemNo', 'like', '%pwcp%')->where('notifications.transactionType', '<>', 'ABANDONED_ORDER')->where('notifications.transactionType', '<>', 'CANCEL-REBILL')->where('notifications.transactionType', '<>', 'CGBK')->where('notifications.transactionType', '<>', 'TEST')->where('notifications.transactionType', '<>', 'TEST_BILL')->where('notifications.transactionType', '<>', 'TEST_SALE')->where('billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+  
+        $membersLast7Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')->where('lineItems.itemNo', 'like', '%pwcp%')->where('notifications.transactionType', '<>', 'ABANDONED_ORDER')->where('notifications.transactionType', '<>', 'CANCEL-REBILL')->where('notifications.transactionType', '<>', 'CGBK')->where('notifications.transactionType', '<>', 'TEST')->where('notifications.transactionType', '<>', 'TEST_BILL')->where('notifications.transactionType', '<>', 'TEST_SALE')->where('billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+  
+        $listAll = DB::table('billing')
+            ->distinct()
+            ->select(
+              'billing.firstName',
+              'billing.lastName',
+              'billing.email',
+              DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+              DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+              DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+              DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
+              DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+               )
+            ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+            ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+            ->where('lineItems.itemNo', 'like', '%pwcp%')
+            ->where('notifications.transactionType', '<>', 'ABANDONED_ORDER')
+            ->where('notifications.transactionType', '<>', 'CANCEL-REBILL')
+            ->where('notifications.transactionType', '<>', 'CGBK')
+            ->where('notifications.transactionType', '<>', 'TEST')
+            ->where('notifications.transactionType', '<>', 'TEST_BILL')
+            ->where('notifications.transactionType', '<>', 'TEST_SALE')
+            ->where('billing.firstName', '<>', '')
+            ->groupby('billing.firstName', 'billing.lastName','billing.email')
+            ->get();
 
-        $MembersYesterday = Members::where(DB::raw("(STR_TO_DATE(dt,'%Y-%m-%d'))"), '=', $searchDt)
-            ->whereHas('lineItems', function ($query) {
-              $query->where('itemNo', 'like', '%pwcp%');
-            })->count();
-
-        $MembersLast7Days = Members::where(DB::raw("(STR_TO_DATE(dt,'%Y-%m-%d'))"), '>=', $searchStartDt)
-            ->where(DB::raw("(STR_TO_DATE(dt,'%Y-%m-%d'))"), '<=', $searchEndDt)
-            ->whereHas('lineItems', function ($query) {
-              $query->where('itemNo', 'like', '%pwcp%');
-            })->count();
-
-     
-      return json_encode(['members'=>$AllMembers, 'membersYesterday'=>$MembersYesterday, 'membersLast7Days'=>$MembersLast7Days]);    
+        return json_encode(['listAll'=>$listAll, 'members'=>$allMembers->count(), 'membersYesterday'=>$membersYesterday->count(), 'membersLast7Days'=>$membersLast7Days->count()]);    
     
     }else if($para["repOption"] == "2"){      
 
