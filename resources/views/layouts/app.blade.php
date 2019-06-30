@@ -20,16 +20,15 @@
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>   -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>  
 
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     
 
     <script src="{{ asset('public/js/toastr.js') }}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.standalone.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-
-    <!-- <link href="{{ asset('public/dyna_tbl/jquery.dynatable.css') }}" rel="stylesheet">
-    <script src="{{ asset('public/dyna_tbl/jquery.dynatable.js') }}"></script> -->
-
-    
 
 
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -37,9 +36,6 @@
 
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/scroller/2.0.0/js/dataTables.scroller.min.js"></script>
-
-    
-
 
 
     <!-- Styles -->
@@ -87,6 +83,18 @@
         display: none;
         width:100%
     }
+    .limit-text {
+        text-align:left;
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-transition: all 0.35s ease;
+        -moz-transition: all 0.35s ease;
+        -o-transition: all 0.35s ease;
+        -ms-transition: all 0.35s ease;
+        transition: all 0.35s ease;
+    }  
      </style>
 
 <body>
@@ -380,10 +388,11 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     var data = JSON.parse(data);
-                    var totMember = "<h5><span>Total Members To Date: <b>"+data.members+"</b>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-                    var memberYesterday = "<span>Members Added Yesterday: <b>"+data.membersYesterday+"</b>&nbsp;&nbsp;&nbsp;&nbsp;</span>";
-                    var member7DaysAgo = "<span>Members Added in Last 7 Days: <b>"+data.membersLast7Days+"</b></span></h5>";
-                    $("#summary").html(totMember+memberYesterday+member7DaysAgo);
+                    var totMember = "<p><span>Total Members To Date: <font style='font-size:20px'><b>"+data.members+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    var memberYesterday = "<span>Added Yesterday: <font style='font-size:20px'><b>"+data.membersYesterday+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    var member7DaysAgo = "<span>Last 7 Days: <font style='font-size:20px'><b>"+data.membersLast7Days+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    var member30DaysAgo = "<span>Last 30 Days: <font style='font-size:20px'><b>"+data.membersLast30Days+"</b></font></span></p>";
+                    $("#summary").html(totMember+memberYesterday+member7DaysAgo+member30DaysAgo);
                     list(data.listAll);
 
                 }
@@ -424,15 +433,24 @@
     }
 
 
-    jQuery(document).ready(function($) {
+    // jQuery(document).ready(function($) {
+    //     $('#datepicker1').datepicker({
+    //         dateFormat: "mm-dd-yyyy", autoclose: true
+    //     });
+    //     $('#datepicker2').datepicker({
+    //         dateFormat: "mm-dd-yyyy", autoclose: true
+    //     });        
+    // });
+
+    $(document).ready(function() {
         $('#datepicker1').datepicker({
             dateFormat: "mm-dd-yyyy", autoclose: true
         });
         $('#datepicker2').datepicker({
             dateFormat: "mm-dd-yyyy", autoclose: true
-        });        
+        });  
     });
-    
+
 </script>
 @yield('scripts')
 
