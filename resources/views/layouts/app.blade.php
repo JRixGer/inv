@@ -426,15 +426,15 @@
                     $("#dataList").show();
                     var data = JSON.parse(data);
 
-                    var header = "<table class='table table-bordered' style='width:100%'><tr><td style='font-weight:bold'>MEMBERS</td><td style='font-weight:bold'>To Date</td><td style='font-weight:bold'>Last 30 Days</td><td style='font-weight:bold'>Last 7 days</td><td style='font-weight:bold'>Yesterday</td><td style='font-weight:bold'>Date Range<br>"+fromDt+" &#8594; "+toDt+"</td></tr>";
+                    var header = "<table class='table table-bordered' style='width:100%; font-size:18px'><tr><td style='font-weight:bold'>MEMBERS</td><td style='font-weight:bold'>Date Range:<br>"+fromDt+" &#8594; "+toDt+"</td><td style='font-weight:bold'>To Date(Total)</td><td style='font-weight:bold'>Last 30 Days</td><td style='font-weight:bold'>Last 7 days</td><td style='font-weight:bold'>Yesterday</td></tr>";
 
-                    var activeM = "<tr><td>ACTIVE</td><td>"+data.members+"</td><td>"+data.membersLast30Days+"</td><td>"+data.membersLast7Days+"</td><td>"+data.membersYesterday+"</td><td>"+data.membersRange+"</td></tr>";
+                    var activeM = "<tr><td>ACTIVE</td><td>"+data.membersRange+"</td><td>"+data.members+"</td><td>"+data.membersLast30Days+"</td><td>"+data.membersLast7Days+"</td><td>"+data.membersYesterday+"</td></tr>";
 
-                    var canceledM = "<tr><td>CANCELED</td><td>"+data.membersCanceled+"</td><td>"+data.membersLast30DaysCanceled+"</td><td>"+data.membersLast7DaysCanceled+"</td><td>"+data.membersYesterdayCanceled+"</td><td>"+data.membersRangeCanceled+"</td></tr></table>";
+                    var canceledM = "<tr><td>CANCELED</td><td>"+data.membersRangeCanceled+"</td><td>"+data.membersCanceled+"</td><td>"+data.membersLast30DaysCanceled+"</td><td>"+data.membersLast7DaysCanceled+"</td><td>"+data.membersYesterdayCanceled+"</td></tr></table>";
                     
                     $("#summary").html(header+activeM+canceledM);
-                    $("#datatable").html("");
-                    
+                    $('#datatable').DataTable().destroy();
+                    $('#datatable').html("");
                     //list(data.listAll);
                 }
            }

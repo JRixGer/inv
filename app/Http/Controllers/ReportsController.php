@@ -161,35 +161,35 @@ class ReportsController extends Controller
 
         $allMembersCanceled = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK', 'RFND'])
+        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK'])
         ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
         $membersYesterdayCanceled = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK', 'RFND'])
+        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK'])
         ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
 
         ->where('billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
         $membersLast7DaysCanceled = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK', 'RFND'])
+        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK'])
         ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
 
         ->where('billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt7)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
         $membersLast30DaysCanceled = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK', 'RFND'])
+        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK'])
         ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
 
         ->where('billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
 
         $membersRangeCanceled = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK', 'RFND'])
+        ->whereIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL', 'CGBK'])
         ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDtRange)
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '<=', $searchEndDtRange)
