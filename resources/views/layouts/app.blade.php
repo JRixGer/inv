@@ -140,7 +140,15 @@
 
                         <li><a class="nav-link" href="{{ route('maropost.list') }}">Maropost</a></li>
                         <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
-                        <li><a class="nav-link" href="{{ route('report.options') }}">DB Mining</a></li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            DB Mining<span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{{ route('report.options') }}">PWCP</a>
+                              <a class="dropdown-item" href="#">PIC</a>
+                            </div>
+                        </li>                        
                         @auth
                         <li><a class="nav-link" href="http://ship.preparedpatriot.us/index.php?l=ea7a8e98f1a61b0ae181ba1cf22a5333">Shipping</a></li>                                                
                         @endauth
@@ -362,13 +370,17 @@
     function dataMine()
     {
 
-        $("#spinner").html('<div id="imgcenter" style="width:100%; height:100%"><img src="../../public/images/loading.gif"><p style="text-align:center; color:#ccc; font-size:10px">please wait</p></div>');
-        $("#dataList").hide();
         var repOption = $("#reportOpt").val();
         var fromDt = $("#datepicker1").val();
         var toDt = $("#datepicker2").val();
         var transType = $("#transactionType").val();
         var dateFltr = $("#dateFilter").val();
+
+        if(repOption == 2 && (fromDt.length == 0 || toDt.length == 0))
+            return;
+
+        $("#spinner").html('<div id="imgcenter" style="width:100%; height:100%"><img src="../../public/images/loading.gif"><p style="text-align:center; color:#ccc; font-size:10px">please wait</p></div>');
+        $("#dataList").hide();
 
         $.ajaxSetup({
             headers: {
@@ -381,10 +393,11 @@
            type:'GET',
            url:'/inv/shipping/report/datamine',
            data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr},
-           success:function(data){               
+           success:function(data){        
+                       
                 if(repOption == 1)
-                {                
-
+                {          
+                    //console.log(repOption);      
                     $("#spinner").html('');
                     $("#dataList").show();
                     var data = JSON.parse(data);
@@ -396,13 +409,18 @@
                     list(data.listAll);
 
                 }
-
-                if(repOption == 2)
-                {                    
+                else if(repOption == 2)
+                {             
+                    //console.log(repOption);       
+                    $("#spinner").html('');
+                    $("#dataList").show();
                     var data = JSON.parse(data);
-                    var members ="<h5><b>Found</b> "+ data.searchTransType+" member(s) To Date.</h5><br>";
-                    //alert(transType);
-                    $("#dataList").html(members);
+                    // var totMember = "<p><span>Total Members To Date: <font style='font-size:20px'><b>"+data.members+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    // var memberYesterday = "<span>Added Yesterday: <font style='font-size:20px'><b>"+data.membersYesterday+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    // var member7DaysAgo = "<span>Last 7 Days: <font style='font-size:20px'><b>"+data.membersLast7Days+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    // var member30DaysAgo = "<span>Last 30 Days: <font style='font-size:20px'><b>"+data.membersLast30Days+"</b></font></span></p>";
+                    $("#summary").html("");
+                    list(data.listAll);
                 }
             
            }
@@ -413,7 +431,8 @@
 
     function list(data)
     {
-  
+        console.log(data)
+        $('#datatable').DataTable().destroy();
         $('#datatable').DataTable( {
             lengthMenu: [ 10, 25, 50, 75, 100 ],
             data: data,
@@ -431,16 +450,6 @@
             ]
         } );
     }
-
-
-    // jQuery(document).ready(function($) {
-    //     $('#datepicker1').datepicker({
-    //         dateFormat: "mm-dd-yyyy", autoclose: true
-    //     });
-    //     $('#datepicker2').datepicker({
-    //         dateFormat: "mm-dd-yyyy", autoclose: true
-    //     });        
-    // });
 
     $(document).ready(function() {
         $('#datepicker1').datepicker({

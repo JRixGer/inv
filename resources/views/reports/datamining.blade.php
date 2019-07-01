@@ -7,7 +7,7 @@
                 <div class="card-header title_">
                     <div class="row">
                         <div class="col-md-1" style="padding-top:8px">
-                        <h5 class="limit-text">DB Mining  </h5>
+                        <h5 class="limit-text">PWCP</h5>
                         </div>  
                         <div class="col-md-3">
                             <select class="form-control" id="reportOpt" onChange="showHide()">
