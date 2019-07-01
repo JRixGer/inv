@@ -71,6 +71,7 @@
                         <div id="summary">
                         </div> 
                         <hr>
+                        <div id="datatablediv">
                         <table class="table display" id="datatable" style="width:100%">
                             <thead>
                                 <tr>
@@ -88,6 +89,7 @@
                             <tbody>
                             </tbody>
                         </table>
+                        </div>
                         </div>
                         <div class="col-md-12" id="spinner" style="padding:20px;">
                         </div>                        

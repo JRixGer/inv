@@ -349,10 +349,18 @@
 
     function showHide()
     {
-        if($("#reportOpt").val() == '2' || $("#reportOpt").val() == '4')                                
+        if($("#reportOpt").val() == '2')                                
         {
             $(".datefrom").show();
             $(".dateto").show();
+            $(".transactiontype").show();
+            $(".datefilter").show();
+        }
+        else if($("#reportOpt").val() == '3')                                
+        {
+            $(".datefrom").show();
+            $(".dateto").show();
+            $(".datefilter").show();
         }
         else
         {
@@ -360,6 +368,7 @@
             $(".dateto").hide();
             $(".transactiontype").hide();
             $(".datefilter").hide();
+
         }
     }
 
@@ -397,7 +406,6 @@
                     //console.log(repOption);      
                     $("#spinner").html('');
                     $("#dataList").show();
-                    $("#datatablediv").show();
                     var data = JSON.parse(data);
                     var totMember = "<p><span>Total Members To Date: <font style='font-size:20px'><b>"+data.members+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
                     var memberYesterday = "<span>Added Yesterday: <font style='font-size:20px'><b>"+data.membersYesterday+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
@@ -412,33 +420,13 @@
                     //console.log(repOption);       
                     $("#spinner").html('');
                     $("#dataList").show();
-                    $("#datatablediv").show();
                     var data = JSON.parse(data);
-                    $("#summary").html("");
+                    // var totMember = "<p><span>Total Members To Date: <font style='font-size:20px'><b>"+data.members+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    // var memberYesterday = "<span>Added Yesterday: <font style='font-size:20px'><b>"+data.membersYesterday+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    // var member7DaysAgo = "<span>Last 7 Days: <font style='font-size:20px'><b>"+data.membersLast7Days+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    // var member30DaysAgo = "<span>Last 30 Days: <font style='font-size:20px'><b>"+data.membersLast30Days+"</b></font></span></p>";
+                    // $("#summary").html(totMember+memberYesterday+member7DaysAgo+member30DaysAgo);
                     list(data.listAll);
-                }
-                else if(repOption == 3)
-                {
-
-                }            
-                else if(repOption == 4)
-                {             
-                    //console.log(repOption);       
-                    $("#spinner").html('');
-                    $("#dataList").show();
-                    $("#datatablediv").show();
-                    
-                    var data = JSON.parse(data);
-
-                    var header = "<table class='table table-bordered' style='width:100%; font-size:18px'><tr><td style='font-weight:bold'>MEMBERS</td><td style='font-weight:bold'>Date Range:<br>"+fromDt+" &#8594; "+toDt+"</td><td style='font-weight:bold'>To Date(Total)</td><td style='font-weight:bold'>Last 30 Days</td><td style='font-weight:bold'>Last 7 days</td><td style='font-weight:bold'>Yesterday</td></tr>";
-
-                    var activeM = "<tr><td>ACTIVE</td><td>"+data.membersRange+"</td><td>"+data.members+"</td><td>"+data.membersLast30Days+"</td><td>"+data.membersLast7Days+"</td><td>"+data.membersYesterday+"</td></tr>";
-
-                    var canceledM = "<tr><td>CANCELED</td><td>"+data.membersRangeCanceled+"</td><td>"+data.membersCanceled+"</td><td>"+data.membersLast30DaysCanceled+"</td><td>"+data.membersLast7DaysCanceled+"</td><td>"+data.membersYesterdayCanceled+"</td></tr></table>";
-                    
-                    $("#summary").html(header+activeM+canceledM);
-                    $('#datatablediv').hide();
-                    //list(data.listAll);
                 }
                 else if(repOption == 6)
                 {             
@@ -446,7 +434,8 @@
                     $("#dataList").show();
                     var data = JSON.parse(data);
                     
-                }     
+                }                 
+            
            }
         });  
 
