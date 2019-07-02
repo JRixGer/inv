@@ -211,7 +211,23 @@ class ReportsController extends Controller
       }
     }else if($para["repOption"] == "6"){      
 
-          $listAll = DB::table('billing')
+
+        $totalAffiliates = DB::table('notifications')
+          ->distinct()
+          ->select('notifications.affiliate')
+          ->leftjoin('billing', 'notifications.id', '=', 'billing.lnkid')
+          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL','CGBK', 'TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('notifications.affiliate', '<>', '')
+          ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+    
+        
+        $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.phoneNumber','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')->where('lineItems.itemNo', 'like', '%pwcp%')->where('notifications.transactionType', '<>', 'ABANDONED_ORDER')->where('notifications.transactionType', '<>', 'CANCEL-REBILL')->where('notifications.transactionType', '<>', 'CGBK')->where('notifications.transactionType', '<>', 'TEST')->where('notifications.transactionType', '<>', 'TEST_BILL')->where('notifications.transactionType', '<>', 'TEST_SALE')->where('billing.firstName', '<>', '')->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+  
+
+
+        $listAll = DB::table('notifications')
           ->distinct()
           ->select(
             'notifications.affiliate',
@@ -224,20 +240,15 @@ class ReportsController extends Controller
             DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
             DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
             )
-          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+          ->leftjoin('billing', 'notifications.id', '=', 'billing.lnkid')
           ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
           ->where('lineItems.itemNo', 'like', '%pwcp%')
-          ->where('notifications.transactionType', '<>', 'ABANDONED_ORDER')
-          ->where('notifications.transactionType', '<>', 'CANCEL-REBILL')
-          ->where('notifications.transactionType', '<>', 'CGBK')
-          ->where('notifications.transactionType', '<>', 'TEST')
-          ->where('notifications.transactionType', '<>', 'TEST_BILL')
-          ->where('notifications.transactionType', '<>', 'TEST_SALE')
+          ->whereNotIn('notifications.transactionType', ['ABANDONED_ORDER', 'CANCEL-REBILL','CGBK', 'TEST', 'TEST_BILL','TEST_SALE'])
           ->where('notifications.affiliate', '<>', '')
-          ->where('notifications.transactionType', '<>', 'TEST')
           ->groupby('notifications.affiliate')
           ->get();
-          return json_encode(['listAll'=> $listAll]);    
+
+          return json_encode(['listAll'=> $listAll,'totalAffiliates'=> $totalAffiliates->count(),'allMembers'=> $allMembers->count()]);    
 
     }else{
 

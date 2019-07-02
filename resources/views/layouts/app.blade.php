@@ -452,9 +452,13 @@
                     $("#datatablediv").hide();
                     $("#datatabledivaff").show();
                     var data = JSON.parse(data);
-                    $("#summary").html("");
-                    listAffiliate(data.listAll);
                     
+                    var totalAffiliates = "<p><span>Total Affiliates To Date: <font style='font-size:20px'><b>"+data.totalAffiliates+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    var allMembers = "<span>Total Members To Date: <font style='font-size:20px'><b>"+data.allMembers+"</b></font></span></p>";
+
+                    $("#summary").html(totalAffiliates+allMembers);
+                    listAffiliate(data.listAll);
+
                 }     
            }
         });  
