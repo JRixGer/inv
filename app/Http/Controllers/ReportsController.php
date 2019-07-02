@@ -209,6 +209,35 @@ class ReportsController extends Controller
         ]);   
 
       }
+    }else if($para["repOption"] == "6"){      
+
+          $listAll = DB::table('billing')
+          ->distinct()
+          ->select(
+            'notifications.affiliate',
+            DB::raw("(GROUP_CONCAT(billing.email SEPARATOR ', ')) as Emails"),
+            DB::raw("(COUNT(notifications.affiliate)) as TotalMembers"),
+            DB::raw("(GROUP_CONCAT(CONCAT(billing.firstName,' ',billing.lastName) SEPARATOR ', ')) as Members"),
+            DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+            DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+            DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+            DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
+            DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+            )
+          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->where('notifications.transactionType', '<>', 'ABANDONED_ORDER')
+          ->where('notifications.transactionType', '<>', 'CANCEL-REBILL')
+          ->where('notifications.transactionType', '<>', 'CGBK')
+          ->where('notifications.transactionType', '<>', 'TEST')
+          ->where('notifications.transactionType', '<>', 'TEST_BILL')
+          ->where('notifications.transactionType', '<>', 'TEST_SALE')
+          ->where('notifications.affiliate', '<>', '')
+          ->where('notifications.transactionType', '<>', 'TEST')
+          ->groupby('notifications.affiliate')
+          ->get();
+          return json_encode(['listAll'=> $listAll]);    
 
     }else{
 

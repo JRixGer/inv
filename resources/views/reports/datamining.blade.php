@@ -71,6 +71,7 @@
                         <div id="summary">
                         </div> 
                         <hr>
+
                         <div id="datatablediv">
                         <table class="table display" id="datatable" style="width:100%">
                             <thead>
@@ -90,6 +91,28 @@
                             </tbody>
                         </table>
                         </div>
+
+                        <div id="datatabledivaff">
+                        <table class="table display" id="datatableaff" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Affiliates</th>
+                                    <th>Total Members</th>
+                                    <th>Member Names</th>
+                                    <th>Emails</th>
+                                    <th>Dates</th>
+                                    <th>SKUs</th>
+                                    <th>Product Names</th>
+                                    <th>Receipts</th>
+                                    <th>No Of ReBills</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        </div>
+
                         </div>
                         <div class="col-md-12" id="spinner" style="padding:20px;">
                         </div>                        

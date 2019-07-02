@@ -398,6 +398,7 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     $("#datatablediv").show();
+                    $("#datatabledivaff").hide();
                     var data = JSON.parse(data);
                     var totMember = "<p><span>Total Members To Date: <font style='font-size:20px'><b>"+data.members+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
                     var memberYesterday = "<span>Added Yesterday: <font style='font-size:20px'><b>"+data.membersYesterday+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
@@ -413,6 +414,7 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     $("#datatablediv").show();
+                    $("#datatabledivaff").hide();
                     var data = JSON.parse(data);
                     $("#summary").html("");
                     list(data.listAll);
@@ -427,6 +429,7 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     $("#datatablediv").show();
+                    $("#datatabledivaff").hide();
                     
                     var data = JSON.parse(data);
 
@@ -438,13 +441,19 @@
                     
                     $("#summary").html(header+activeM+canceledM);
                     $('#datatablediv').hide();
+                    $('#datatabledivaff').hide();
                     //list(data.listAll);
                 }
                 else if(repOption == 6)
                 {             
+                    //console.log(repOption);       
                     $("#spinner").html('');
                     $("#dataList").show();
+                    $("#datatablediv").hide();
+                    $("#datatabledivaff").show();
                     var data = JSON.parse(data);
+                    $("#summary").html("");
+                    listAffiliate(data.listAll);
                     
                 }     
            }
@@ -465,6 +474,29 @@
               { "data": "firstName" },
               { "data": "lastName" },
               { "data": "email" },
+              { "data": "Dates" },
+              { "data": "SKUs" },
+              { "data": "ProductNames" },
+              { "data": "Receipts" },
+              { "data": "NoOfReBills" }
+
+            ]
+        } );
+    }
+
+    function listAffiliate(data)
+    {
+        console.log(data)
+        $('#datatableaff').DataTable().destroy();
+        $('#datatableaff').DataTable( {
+            lengthMenu: [ 10, 25, 50, 75, 100 ],
+            data: data,
+            retrieve: true,
+            "columns": [
+              { "data": "affiliate" },
+              { "data": "TotalMembers" },
+              { "data": "Members" },
+              { "data": "Emails" },
               { "data": "Dates" },
               { "data": "SKUs" },
               { "data": "ProductNames" },
