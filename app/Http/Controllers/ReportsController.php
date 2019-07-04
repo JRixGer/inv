@@ -71,28 +71,28 @@ class ReportsController extends Controller
         $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
         $membersYesterday = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
         $membersLast7Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt7)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
         $membersLast30Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
@@ -112,7 +112,7 @@ class ReportsController extends Controller
             ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
             ->where('lineItems.itemNo', 'like', '%pwcp%')
             ->whereNotIn('billing.email', $inactive)
-            ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+            ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
             ->where('billing.firstName', '<>', '')
             ->groupby('billing.firstName', 'billing.lastName','billing.email')
             ->get();
@@ -139,7 +139,7 @@ class ReportsController extends Controller
           ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
           ->where('lineItems.itemNo', 'like', '%pwcp%')
           ->whereNotIn('billing.email', $inactive)
-          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
           ->where('billing.firstName', '<>', '')
           ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDtRange)
           ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '<=', $searchEndDtRange)
@@ -156,14 +156,14 @@ class ReportsController extends Controller
         $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
   
         $membersYesterday = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
 
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
@@ -171,7 +171,7 @@ class ReportsController extends Controller
         $membersLast7Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
 
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt7)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
@@ -179,7 +179,7 @@ class ReportsController extends Controller
         $membersLast30Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
 
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
@@ -187,7 +187,7 @@ class ReportsController extends Controller
         $membersRange = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDtRange)
         ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '<=', $searchEndDtRange)
@@ -246,7 +246,7 @@ class ReportsController extends Controller
           ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
           ->where('lineItems.itemNo', 'like', '%pwcp%')
           ->whereNotIn('billing.email', $inactive)
-          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
           ->where('notifications.affiliate', '<>', '')
           ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
     
@@ -254,7 +254,7 @@ class ReportsController extends Controller
         $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('billing.firstName', '<>', '')
         ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
          
@@ -275,8 +275,8 @@ class ReportsController extends Controller
           ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
           ->where('lineItems.itemNo', 'like', '%pwcp%')
           ->whereNotIn('billing.email', $inactive)
-          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE', 'RFND'])
-          ->where('billing.firstName', '<>', '')
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('notifications.affiliate', '<>', '')
           ->groupby('notifications.affiliate')
           ->get();
 
