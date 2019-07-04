@@ -398,6 +398,7 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     $("#datatablediv").show();
+                    $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
                     var data = JSON.parse(data);
                     var totMember = "<p><span>Total Members To Date: <font style='font-size:20px'><b>"+data.members+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
@@ -414,6 +415,7 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     $("#datatablediv").show();
+                    $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
                     var data = JSON.parse(data);
                     $("#summary").html("");
@@ -429,6 +431,7 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     $("#datatablediv").show();
+                    $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
                     
                     var data = JSON.parse(data);
@@ -450,6 +453,7 @@
                     $("#spinner").html('');
                     $("#dataList").show();
                     $("#datatablediv").hide();
+                    $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").show();
                     var data = JSON.parse(data);
                     
@@ -460,6 +464,22 @@
                     listAffiliate(data.listAll);
 
                 }     
+                else if(repOption == 7)
+                {             
+                    //console.log(repOption);       
+                    $("#spinner").html('');
+                    $("#dataList").show();
+                    $("#datatablediv").hide();
+                    $("#datatabledivaff").hide();
+                    $("#datatabledivcrossref").show();
+                    var data = JSON.parse(data);
+
+                    console.log(data);
+
+                    $("#summary").html("");
+                    list_CB_IS_CrossRef(data.listAll);
+
+                }                  
            }
         });  
 
@@ -510,6 +530,36 @@
             ]
         } );
     }
+
+    function list_CB_IS_CrossRef(data)
+    {
+        console.log(data)
+        $('#datatablecrossref').DataTable().destroy();
+        $('#datatablecrossref').DataTable( {
+            lengthMenu: [ 10, 25, 50, 75, 100 ],
+            data: data,
+            "order": [[ 12, "asc" ]],
+            retrieve: true,
+            "columns": [
+              { "data": "CB_FirstName" },
+              { "data": "CB_LastName" },
+            //   { "data": "CB_Email" },
+              { "data": "CB_Dates" },
+              { "data": "CB_SKUs" },
+              { "data": "CB_ProductNames" },
+              { "data": "CB_Receipts" },
+              { "data": "CB_NoOfReBills" },
+              { "data": "IS_FirstName" },
+              { "data": "IS_LastName" },
+              { "data": "IS_OrderDate" },
+              { "data": "IS_OrderTitle" },
+              { "data": "IS_ProductNames" },
+              { "data": "lnk_name" }
+            ]
+        } );
+    }
+
+
 
     $(document).ready(function() {
         $('#datepicker1').datepicker({

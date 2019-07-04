@@ -17,6 +17,7 @@
                                 <option value='4'>Display/Chart active vs Canceled Members</option>
                                 <option value='5'>Rebills, Statistics on Rebills for Affiliates</option>
                                 <option value='6'>Display Affiliates and the Amount of Members Added</option>
+                                <option value='7'>CB & IS Active Members Cross Referencing (PWCP)</option>
                             </select>   
                         </div>  
 
@@ -72,7 +73,7 @@
                         </div> 
                         <hr>
 
-                        <div id="datatablediv">
+                        <div id="datatablediv" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
                         <table class="table display" id="datatable" style="width:100%">
                             <thead>
                                 <tr>
@@ -92,7 +93,7 @@
                         </table>
                         </div>
 
-                        <div id="datatabledivaff">
+                        <div id="datatabledivaff" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
                         <table class="table display" id="datatableaff" style="width:100%">
                             <thead>
                                 <tr>
@@ -112,6 +113,34 @@
                             </tbody>
                         </table>
                         </div>
+
+                        <div id="datatabledivcrossref" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
+                        <table class="table display" id="datatablecrossref" style="width:100%">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>CB_FirstName</th>
+                                    <th>CB_LastName</th>
+                                    <!-- <th>CB_Email</th> -->
+                                    <th>CB_Dates</th>
+                                    <th>CB_SKUs</th>
+                                    <th>CB_ProductNames</th>
+                                    <th>CB_Receipts</th>
+                                    <th>CB_NoOfReBills</th>
+                                    <th>IS_FirstName</th>
+                                    <th>IS_LastName</th>
+                                    <th>IS_OrderDate</th>
+                                    <th>IS_OrderTitle</th>
+                                    <th>IS_ProductNames</th>
+                                    <th>Lnk_Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        </div>
+                        
 
                         </div>
                         <div class="col-md-12" id="spinner" style="padding:20px;">

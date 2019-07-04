@@ -280,8 +280,36 @@ class ReportsController extends Controller
           ->groupby('notifications.affiliate')
           ->get();
 
-          return json_encode(['listAll'=> $listAll,'totalAffiliates'=> $totalAffiliates->count(),'allMembers'=> $allMembers->count()]);    
+          return json_encode(['listAll'=> $listAll,'totalAffiliates'=> $totalAffiliates->count(),'allMembers'=> $allMembers->count()]);   
 
+
+    }else if($para["repOption"] == "7"){ 
+         
+      $listAll = DB::table('vw_CB_IS_Active')
+      ->distinct()
+      ->select(
+        'vw_CB_IS_Active.lnk_name',
+        'vw_CB_IS_Active.CB_FirstName',
+        'vw_CB_IS_Active.CB_LastName',
+        'vw_CB_IS_Active.CB_Email',
+        'vw_CB_IS_Active.CB_Dates',
+        'vw_CB_IS_Active.CB_SKUs',
+        'vw_CB_IS_Active.CB_ProductNames',
+        'vw_CB_IS_Active.CB_Receipts',
+        'vw_CB_IS_Active.CB_NoOfReBills',
+        'vw_CB_IS_Active.lnk_name',
+        'vw_CB_IS_Active.IS_FirstName',
+        'vw_CB_IS_Active.IS_LastName',
+        DB::raw("(GROUP_CONCAT(STR_TO_DATE(is_pwcp_active.OrderDate,'%Y-%m-%d') SEPARATOR ', ')) as IS_OrderDate"),
+        DB::raw("(GROUP_CONCAT(is_pwcp_active.OrderTitle SEPARATOR ', ')) as IS_OrderTitle"),
+        DB::raw("(GROUP_CONCAT(is_pwcp_active.ProductName SEPARATOR ', ')) as IS_ProductNames")
+        )
+      ->leftjoin('is_pwcp_active', 'vw_CB_IS_Active.lnk_name', '=', 'is_pwcp_active.lnk_name')
+      ->groupby('vw_CB_IS_Active.lnk_name')
+      ->get();
+      
+      return json_encode(['listAll'=> $listAll]);   
+    
     }else{
 
       
