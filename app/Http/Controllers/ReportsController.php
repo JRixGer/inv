@@ -180,28 +180,56 @@ class ReportsController extends Controller
 
       if ($searchStartDtRange != '' && $searchEndDtRange != '')
       {
-          $listAll = DB::table('billing')
-          ->distinct()
-          ->select(
-            'billing.firstName',
-            'billing.lastName',
-            'billing.email',
-            DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
-            DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
-            DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
-            DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
-            DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
-            )
-          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
-          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-          ->where('lineItems.itemNo', 'like', '%pwcp%')
-          ->whereNotIn('billing.email', $inactive)
-          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-          ->where('billing.firstName', '<>', '')
-          ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDtRange)
-          ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '<=', $searchEndDtRange)
-          ->groupby('billing.firstName', 'billing.lastName','billing.email')
-          ->get();
+          if($para['reportSelected'] == 'PIC')
+          {
+              $listAll = DB::table('pigman_billing')
+              ->distinct()
+              ->select(
+                'pigman_billing.firstName',
+                'pigman_billing.lastName',
+                'pigman_billing.email',
+                DB::raw("(GROUP_CONCAT(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+                DB::raw("(GROUP_CONCAT(pigman_lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+                DB::raw("(GROUP_CONCAT(pigman_lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+                DB::raw("(GROUP_CONCAT(pigman_notifications.receipt SEPARATOR ', ')) as Receipts"),
+                DB::raw("SUM(IF(pigman_notifications.transactionType='BILL',1,0)) as NoOfReBills")
+                )
+              ->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')
+              ->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+              ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+              ->whereNotIn('pigman_billing.email', $inactive)
+              ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+              ->where('pigman_billing.firstName', '<>', '')
+              ->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDtRange)
+              ->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '<=', $searchEndDtRange)
+              ->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')
+              ->get();
+          }
+          else
+          {
+              $listAll = DB::table('billing')
+              ->distinct()
+              ->select(
+                'billing.firstName',
+                'billing.lastName',
+                'billing.email',
+                DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+                DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+                DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+                DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
+                DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+                )
+              ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+              ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+              ->where('lineItems.itemNo', 'like', '%pwcp%')
+              ->whereNotIn('billing.email', $inactive)
+              ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+              ->where('billing.firstName', '<>', '')
+              ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDtRange)
+              ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '<=', $searchEndDtRange)
+              ->groupby('billing.firstName', 'billing.lastName','billing.email')
+              ->get();    
+          }
           return json_encode(['listAll'=> $listAll]);    
       }
 
@@ -427,7 +455,7 @@ class ReportsController extends Controller
           array_multisort($listAll, SORT_DESC);
         }
         return json_encode(['listAll'=> $listAll]);   
-        
+
     }else{
 
       

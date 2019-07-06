@@ -99,7 +99,6 @@
                                     <th>Product Names</th>
                                     <th>Receipts</th>
                                     <th>No Of ReBills</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,10 +160,7 @@
                         </div>                        
                     </div>   
 
-
-
-
-                    <div class="row" id="PIC">
+                    <!-- <div class="row" id="PIC">
                         <div class="col-md-12" id="dataListPIC" style="padding:30px; display:none">
                         <div id="summaryPIC">
                         </div> 
@@ -218,7 +214,6 @@
                                     
                                     <th>CB_FirstName</th>
                                     <th>CB_LastName</th>
-                                    <!-- <th>CB_Email</th> -->
                                     <th>CB_Dates</th>
                                     <th>CB_SKUs</th>
                                     <th>CB_ProductNames</th>
@@ -242,7 +237,7 @@
                         </div>
                         <div class="col-md-12" id="spinnerPIC" style="padding:20px;">
                         </div>                        
-                    </div>   
+                    </div>    -->
 
                 </div>
             </div>
