@@ -148,6 +148,35 @@ class ReportsController extends Controller
           return json_encode(['listAll'=> $listAll]);    
       }
 
+    }else if($para["repOption"] == "3"){      
+
+      if ($searchStartDtRange != '' && $searchEndDtRange != '')
+      {
+          $listAll = DB::table('billing')
+          ->distinct()
+          ->select(
+            'billing.firstName',
+            'billing.lastName',
+            'billing.email',
+            DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+            DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+            DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+            DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
+            DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+            )
+          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('billing.firstName', '<>', '')
+          ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDtRange)
+          ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '<=', $searchEndDtRange)
+          ->groupby('billing.firstName', 'billing.lastName','billing.email')
+          ->get();
+          return json_encode(['listAll'=> $listAll]);    
+      }
+
     }else if($para["repOption"] == "4"){      
 
       if ($searchStartDtRange != '' && $searchEndDtRange != '')
@@ -300,16 +329,40 @@ class ReportsController extends Controller
         'vw_CB_IS_Active.lnk_name',
         'vw_CB_IS_Active.IS_FirstName',
         'vw_CB_IS_Active.IS_LastName',
-        DB::raw("(GROUP_CONCAT(STR_TO_DATE(is_pwcp_active.OrderDate,'%Y-%m-%d') SEPARATOR ', ')) as IS_OrderDate"),
+        DB::raw("(GROUP_CONCAT(is_pwcp_active.OrderDate SEPARATOR ', ')) as IS_OrderDate"),
         DB::raw("(GROUP_CONCAT(is_pwcp_active.OrderTitle SEPARATOR ', ')) as IS_OrderTitle"),
         DB::raw("(GROUP_CONCAT(is_pwcp_active.ProductName SEPARATOR ', ')) as IS_ProductNames")
         )
       ->leftjoin('is_pwcp_active', 'vw_CB_IS_Active.lnk_name', '=', 'is_pwcp_active.lnk_name')
       ->groupby('vw_CB_IS_Active.lnk_name')
       ->get();
-      
+
+      if($para["remMatch"] == "1")
+      {
+        $listAll = $listAll->toArray();
+        foreach ($listAll as $key => $d) {
+          if(!empty($d->CB_FirstName) && !empty($d->IS_FirstName))
+          {
+            $arrSKUs = explode(" ",$d->CB_SKUs);
+            $arrReceipts = explode(" ",$d->CB_Receipts);
+            for($i = 0; $i < sizeof($arrSKUs); $i++)
+            {
+              if (strpos($d->IS_ProductNames, $arrSKUs[$i])) {
+                unset($listAll[$key]);
+              }
+            }
+            for($i = 0; $i < sizeof($arrReceipts); $i++)
+            {
+              if (strpos($d->IS_OrderTitle, $arrReceipts[$i])) {
+                unset($listAll[$key]);
+              }
+            }
+  
+          }
+        }
+        array_multisort($listAll, SORT_DESC);
+      }
       return json_encode(['listAll'=> $listAll]);   
-    
     }else{
 
       

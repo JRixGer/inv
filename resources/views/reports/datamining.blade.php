@@ -56,6 +56,12 @@
                                 <input type="text" class="form-control" id="datepicker2" placeholder="To date">
                             </div>
                         </div>
+                        <div class="col-md-2 removeMatchCheckBox">
+                            <div class="custom-control custom-checkbox" style="padding-top:5px">
+                                <input type="checkbox" class="custom-control-input" id="remMatch">
+                                <label class="custom-control-label" for="remMatch">exclude match</label>
+                            </div>
+                        </div>
                         <div class="col-md-1" >
                             <div class="input-group date showreport">
                             <button type="button" class="btn btn-info" onClick="dataMine()">Go</button>

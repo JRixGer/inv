@@ -83,6 +83,10 @@
         display: none;
         width:100%
     }
+    .removeMatchCheckBox{
+        display: none;
+        width:100%
+    }    
     .limit-text {
         text-align:left;
         width: auto;
@@ -349,17 +353,30 @@
 
     function showHide()
     {
-        if($("#reportOpt").val() == '2' || $("#reportOpt").val() == '4')                                
+        if($("#reportOpt").val() == '2' || $("#reportOpt").val() == '4' || $("#reportOpt").val() == '3')                                
         {
             $(".datefrom").show();
             $(".dateto").show();
+            $(".transactiontype").hide();
+            $(".datefilter").hide();          
+            $(".removeMatchCheckBox").hide();  
         }
+        else if($("#reportOpt").val() == '7')                                
+        {
+            $(".datefrom").hide();
+            $(".dateto").hide();
+            $(".transactiontype").hide();
+            $(".datefilter").hide();
+            $(".removeMatchCheckBox").show();
+        }        
         else
         {
             $(".datefrom").hide();
             $(".dateto").hide();
             $(".transactiontype").hide();
             $(".datefilter").hide();
+            $(".removeMatchCheckBox").hide();
+            
         }
     }
 
@@ -372,7 +389,8 @@
         var toDt = $("#datepicker2").val();
         var transType = $("#transactionType").val();
         var dateFltr = $("#dateFilter").val();
-
+        var remMatch = $("#remMatch:checked").val()? 1:0;
+       
         if(repOption == 2 && (fromDt.length == 0 || toDt.length == 0))
             return;
 
@@ -389,7 +407,7 @@
         $.ajax({
            type:'GET',
            url:'/inv/shipping/report/datamine',
-           data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr},
+           data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr, remMatch:remMatch},
            success:function(data){        
                        
                 if(repOption == 1)
@@ -423,7 +441,14 @@
                 }
                 else if(repOption == 3)
                 {
-
+                    $("#spinner").html('');
+                    $("#dataList").show();
+                    $("#datatablediv").show();
+                    $("#datatabledivcrossref").hide();
+                    $("#datatabledivaff").hide();
+                    var data = JSON.parse(data);
+                    $("#summary").html("");
+                    list(data.listAll);
                 }            
                 else if(repOption == 4)
                 {             
