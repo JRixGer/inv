@@ -341,22 +341,29 @@ class ReportsController extends Controller
       {
         $listAll = $listAll->toArray();
         foreach ($listAll as $key => $d) {
+          $foundSKU = TRUE;
+          $foundREC = TRUE;
           if(!empty($d->CB_FirstName) && !empty($d->IS_FirstName))
           {
             $arrSKUs = explode(" ",$d->CB_SKUs);
             $arrReceipts = explode(" ",$d->CB_Receipts);
             for($i = 0; $i < sizeof($arrSKUs); $i++)
             {
-              if (strpos($d->IS_ProductNames, $arrSKUs[$i])) {
-                unset($listAll[$key]);
+              if (strpos($d->IS_ProductNames, $arrSKUs[$i]) === false) {
+                $foundSKU = FALSE;
+                break;
               }
             }
             for($i = 0; $i < sizeof($arrReceipts); $i++)
             {
-              if (strpos($d->IS_OrderTitle, $arrReceipts[$i])) {
-                unset($listAll[$key]);
+              if (strpos($d->IS_OrderTitle, $arrReceipts[$i]) === false) {
+                $foundREC = FALSE;
+                break;
               }
             }
+
+            if($foundSKU == TRUE || $foundREC == TRUE)
+              unset($listAll[$key]);
   
           }
         }
