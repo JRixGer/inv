@@ -99,6 +99,9 @@
         -ms-transition: all 0.35s ease;
         transition: all 0.35s ease;
     }  
+    #PIC{
+        display: none;
+    }
      </style>
 
 <body>
@@ -149,8 +152,8 @@
                             DB Mining<span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="{{ route('report.options') }}">PWCP</a>
-                              <a class="dropdown-item" href="#">PIC</a>
+                              <a class="dropdown-item" href="{{ route('report.options') }}?t=pwcp">PWCP</a>
+                              <a class="dropdown-item" href="{{ route('report.options') }}?t=pic">PIC</a>
                             </div>
                         </li>                        
                         @auth
@@ -250,7 +253,7 @@
         var campaign_id = $("#campaign_id").val();
         var tag_name = $("#tag_name").val();
         var goal_id = $("#goal_id").val();
-
+        
         //$("#update_sku_model").modal('hide');
 
         $.ajaxSetup({
@@ -390,6 +393,7 @@
         var transType = $("#transactionType").val();
         var dateFltr = $("#dateFilter").val();
         var remMatch = $("#remMatch:checked").val()? 1:0;
+        var reportSelected = $("#reportSelected").val();
        
         if(repOption == 2 && (fromDt.length == 0 || toDt.length == 0))
             return;
@@ -407,7 +411,7 @@
         $.ajax({
            type:'GET',
            url:'/inv/shipping/report/datamine',
-           data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr, remMatch:remMatch},
+           data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr, remMatch:remMatch, reportSelected:reportSelected},
            success:function(data){        
                        
                 if(repOption == 1)

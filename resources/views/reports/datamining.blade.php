@@ -7,7 +7,8 @@
                 <div class="card-header title_">
                     <div class="row">
                         <div class="col-md-1" style="padding-top:8px">
-                        <h5 class="limit-text">PWCP</h5>
+                        <h5 class="limit-text">{{$reportName}}</h5>
+                        <input type="hidden" id="reportSelected" value="{{$reportName}}">
                         </div>  
                         <div class="col-md-3">
                             <select class="form-control" id="reportOpt" onChange="showHide()">
@@ -17,7 +18,14 @@
                                 <option value='4'>Display/Chart active vs Canceled Members</option>
                                 <option value='5'>Rebills, Statistics on Rebills for Affiliates</option>
                                 <option value='6'>Display Affiliates and the Amount of Members Added</option>
-                                <option value='7'>CB & IS Active Members Cross Referencing (PWCP)</option>
+                                <?php
+                                if($reportName == 'PWCP')
+                                {
+                                ?>
+                                    <option value='7'>CB & IS Active Members Cross Referencing (PWCP)</option>
+                                <?php
+                                }    
+                                ?>
                             </select>   
                         </div>  
 
@@ -56,10 +64,10 @@
                                 <input type="text" class="form-control" id="datepicker2" placeholder="To date">
                             </div>
                         </div>
-                        <div class="col-md-2 removeMatchCheckBox">
-                            <div class="custom-control custom-checkbox" style="padding-top:5px">
+                        <div class="col-md-1 removeMatchCheckBox">
+                            <div class="custom-control custom-checkbox" style="padding-top:5px; overflow: visible; white-space: nowrap;">
                                 <input type="checkbox" class="custom-control-input" id="remMatch">
-                                <label class="custom-control-label" for="remMatch">exclude match</label>
+                                <label class="custom-control-label" for="remMatch">hide match</label>
                             </div>
                         </div>
                         <div class="col-md-1" >
@@ -73,7 +81,7 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row" id="pwcp">
                         <div class="col-md-12" id="dataList" style="padding:30px; display:none">
                         <div id="summary">
                         </div> 
@@ -151,7 +159,91 @@
                         </div>
                         <div class="col-md-12" id="spinner" style="padding:20px;">
                         </div>                        
-                    </div>                    
+                    </div>   
+
+
+
+
+                    <div class="row" id="PIC">
+                        <div class="col-md-12" id="dataListPIC" style="padding:30px; display:none">
+                        <div id="summaryPIC">
+                        </div> 
+                        <hr>
+
+                        <div id="datatabledivPIC" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
+                        <table class="table display" id="datatablePIC" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Dates</th>
+                                    <th>SKUs</th>
+                                    <th>Product Names</th>
+                                    <th>Receipts</th>
+                                    <th>No Of ReBills</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        </div>
+
+                        <div id="datatabledivaffPIC" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
+                        <table class="table display" id="datatableaffPIC" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Affiliates</th>
+                                    <th>Total Members</th>
+                                    <th>Member Names</th>
+                                    <th>Emails</th>
+                                    <th>Dates</th>
+                                    <th>SKUs</th>
+                                    <th>Product Names</th>
+                                    <th>Receipts</th>
+                                    <th>No Of ReBills</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        </div>
+
+                        <div id="datatabledivcrossrefPIC" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
+                        <table class="table display" id="datatablecrossrefPIC" style="width:100%">
+                            <thead>
+                                <tr>
+                                    
+                                    <th>CB_FirstName</th>
+                                    <th>CB_LastName</th>
+                                    <!-- <th>CB_Email</th> -->
+                                    <th>CB_Dates</th>
+                                    <th>CB_SKUs</th>
+                                    <th>CB_ProductNames</th>
+                                    <th>CB_Receipts</th>
+                                    <th>CB_NoOfReBills</th>
+                                    <th>IS_FirstName</th>
+                                    <th>IS_LastName</th>
+                                    <th>IS_OrderDate</th>
+                                    <th>IS_OrderTitle</th>
+                                    <th>IS_ProductNames</th>
+                                    <th>Lnk_Name</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                        </div>
+                        
+
+                        </div>
+                        <div class="col-md-12" id="spinnerPIC" style="padding:20px;">
+                        </div>                        
+                    </div>   
+
                 </div>
             </div>
         </div>

@@ -23,7 +23,8 @@ class ReportsController extends Controller
                               GROUP by `transactionType`"
                             );            
     
-    return view('reports.datamining',['transtypes' => $transtypes]); // laravel way
+    $input = \Request::all();
+    return view('reports.datamining',['transtypes' => $transtypes, 'reportName' => strtoupper($input['t'])]); // laravel way
   }
 
   public function datamine(Request $request)
@@ -56,67 +57,123 @@ class ReportsController extends Controller
     $searchTransType = $para['transType'];
     $itemPrefix = '%pwcp%';
 
-    $canceledMembers = DB::table('vw_canceled_members')
+    $vw_canceled = "vw_canceled_members";
+    if($para['reportSelected'] == 'PIC')
+      $vw_canceled = "vw_pigman_canceled_members";
+
+    $canceledMembers = DB::table($vw_canceled)
     ->select('*')
     ->get();
     
     $inactive = array();
-
     foreach ($canceledMembers as $key => $d) 
       $inactive[] = $d->email; 
 
+
     if($para["repOption"] == "1")
     {
+        if($para['reportSelected'] == 'PIC')
+        {
+          $allMembers = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+          ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+          ->whereNotIn('pigman_billing.email', $inactive)
+          ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('pigman_billing.firstName', '<>', '')
+          ->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')->get();
     
-        $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-        ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-        ->where('billing.firstName', '<>', '')
-        ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
-  
-        $membersYesterday = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-        ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-        ->where('billing.firstName', '<>', '')
-        ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
-  
-        $membersLast7Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-        ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-        ->where('billing.firstName', '<>', '')
-        ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt7)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
-  
-        $membersLast30Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-        ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-        ->where('billing.firstName', '<>', '')
-        ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
-  
-        $listAll = DB::table('billing')
-            ->distinct()
-            ->select(
-              'billing.firstName',
-              'billing.lastName',
-              'billing.email',
-              DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
-              DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
-              DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
-              DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
-              DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
-               )
-            ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
-            ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-            ->where('lineItems.itemNo', 'like', '%pwcp%')
-            ->whereNotIn('billing.email', $inactive)
-            ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-            ->where('billing.firstName', '<>', '')
-            ->groupby('billing.firstName', 'billing.lastName','billing.email')
-            ->get();
-
+          $membersYesterday = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+          ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+          ->whereNotIn('pigman_billing.email', $inactive)
+          ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('pigman_billing.firstName', '<>', '')
+          ->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')->get();
+    
+          $membersLast7Days = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+          ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+          ->whereNotIn('pigman_billing.email', $inactive)
+          ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('pigman_billing.firstName', '<>', '')
+          ->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt7)->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')->get();
+    
+          $membersLast30Days = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+          ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+          ->whereNotIn('pigman_billing.email', $inactive)
+          ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('pigman_billing.firstName', '<>', '')
+          ->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')->get();
+    
+          $listAll = DB::table('pigman_billing')
+              ->distinct()
+              ->select(
+                'pigman_billing.firstName',
+                'pigman_billing.lastName',
+                'pigman_billing.email',
+                DB::raw("(GROUP_CONCAT(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+                DB::raw("(GROUP_CONCAT(pigman_lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+                DB::raw("(GROUP_CONCAT(pigman_lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+                DB::raw("(GROUP_CONCAT(pigman_notifications.receipt SEPARATOR ', ')) as Receipts"),
+                DB::raw("SUM(IF(pigman_notifications.transactionType='BILL',1,0)) as NoOfReBills")
+                 )
+              ->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')
+              ->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+              ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+              ->whereNotIn('pigman_billing.email', $inactive)
+              ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+              ->where('pigman_billing.firstName', '<>', '')
+              ->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')
+              ->get();
+        }
+        else
+        {
+          $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('billing.firstName', '<>', '')
+          ->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+    
+          $membersYesterday = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('billing.firstName', '<>', '')
+          ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+    
+          $membersLast7Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('billing.firstName', '<>', '')
+          ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt7)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+    
+          $membersLast30Days = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('billing.firstName', '<>', '')
+          ->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('billing.firstName', 'billing.lastName','billing.email')->get();
+    
+          $listAll = DB::table('billing')
+              ->distinct()
+              ->select(
+                'billing.firstName',
+                'billing.lastName',
+                'billing.email',
+                DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+                DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+                DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+                DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
+                DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+                 )
+              ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+              ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+              ->where('lineItems.itemNo', 'like', '%pwcp%')
+              ->whereNotIn('billing.email', $inactive)
+              ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+              ->where('billing.firstName', '<>', '')
+              ->groupby('billing.firstName', 'billing.lastName','billing.email')
+              ->get();  
+        }
         return json_encode(['listAll'=>$listAll, 'members'=>$allMembers->count(), 'membersYesterday'=>$membersYesterday->count(), 'membersLast7Days'=>$membersLast7Days->count(), 'membersLast30Days'=>$membersLast30Days->count()]);    
     
     }else if($para["repOption"] == "2"){      
