@@ -526,6 +526,7 @@ class ReportsController extends Controller
             ->whereNotIn('billing.email', $inactive)
             ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
             ->where('notifications.affiliate', '<>', '')
+            ->where('billing.firstName', '<>', '')
             ->groupby('notifications.affiliate')->get();        
             
             $totalAffiliatesMembers = DB::table('billing')
