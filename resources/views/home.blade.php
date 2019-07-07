@@ -7,18 +7,19 @@
 
         <div class="col-md-4">
             <div class="card" style="margin:10px">
-                <div class="card-header"><a href="{{ route('notifications.list') }}" class="panel-lnk">INS Raw Data</a></div>
                <div class="card-body" style="padding:10px">
-                   <!-- <rawlist></rawlist> -->
+                    <div id="pop_div"></div>
+                    <?php echo Lava::render('AreaChart', 'Population', 'pop_div') ?>
+
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="card" style="margin:10px;">
-                <div class="card-header"><a href="{{ route('inventory.list') }}" class="panel-lnk">Re-order</a></div>
                 <div class="card-body" style="padding:10px">
-                    <!-- <reorderlist></reorderlist> -->
+                    <div id="chart-div1"></div>
+                    <?php echo Lava::render('PieChart', 'IMDB', 'chart-div1') ?>
                 </div>
             </div>
         </div>
@@ -26,9 +27,9 @@
 
         <div class="col-md-4">
             <div class="card" style="margin:10px">
-                <div class="card-header"><a href="{{ route('maropost.mpost') }}" class="panel-lnk">Maropost</a></div>
                 <div class="card-body" style="padding:10px">
-                    <!-- <marolist></marolist> -->
+                    <div id="chart-div2"></div>
+                    <?php echo Lava::render('DonutChart', 'IMDB', 'chart-div2') ?>
                 </div>
             </div>
         </div>
