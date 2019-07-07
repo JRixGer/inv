@@ -155,7 +155,7 @@ class HomeController extends Controller
               'titleTextStyle' => [
                 'color'    => '#eb6b2c',
                 'fontSize' => 16
-            ]
+              ]
         ]);
 
 
