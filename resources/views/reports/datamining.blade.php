@@ -7,7 +7,7 @@
                 <div class="card-header title_">
                     <div class="row">
                         <div class="col-md-1" style="padding-top:8px">
-                        <h5 class="limit-text">{{$reportName}}</h5>
+                        <h5 class="limit-text" style="font-weight:bold">{{$reportName}}</h5>
                         <input type="hidden" id="reportSelected" value="{{$reportName}}">
                         </div>  
                         <div class="col-md-3">

@@ -487,9 +487,10 @@
                     var data = JSON.parse(data);
                     
                     var totalAffiliates = "<p><span>Total Affiliates To Date: <font style='font-size:20px'><b>"+data.totalAffiliates+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    var totalAffiliatesMembers = "<span>Total Affiliates Members To Date: <font style='font-size:20px'><b>"+data.totalAffiliatesMembers+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
                     var allMembers = "<span>Total Members To Date: <font style='font-size:20px'><b>"+data.allMembers+"</b></font></span></p>";
 
-                    $("#summary").html(totalAffiliates+allMembers);
+                    $("#summary").html(totalAffiliates+totalAffiliatesMembers+allMembers);
                     listAffiliate(data.listAll);
 
                 }     
