@@ -15,6 +15,7 @@
                                 <option value='1'>Added Members Information</option>
                                 <option value='2'>Added Members Information by Date Range</option>
                                 <option value='3'>Cancelation of Members</option>
+                                <option value='8'>Cancelation of Members by Date Range</option>
                                 <option value='4'>Display/Chart active vs Canceled Members</option>
                                 <option value='5'>Rebills, Statistics on Rebills for Affiliates</option>
                                 <option value='6'>Display Affiliates and the Amount of Members Added</option>

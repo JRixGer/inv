@@ -237,6 +237,32 @@ class ReportsController extends Controller
 
       if ($searchStartDtRange != '' && $searchEndDtRange != '')
       {
+            $listAll = DB::table('billing')
+            ->distinct()
+            ->select(
+              'billing.firstName',
+              'billing.lastName',
+              'billing.email',
+              DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as Dates"),
+              DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as SKUs"),
+              DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as ProductNames"),
+              DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as Receipts"),
+              DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+              )
+            ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+            ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+            ->where('lineItems.itemNo', 'like', '%pwcp%')
+            ->whereIn('billing.email', $inactive)
+            ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+            ->where('billing.firstName', '<>', '')
+            ->groupby('billing.firstName', 'billing.lastName','billing.email')
+            ->get();  
+            return json_encode(['listAll'=> $listAll]);    
+      }
+    }else if($para["repOption"] == "8"){      
+
+      if ($searchStartDtRange != '' && $searchEndDtRange != '')
+      {
           $listAll = DB::table('billing')
           ->distinct()
           ->select(

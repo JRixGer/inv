@@ -26,15 +26,25 @@ class HomeController extends Controller
     public function index()
     {
         $vw_canceled = "vw_canceled_members";
-   
         $canceledMembers = DB::table($vw_canceled)
         ->select('*')
         ->get();
-        
+
+        $vw_canceled_pic = "vw_pigman_canceled_members";
+        $canceledMembers_pic = DB::table($vw_canceled_pic)
+        ->select('*')
+        ->get();
+
         $inactive = array();
         foreach ($canceledMembers as $key => $d) 
           $inactive[] = $d->email; 
 
+
+        $inactive_pic = array();
+        foreach ($canceledMembers_pic as $key => $d) 
+          $inactive_pic[] = $d->email; 
+  
+        
         $listAll = DB::table('billing')
         ->distinct()
         ->select(
@@ -167,14 +177,14 @@ class HomeController extends Controller
 
         $allMembersPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereNotIn('pigman_billing.email', $inactive)
+        ->whereNotIn('pigman_billing.email', $inactive_pic)
         ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('pigman_billing.firstName', '<>', '')
         ->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')->get();
   
         $membersYesterdayPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereNotIn('pigman_billing.email', $inactive)
+        ->whereNotIn('pigman_billing.email', $inactive_pic)
         ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('pigman_billing.firstName', '<>', '')
 
@@ -182,7 +192,7 @@ class HomeController extends Controller
   
         $membersLast7DaysPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereNotIn('pigman_billing.email', $inactive)
+        ->whereNotIn('pigman_billing.email', $inactive_pic)
         ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('pigman_billing.firstName', '<>', '')
 
@@ -190,7 +200,7 @@ class HomeController extends Controller
   
         $membersLast30DaysPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereNotIn('pigman_billing.email', $inactive)
+        ->whereNotIn('pigman_billing.email', $inactive_pic)
         ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('pigman_billing.firstName', '<>', '')
 
@@ -198,23 +208,23 @@ class HomeController extends Controller
 
         $allMembersCanceledPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereIn('pigman_billing.email', $inactive)
+        ->whereIn('pigman_billing.email', $inactive_pic)
         ->where('pigman_billing.firstName', '<>', '')
         ->groupby('pigman_billing.email')->get();
   
         $membersYesterdayCanceledPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereIn('pigman_billing.email', $inactive)
+        ->whereIn('pigman_billing.email', $inactive_pic)
         ->where('pigman_billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '=', $searchDt)->groupby('pigman_billing.email')->get();
   
         $membersLast7DaysCanceledPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereIn('pigman_billing.email', $inactive)
+        ->whereIn('pigman_billing.email', $inactive_pic)
         ->where('pigman_billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt7)->groupby('pigman_billing.email')->get();
   
         $membersLast30DaysCanceledPIC = DB::table('pigman_billing')->distinct()->select('pigman_billing.firstName','pigman_billing.lastName','pigman_billing.email')->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
         ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-        ->whereIn('pigman_billing.email', $inactive)
+        ->whereIn('pigman_billing.email', $inactive_pic)
         ->where('pigman_billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('pigman_billing.email')->get();
 
 

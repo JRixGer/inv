@@ -356,7 +356,7 @@
 
     function showHide()
     {
-        if($("#reportOpt").val() == '2' || $("#reportOpt").val() == '4' || $("#reportOpt").val() == '3')                                
+        if($("#reportOpt").val() == '2' || $("#reportOpt").val() == '4' || $("#reportOpt").val() == '8')                                
         {
             $(".datefrom").show();
             $(".dateto").show();
@@ -509,7 +509,18 @@
                     $("#summary").html("");
                     list_CB_IS_CrossRef(data.listAll);
 
-                }                  
+                }    
+                 else if(repOption == 8)
+                {
+                    $("#spinner").html('');
+                    $("#dataList").show();
+                    $("#datatablediv").show();
+                    $("#datatabledivcrossref").hide();
+                    $("#datatabledivaff").hide();
+                    var data = JSON.parse(data);
+                    $("#summary").html("");
+                    list(data.listAll);
+                }                          
            }
         });  
 
