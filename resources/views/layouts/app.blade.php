@@ -102,6 +102,11 @@
     #PIC{
         display: none;
     }
+
+    .form-control {
+        padding: 0.175rem 0.75rem !important;
+    }
+
      </style>
 
 <body>
@@ -149,11 +154,12 @@
                         <li><a class="nav-link" href="{{ route('notifications.list') }}">Raw</a></li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            DB Mining<span class="caret"></span>
+                            Memberships<span class="caret"></span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="{{ route('report.options') }}?t=pwcp">PWCP</a>
                               <a class="dropdown-item" href="{{ route('report.options') }}?t=pic">PIC</a>
+                              <a class="dropdown-item" href="{{ route('report.import') }}?t=pwcp">Import IS</a>
                             </div>
                         </li>                        
                         @auth

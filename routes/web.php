@@ -287,6 +287,35 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	// 	'as' => 'category.store'
 	// ]
 	// );
+
+
+	//Route::get('/', 'ImportController@getImport')->name('import');
+	//Route::post('/import_parse', 'ImportController@parseImport')->name('import_parse');
+	//Route::post('/import_process', 'ImportController@processImport')->name('import_process');
+	
+	Route::get('/report/import', [
+
+		'uses' => 'ImportController@getImport',
+		'as' => 'report.import'
+	]
+	);
+
+	Route::post('/report/import_parse', [
+
+		'uses' => 'ImportController@parseImport',
+		'as' => 'report.import_parse'
+	]
+	);
+
+	
+	Route::post('/report/import_process', [
+
+		'uses' => 'ImportController@processImport',
+		'as' => 'report.import_process'
+	]
+	);
+
+	
 });
 
 
