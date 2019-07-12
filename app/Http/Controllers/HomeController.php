@@ -71,14 +71,96 @@ class HomeController extends Controller
             $affiliate->addRow([$d->affiliate,  $d->TotalMembers, $d->NoOfReBills]);
         
         \Lava::LineChart('PWCPAffiliates', $affiliate, [
-            'titleTextStyle' => [
-                'color'    => '#eb6b2c',
-                'fontSize' => 16
-                ]
+            'fontSize' => 12,
+            'height' => 400,
+            'legend' => [
+              'position' => 'top'
+            ]
         ]);
         
+
         //////////////////////////////
 
+
+        $listAll = DB::table('billing')
+        ->distinct()
+        ->select(
+          DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y')) As Days"),
+          DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
+          DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+          )
+        ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+        ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+        ->where('lineItems.itemNo', 'like', '%pwcp%')
+        ->whereNotIn('billing.email', $inactive)
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+        ->where('notifications.affiliate', '<>', '')
+        ->where('billing.firstName', '<>', '')
+        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y'))"))->get(); 
+
+
+        
+
+        $affiliate = \Lava::DataTable();
+        $affiliate->addStringColumn('Day')
+                     ->addNumberColumn('Members')
+                     ->addNumberColumn('Re-Bills');
+
+        foreach ($listAll as $key => $d) 
+            $affiliate->addRow([$d->Days,  $d->TotalMembers, $d->NoOfReBills]);
+        
+        \Lava::LineChart('PWCPAffiliatesByDay', $affiliate, [
+            'fontSize' => 12,
+            'height' => 400,
+            'legend' => [
+              'position' => 'top'
+            ]
+            ]);
+        
+        
+        ////////////////
+
+
+          $listAll = DB::table('billing')
+          ->distinct()
+          ->select(
+            DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y')) As Months"),
+            DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
+            DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+            )
+          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('notifications.affiliate', '<>', '')
+          ->where('billing.firstName', '<>', '')
+          ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->get(); 
+  
+  
+          
+  
+          $affiliate = \Lava::DataTable();
+          $affiliate->addStringColumn('Month')
+                       ->addNumberColumn('Members')
+                       ->addRoleColumn('string', 'annotation')
+                       ->addNumberColumn('Re-Bills')
+                       ->addRoleColumn('string', 'annotation');
+  
+          foreach ($listAll as $key => $d) 
+              $affiliate->addRow([$d->Months,  $d->TotalMembers, $d->TotalMembers, $d->NoOfReBills, $d->NoOfReBills]);
+          
+          \Lava::LineChart('PWCPAffiliatesByMonth', $affiliate, [
+              'fontSize' => 12,
+              'height' => 400,
+              'legend' => [
+                'position' => 'top'
+              ]
+              ]);
+          
+          
+          ////////////////
+          ////////////////
 
 
         $AllMembers = 0;
@@ -155,16 +237,22 @@ class HomeController extends Controller
 
         $activeCanceled->addStringColumn('Span')
                 ->addNumberColumn('Active')
+                ->addRoleColumn('string', 'annotation')
                 ->addNumberColumn('Canceled')
-                ->addRow(['To Date', $allMembers->count(), $allMembersCanceled->count()])
-                ->addRow(['Last 30 Days', $membersLast30Days->count(), $membersLast30DaysCanceled->count()])
-                ->addRow(['Last 7 Days', $membersLast7Days->count(), $membersLast7DaysCanceled->count()])
-                ->addRow(['Yesterday', $membersYesterday->count(), $membersYesterdayCanceled->count()]);
+                ->addRoleColumn('string', 'annotation')
+                ->addRow(['To Date', $allMembers->count(),$allMembers->count(), $allMembersCanceled->count(), $allMembersCanceled->count()])
+                ->addRow(['Last 30 Days', $membersLast30Days->count(),$membersLast30Days->count(), $membersLast30DaysCanceled->count(), $membersLast30DaysCanceled->count()])
+                ->addRow(['Last 7 Days', $membersLast7Days->count(),$membersLast7Days->count(), $membersLast7DaysCanceled->count(), $membersLast7DaysCanceled->count()])
+                ->addRow(['Yesterday', $membersYesterday->count(),$membersYesterday->count(), $membersYesterdayCanceled->count(), $membersYesterdayCanceled->count()]);
 
         \Lava::ColumnChart('ActiveCanceled', $activeCanceled, [
               'titleTextStyle' => [
                 'color'    => '#eb6b2c',
                 'fontSize' => 16
+              ],
+              'height' => 300,
+              'legend' => [
+                'position' => 'top'
               ]
         ]);
 
@@ -230,18 +318,71 @@ class HomeController extends Controller
 
         $activeCanceledPIC = \Lava::DataTable();
 
-        $activeCanceledPIC->addStringColumn('Span')
+        $activeCanceledPIC
+                ->addStringColumn('Infraction')
                 ->addNumberColumn('Active')
+                ->addRoleColumn('string', 'annotation')
                 ->addNumberColumn('Canceled')
-                ->addRow(['To Date', $allMembersPIC->count(), $allMembersCanceledPIC->count()])
-                ->addRow(['Last 30 Days', $membersLast30DaysPIC->count(), $membersLast30DaysCanceledPIC->count()])
-                ->addRow(['Last 7 Days', $membersLast7DaysPIC->count(), $membersLast7DaysCanceledPIC->count()])
-                ->addRow(['Yesterday', $membersYesterdayPIC->count(), $membersYesterdayCanceledPIC->count()]);
+                ->addRoleColumn('string', 'annotation')
+                
+                ->addRow(['To Date', $allMembersPIC->count(),$allMembersPIC->count(), $allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()])
+                ->addRow(['Last 30 Days', $membersLast30DaysPIC->count(),$membersLast30DaysPIC->count(), $membersLast30DaysCanceledPIC->count(), $membersLast30DaysCanceledPIC->count()])
+                ->addRow(['Last 7 Days', $membersLast7DaysPIC->count(),$membersLast7DaysPIC->count(), $membersLast7DaysCanceledPIC->count(), $membersLast7DaysCanceledPIC->count()])
+                ->addRow(['Yesterday', $membersYesterdayPIC->count(),$membersYesterdayPIC->count(), $membersYesterdayCanceledPIC->count(), $membersYesterdayCanceledPIC->count()]);
+                
+                // ->addStringColumn('Span')
+                // ->addNumberColumn('string')
+                // ->addRoleColumn('string', 'annotation')
+
+                // ->addRows([
+                //   ['To Date',            [20,'20'],[2,'2']],
+                //   ['Last 30 Days', [13,'13'],[3,'2']],
+                //   ['Last 7 Days',   [34,'34'],[4,'2']],
+                //   ['Yesterday', [22,'22'],[5,'2']]
+                // ]);
+
 
         \Lava::ColumnChart('ActiveCanceledPIC', $activeCanceledPIC, [
               'titleTextStyle' => [
                 'color'    => '#eb6b2c',
-                'fontSize' => 16
+                'fontSize' => 10
+              ],
+              'height' => 300,
+              'legend' => [
+                  'position' => 'top'
+              ]
+        ]);
+
+        $activeCanceledPWPCOverall = \Lava::DataTable();
+        $activeCanceledPWPCOverall
+                ->addStringColumn('PWPC')
+                ->addNumberColumn('Total')
+                ->addRow(['Active Members: '.$allMembers->count(), $allMembers->count()])
+                ->addRow(['Canceled Members: '.$allMembersCanceled->count(), $allMembersCanceled->count()]);
+        
+        \Lava::PieChart('PWPCActiveCanceled', $activeCanceledPWPCOverall, [
+            'is3D'   => true,
+            'slices' => [
+                ['offset' => 0.2],
+                ['offset' => 0.25],
+                ['offset' => 0.3]
+            ]
+        ]);
+
+
+        $activeCanceledPICOverall = \Lava::DataTable();
+        $activeCanceledPICOverall
+                ->addStringColumn('PIC')
+                ->addNumberColumn('Total')
+                ->addRow(['Active Members: '.$allMembersPIC->count(), $allMembersPIC->count()])
+                ->addRow(['Canceled Members: '.$allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()]);
+        
+        \Lava::PieChart('PICActiveCanceled', $activeCanceledPICOverall, [
+            'is3D'   => true,
+            'slices' => [
+                ['offset' => 0.2],
+                ['offset' => 0.25],
+                ['offset' => 0.3]
             ]
         ]);
 

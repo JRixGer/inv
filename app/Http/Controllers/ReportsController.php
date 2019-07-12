@@ -33,6 +33,8 @@ class ReportsController extends Controller
     $para = $request->toArray();
     
     $listAll = null;
+    $listAll_CB = null;
+    $listAll_IS = null;
     $AllMembers = 0;
     $MembersYesterday = 0;
     $MembersLast7Days = 0;
@@ -55,6 +57,8 @@ class ReportsController extends Controller
     $searchEndDtRange =  date('Y-m-d',strtotime($para['toDt']));  
     //echo $searchStartDtRange."  -  ".$searchEndDtRange;
     $searchTransType = $para['transType'];
+    $manualSearch = $para['manualSearch'];
+   
     $itemPrefix = '%pwcp%';
 
     $vw_canceled = "vw_canceled_members";
@@ -69,8 +73,86 @@ class ReportsController extends Controller
     foreach ($canceledMembers as $key => $d) 
       $inactive[] = $d->email; 
 
+    if($para["repOption"] == "0")
+    {
 
-    if($para["repOption"] == "1")
+      if($para['reportSelected'] == 'PIC')
+      {
+
+          $listAll_CB = DB::table('pigman_billing')
+              ->distinct()
+              ->select(
+                'pigman_billing.firstName',
+                'pigman_billing.lastName',
+                'pigman_billing.email',
+                DB::raw("(GROUP_CONCAT(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as CB_Dates"),
+                DB::raw("(GROUP_CONCAT(pigman_lineItems.itemNo SEPARATOR ', ')) as CB_SKUs"),
+                DB::raw("(GROUP_CONCAT(pigman_lineItems.productTitle SEPARATOR ', ')) as CB_ProductNames"),
+                DB::raw("(GROUP_CONCAT(pigman_notifications.receipt SEPARATOR ', ')) as CB_Receipts")
+                )
+              ->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')
+              ->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+              ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+              ->whereNotIn('pigman_billing.email', $inactive)
+              ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+              ->where('pigman_billing.firstName', '<>', '')
+              ->where(function($query) use ($manualSearch) {
+                $query->orWhere('pigman_billing.email', 'like', '%'. $manualSearch.'%')
+                      ->orWhere('pigman_notifications.receipt', 'like', '%'.$manualSearch.'%');
+                })
+              ->groupby('pigman_billing.firstName', 'pigman_billing.lastName','pigman_billing.email')
+              ->get();
+
+      }
+      else
+      {
+ 
+          $listAll_CB = DB::table('billing')
+              ->distinct()
+              ->select(
+                'billing.firstName',
+                'billing.lastName',
+                'billing.email',
+                DB::raw("(GROUP_CONCAT(STR_TO_DATE(notifications.dt,'%Y-%m-%d') SEPARATOR ', ')) as CB_Dates"),
+                DB::raw("(GROUP_CONCAT(lineItems.itemNo SEPARATOR ', ')) as CB_SKUs"),
+                DB::raw("(GROUP_CONCAT(lineItems.productTitle SEPARATOR ', ')) as CB_ProductNames"),
+                DB::raw("(GROUP_CONCAT(notifications.receipt SEPARATOR ', ')) as CB_Receipts")
+                )
+              ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+              ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+              ->where('lineItems.itemNo', 'like', '%pwcp%')
+              ->whereNotIn('billing.email', $inactive)
+              ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+              ->where('billing.firstName', '<>', '')
+              ->where(function($query) use ($manualSearch) {
+                  $query->orWhere('billing.email', 'like', '%'. $manualSearch.'%')
+                        ->orWhere('notifications.receipt', 'like', '%'.$manualSearch.'%');
+                  })
+              ->groupby('billing.firstName', 'billing.lastName','billing.email')
+              ->get();  
+
+      }
+
+      $listAll_IS = DB::table('is_members_pwcp')
+      ->distinct()
+      ->select(
+        'is_members_pwcp.first_name',
+        'is_members_pwcp.last_name',
+        DB::raw("(GROUP_CONCAT(is_members_pwcp.order_date SEPARATOR ', ')) as IS_OrderDate"),
+        DB::raw("(GROUP_CONCAT(is_members_pwcp.order_title SEPARATOR ', ')) as IS_OrderTitle"),
+        DB::raw("(GROUP_CONCAT(is_members_pwcp.product_name SEPARATOR ', ')) as IS_ProductNames")
+        )
+      ->where(function($query) use ($manualSearch) {
+          $query->orWhere('is_members_pwcp.order_title', 'like', '%' . $manualSearch . '%')
+                ->orWhere('is_members_pwcp.product_name', 'like', '%' . $manualSearch . '%');
+          })
+      ->groupby('is_members_pwcp.first_name', 'is_members_pwcp.last_name')
+      ->get();
+
+      return json_encode(['listAll_CB'=>$listAll_CB, 'listAll_IS'=>$listAll_IS, 'listAll_CB_Count'=>$listAll_CB->count(), 'listAll_IS_Count'=>$listAll_IS->count()]);    
+   
+    }
+    else if($para["repOption"] == "1")
     {
         if($para['reportSelected'] == 'PIC')
         {

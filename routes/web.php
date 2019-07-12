@@ -267,32 +267,7 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 		'as' => 'mail.send_consolidated'
 	]
 	);	
-	// Route::post('/post/store', [
 
-	// 	'uses' => 'PostsController@store',
-	// 	'as' => 'post.store'
-	// ]
-	// );
-
-	// Route::get('/category/create', [
-
-	// 	'uses' => 'CategoriesController@create',
-	// 	'as' => 'category.create'
-	// ]
-	// );
-
-	// Route::post('/category/store', [
-
-	// 	'uses' => 'CategoriesController@store',
-	// 	'as' => 'category.store'
-	// ]
-	// );
-
-
-	//Route::get('/', 'ImportController@getImport')->name('import');
-	//Route::post('/import_parse', 'ImportController@parseImport')->name('import_parse');
-	//Route::post('/import_process', 'ImportController@processImport')->name('import_process');
-	
 	Route::get('/report/import', [
 
 		'uses' => 'ImportController@getImport',

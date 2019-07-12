@@ -12,6 +12,7 @@
                         </div>  
                         <div class="col-md-3">
                             <select class="form-control" id="reportOpt" onChange="showHide()">
+                                <option value='0'>Manual Search by Email, Receipts</option>
                                 <option value='1'>Added Members Information</option>
                                 <option value='2'>Added Members Information by Date Range</option>
                                 <option value='3'>Cancelation of Members</option>
@@ -71,6 +72,11 @@
                                 <label class="custom-control-label" for="remMatch">hide match</label>
                             </div>
                         </div>
+                        <div class="col-md-2 manualSearch">
+                            <div class="custom-control custom-checkbox">
+                                <input type="text" class="form-control" id="manualSearch" placeholder="Type receipt# or email">
+                            </div>
+                        </div>                        
                         <div class="col-md-1" >
                             <div class="input-group date showreport">
                             <button type="button" class="btn btn-info" onClick="dataMine()">Go</button>
@@ -155,6 +161,9 @@
                         </table>
                         </div>
                         
+                        <div id="manualSearchResults" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
+                                
+                        </div>                        
 
                         </div>
                         <div class="col-md-12" id="spinner" style="padding:20px;">

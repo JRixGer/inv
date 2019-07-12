@@ -86,7 +86,13 @@
     .removeMatchCheckBox{
         display: none;
         width:100%
-    }    
+    }
+    .manualSearch{
+        display: block;
+        width:100%
+    }
+
+        
     .limit-text {
         text-align:left;
         width: auto;
@@ -107,6 +113,15 @@
         padding: 0.175rem 0.75rem !important;
     }
 
+    .label-manual {
+        font-weight: bold; 
+    }
+    .badge-manual {
+        border-radius: 5px;
+        background: #f9f9f9;
+        padding: 10px 0px 10px 0px;
+        margin: 10px;
+    }
      </style>
 
 <body>
@@ -362,13 +377,18 @@
 
     function showHide()
     {
-        if($("#reportOpt").val() == '2' || $("#reportOpt").val() == '4' || $("#reportOpt").val() == '8')                                
+        if($("#reportOpt").val() == '0')                                
+        {
+            $(".manualSearch").show();
+        }
+        else if($("#reportOpt").val() == '2' || $("#reportOpt").val() == '4' || $("#reportOpt").val() == '8')                                
         {
             $(".datefrom").show();
             $(".dateto").show();
             $(".transactiontype").hide();
             $(".datefilter").hide();          
             $(".removeMatchCheckBox").hide();  
+            $(".manualSearch").hide();
         }
         else if($("#reportOpt").val() == '7')                                
         {
@@ -377,6 +397,7 @@
             $(".transactiontype").hide();
             $(".datefilter").hide();
             $(".removeMatchCheckBox").show();
+            $(".manualSearch").hide();
         }        
         else
         {
@@ -385,7 +406,7 @@
             $(".transactiontype").hide();
             $(".datefilter").hide();
             $(".removeMatchCheckBox").hide();
-            
+            $(".manualSearch").hide();
         }
     }
 
@@ -399,6 +420,7 @@
         var transType = $("#transactionType").val();
         var dateFltr = $("#dateFilter").val();
         var remMatch = $("#remMatch:checked").val()? 1:0;
+        var manualSearch = $("#manualSearch").val();
         var reportSelected = $("#reportSelected").val();
        
         if(repOption == 2 && (fromDt.length == 0 || toDt.length == 0))
@@ -417,10 +439,82 @@
         $.ajax({
            type:'GET',
            url:'/inv/shipping/report/datamine',
-           data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr, remMatch:remMatch, reportSelected:reportSelected},
-           success:function(data){        
-                       
-                if(repOption == 1)
+           data:{repOption:repOption, fromDt:fromDt, toDt:toDt, transType:transType, dateFltr:dateFltr, remMatch:remMatch, reportSelected:reportSelected, manualSearch:manualSearch},
+           success:function(data){      
+
+                if(repOption == 0)
+                {       
+                    var i;   
+                    $("#spinner").html('');
+                    $("#dataList").show();
+                    $("#datatablediv").hide();
+                    $("#datatabledivcrossref").hide();
+                    $("#datatabledivaff").hide();
+                    $("#manualSearchResults").show();
+
+                    var data = JSON.parse(data);
+                    console.log(data); 
+                    var divContainer = "<div><div style='float:left;width:50%'><h5>ClickBank</h5>";
+                    var li="";
+                    var firstName = "";
+                    var lastName = "";
+                    var email = "";
+                    var CB_Dates = "";
+                    var CB_SKUs = "";
+                    var CB_ProductNames = "";
+                    var CB_Receipts = "";
+
+                    var first_name = "";
+                    var last_name = "";
+                    var IS_OrderDate = "";
+                    var IS_OrderTitle = "";
+                    var IS_ProductNames = "";
+
+                    for(i = 0; i < data.listAll_CB.length; i ++)
+                    {
+
+                        firstName = data.listAll_CB[i]['firstName']?data.listAll_CB[i]['firstName']:'';
+                        lastName = data.listAll_CB[i]['lastName']?data.listAll_CB[i]['lastName']:'';
+                        email = data.listAll_CB[i]['email']?data.listAll_CB[i]['email']:'';
+                        CB_Dates = data.listAll_CB[i]['CB_Dates']?data.listAll_CB[i]['CB_Dates']:'';
+                        CB_SKUs = data.listAll_CB[i]['CB_SKUs']?data.listAll_CB[i]['CB_SKUs']:'';
+                        CB_ProductNames = data.listAll_CB[i]['CB_ProductNames']?data.listAll_CB[i]['CB_ProductNames']:'';
+                        CB_Receipts = data.listAll_CB[i]['CB_Receipts']?data.listAll_CB[i]['CB_Receipts']:'';
+
+
+                        li += "<li><span class='label-manual'>Name:</span> "+firstName+" "+lastName+"</li>";
+                        li += "<li><span class='label-manual'>Email:</span> "+email+"</li>";
+                        li += "<li><span class='label-manual'>Dates:</span> "+CB_Dates+"</li>";
+                        li += "<li><span class='label-manual'>SKUs:</span> "+CB_SKUs+"</li>";
+                        li += "<li><span class='label-manual'>ProductNames:</span> "+CB_ProductNames+"</li>";
+                        li += "<li><span class='label-manual'>Receipts:</span> "+CB_Receipts+"</li>";
+
+                        divContainer += "<div class='badge-manual'><ul>"+li+"</ul></div>";
+                        li="";
+                    }
+                    li = "";
+                    divContainer += "</div><div style='float:left;width:50%'><h5>InfusionSoft</h5>";
+                    for(i = 0; i < data.listAll_IS.length; i ++)
+                    {
+
+                        first_name = data.listAll_IS[i]['first_name']?data.listAll_IS[i]['first_name']:'';
+                        last_name = data.listAll_IS[i]['last_name']?data.listAll_IS[i]['last_name']:'';
+                        IS_OrderDate = data.listAll_IS[i]['IS_OrderDate']?data.listAll_IS[i]['IS_OrderDate']:'';
+                        IS_OrderTitle = data.listAll_IS[i]['IS_OrderTitle']?data.listAll_IS[i]['IS_OrderTitle']:'';
+                        IS_ProductNames = data.listAll_IS[i]['IS_ProductNames']?data.listAll_IS[i]['IS_ProductNames']:'';
+
+                        li += "<li><span class='label-manual'>Name:</span> "+first_name+" "+last_name+"</li>";
+                        li += "<li><span class='label-manual'>OrderDate:</span> "+IS_OrderDate+"</li>";
+                        li += "<li><span class='label-manual'>OrderTitle:</span> "+IS_OrderTitle+"</li>";
+                        li += "<li><span class='label-manual'>ProductNames:</span> "+IS_ProductNames+"</li>";
+                        divContainer += "<div class='badge-manual'><ul>"+li+"</ul></div>";
+                        li="";
+                    }
+                    divContainer += "</div>";
+                    $("#manualSearchResults").html(divContainer);
+
+                }                       
+                else if(repOption == 1)
                 {          
                     //console.log(repOption);      
                     $("#spinner").html('');
@@ -428,6 +522,7 @@
                     $("#datatablediv").show();
                     $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
+                    $("#manualSearchResults").hide();
                     var data = JSON.parse(data);
                     var totMember = "<p><span>Total Members To Date: <font style='font-size:20px'><b>"+data.members+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
                     var memberYesterday = "<span>Added Yesterday: <font style='font-size:20px'><b>"+data.membersYesterday+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
@@ -445,6 +540,7 @@
                     $("#datatablediv").show();
                     $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
+                    $("#manualSearchResults").hide();
                     var data = JSON.parse(data);
                     $("#summary").html("");
                     list(data.listAll);
@@ -456,6 +552,7 @@
                     $("#datatablediv").show();
                     $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
+                    $("#manualSearchResults").hide();
                     var data = JSON.parse(data);
                     $("#summary").html("");
                     list(data.listAll);
@@ -468,7 +565,7 @@
                     $("#datatablediv").show();
                     $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
-                    
+                    $("#manualSearchResults").hide();
                     var data = JSON.parse(data);
 
                     var header = "<table class='table table-bordered' style='width:100%; font-size:18px'><tr><td style='font-weight:bold'>MEMBERS</td><td style='font-weight:bold'>Date Range:<br>"+fromDt+" &#8594; "+toDt+"</td><td style='font-weight:bold'>To Date(Total)</td><td style='font-weight:bold'>Last 30 Days</td><td style='font-weight:bold'>Last 7 days</td><td style='font-weight:bold'>Yesterday</td></tr>";
@@ -490,6 +587,8 @@
                     $("#datatablediv").hide();
                     $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").show();
+                    $("#manualSearchResults").hide();
+
                     var data = JSON.parse(data);
                     
                     var totalAffiliates = "<p><span>Total Affiliates To Date: <font style='font-size:20px'><b>"+data.totalAffiliates+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
@@ -508,6 +607,8 @@
                     $("#datatablediv").hide();
                     $("#datatabledivaff").hide();
                     $("#datatabledivcrossref").show();
+                    $("#manualSearchResults").hide();
+
                     var data = JSON.parse(data);
 
                     console.log(data);
@@ -523,6 +624,8 @@
                     $("#datatablediv").show();
                     $("#datatabledivcrossref").hide();
                     $("#datatabledivaff").hide();
+                    $("#manualSearchResults").hide();
+
                     var data = JSON.parse(data);
                     $("#summary").html("");
                     list(data.listAll);
@@ -538,7 +641,7 @@
         console.log(data)
         $('#datatable').DataTable().destroy();
         $('#datatable').DataTable( {
-            lengthMenu: [ 10, 25, 50, 75, 100 ],
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             data: data,
             retrieve: true,
             "columns": [
@@ -560,7 +663,7 @@
         console.log(data)
         $('#datatableaff').DataTable().destroy();
         $('#datatableaff').DataTable( {
-            lengthMenu: [ 10, 25, 50, 75, 100 ],
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             data: data,
             retrieve: true,
             "columns": [
@@ -583,7 +686,7 @@
         console.log(data)
         $('#datatablecrossref').DataTable().destroy();
         $('#datatablecrossref').DataTable( {
-            lengthMenu: [ 10, 25, 50, 75, 100 ],
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             data: data,
             "order": [[ 12, "asc" ]],
             retrieve: true,

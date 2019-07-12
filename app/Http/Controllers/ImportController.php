@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\IsMembersPwcp;
 use App\IsMembers;
 use App\CsvData;
+use DB;
 use App\Http\Requests\CsvImportRequest;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -58,6 +59,7 @@ class ImportController extends Controller
         
         if($info['csv_file_source'] == 'transactions')
         {
+            DB::table('is_members_pwcp')->delete();
             $data = CsvData::find($request->csv_data_file_id);
             $csv_data = json_decode($data->csv_data, true);
             foreach ($csv_data as $row) {
