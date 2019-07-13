@@ -454,8 +454,8 @@ class HomeController extends Controller
         $activeCanceledPWPCOverall
                 ->addStringColumn('PWPC')
                 ->addNumberColumn('Total')
-                ->addRow(['Active: '.$allMembers->count(), $allMembers->count()])
-                ->addRow(['Canceled: '.$allMembersCanceled->count(), $allMembersCanceled->count()]);
+                ->addRow(['Active:'.$allMembers->count(), $allMembers->count()])
+                ->addRow(['Canceled:'.$allMembersCanceled->count(), $allMembersCanceled->count()]);
         
         \Lava::PieChart('PWPCActiveCanceled', $activeCanceledPWPCOverall, [
             'is3D'   => true,
@@ -476,8 +476,8 @@ class HomeController extends Controller
         $activeCanceledPICOverall
                 ->addStringColumn('PIC')
                 ->addNumberColumn('Total')
-                ->addRow(['Active: '.$allMembersPIC->count(), $allMembersPIC->count()])
-                ->addRow(['Canceled: '.$allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()]);
+                ->addRow(['Active:'.$allMembersPIC->count(), $allMembersPIC->count()])
+                ->addRow(['Canceled:'.$allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()]);
         
         \Lava::PieChart('PICActiveCanceled', $activeCanceledPICOverall, [
             'is3D'   => true,
