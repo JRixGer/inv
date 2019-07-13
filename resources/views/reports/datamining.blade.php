@@ -276,6 +276,8 @@
                     $("#reportOpt").val('6');        
                 else if($_GET['n']=='5' && $_GET['t']=='PWCP')
                     $("#reportOpt").val('6');
+                else if($_GET['n']=='5' && $_GET['t']=='PIC')
+                    $("#reportOpt").val('6');                    
 
                 $("#datepicker1").val('<?php echo '01/01/2019'; ?>');
                 $("#datepicker2").val('<?php echo date('m/d/Y',strtotime('now')); ?>');

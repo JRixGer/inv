@@ -8,7 +8,7 @@
 
         <div class="col-md-4">
             <div class="card" style="margin:10px;">
-                <div class="card-header"><a href="#" onClick="goToPage('1','PWCP')">PWCP - Overall Active and Canceled Members</a></div>
+                <div class="card-header"><a href="#" onClick="goToPage('1','PWCP')" style="width:100%">PWCP - Overall Active and Canceled Members <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                 <div class="card-body">
                     <div id="PWCP-div"></div>
                     <?php echo Lava::render('PieChart', 'PWPCActiveCanceled', 'PWCP-div') ?>
@@ -18,7 +18,7 @@
 
         <div class="col-md-4">
             <div class="card" style="margin:10px;">
-                <div class="card-header"><a href="#" onClick="goToPage('1','PIC')">PIC - Overall Active and Canceled Members</a></div>
+                <div class="card-header"><a href="#" onClick="goToPage('1','PIC')" style="width:100%">PIC - Overall Active and Canceled Members <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                 <div class="card-body">
                     <div id="PIC-div"></div>
                     <?php echo Lava::render('PieChart', 'PICActiveCanceled', 'PIC-div') ?>
@@ -30,7 +30,7 @@
     <div class="row no-gutters justify-content-center">
         <div class="col-md-4">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('2','PWCP')">PWCP - Active and Canceled Members by Date Range</a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('2','PWCP')" style="width:100%">PWCP - Active and Canceled Members by Date Range  <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="activeCanceled_div"></div>
                     <?= Lava::render('ColumnChart', 'ActiveCanceled', 'activeCanceled_div') ?>
@@ -40,7 +40,7 @@
 
         <div class="col-md-4">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('2','PIC')">PIC - Active and Canceled Members by Date Range</a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('2','PIC')" style="width:100%">PIC - Active and Canceled Members by Date Range  <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="activeCanceled_PIC_div"></div>
                     <?= Lava::render('ColumnChart', 'ActiveCanceledPIC', 'activeCanceled_PIC_div') ?>
@@ -107,7 +107,7 @@
 
         <div class="col-md-8">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('3','PWCP')">PWCP - Number of Members and Re Bills by Affiliates</a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('3','PWCP')" style="width:100%">PWCP - Number of Members and Re Bills by Affiliates <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="PWCPAffiliates_div"></div>
                     <?php echo Lava::render('LineChart', 'PWCPAffiliates', 'PWCPAffiliates_div') ?>
@@ -121,7 +121,7 @@
 
         <div class="col-md-8">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('4','PWCP')">PWCP - Number of Members and Re Bills by Month</a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('4','PWCP')" style="width:100%">PWCP - Number of Members and Re Bills by Month <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="PWCPAffiliatesByMonth_div"></div>
                     <?php echo Lava::render('LineChart', 'PWCPAffiliatesByMonth', 'PWCPAffiliatesByMonth_div') ?>
@@ -134,13 +134,38 @@
 
         <div class="col-md-8">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('5','PWCP')">PWCP - Number of Members and Re Bills by Day</a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('5','PWCP')" style="width:100%">PWCP - Number of Members and Re Bills by Day <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="PWCPAffiliatesByDay_div"></div>
                     <?php echo Lava::render('LineChart', 'PWCPAffiliatesByDay', 'PWCPAffiliatesByDay_div') ?>
                 </div>
             </div>
         </div>
+    </div>
+
+
+    <div class="row no-gutters justify-content-center">
+
+        <div class="col-md-4">
+            <div class="card" style="margin:10px">
+               <div class="card-header"><a href="#" onClick="goToPage('5','PWCP')" style="width:100%">PWCP - Total Sales by SKU <span style="float:right"><i class="fa fa-link"></i></span></a></div>
+               <div class="card-body">
+                    <div id="totalSalesBySKU_div"></div>
+                    <?= Lava::render('BarChart', 'totalSalesBySKU', 'totalSalesBySKU_div') ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card" style="margin:10px">
+               <div class="card-header"><a href="#" onClick="goToPage('5','PIC')" style="width:100%">PIC - Total Sales by SKU <span style="float:right"><i class="fa fa-link"></i></span></a></div>
+               <div class="card-body">
+                    <div id="PICtotalSalesBySKU_div"></div>
+                    <?= Lava::render('BarChart', 'PICtotalSalesBySKU', 'PICtotalSalesBySKU_div') ?>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 
