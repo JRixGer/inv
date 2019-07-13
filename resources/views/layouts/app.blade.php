@@ -191,9 +191,19 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="{{ route('report.options') }}?t=pwcp">PWCP</a>
                               <a class="dropdown-item" href="{{ route('report.options') }}?t=pic">PIC</a>
-                              <a class="dropdown-item" href="{{ route('report.import') }}?t=pwcp">Import IS</a>
                             </div>
-                        </li>                        
+                        </li>     
+                        
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            CB & IS Audit<span class="caret"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{{ route('report.import') }}">Import IS</a>
+                              <a class="dropdown-item" href="{{ route('report.audit') }}">CB & IS Cross Referencing</a>
+                            </div>
+                        </li> 
+
                         @auth
                         <li><a class="nav-link" href="http://ship.preparedpatriot.us/index.php?l=ea7a8e98f1a61b0ae181ba1cf22a5333">Shipping</a></li>                                                
                         @endauth
@@ -483,6 +493,7 @@
 
                     var first_name = "";
                     var last_name = "";
+                    var IS_Email = "";
                     var IS_OrderDate = "";
                     var IS_OrderTitle = "";
                     var IS_ProductNames = "";
@@ -516,11 +527,13 @@
 
                         first_name = data.listAll_IS[i]['first_name']?data.listAll_IS[i]['first_name']:'';
                         last_name = data.listAll_IS[i]['last_name']?data.listAll_IS[i]['last_name']:'';
+                        IS_Email = data.listAll_IS[i]['email']?data.listAll_IS[i]['email']:'';
                         IS_OrderDate = data.listAll_IS[i]['IS_OrderDate']?data.listAll_IS[i]['IS_OrderDate']:'';
                         IS_OrderTitle = data.listAll_IS[i]['IS_OrderTitle']?data.listAll_IS[i]['IS_OrderTitle']:'';
                         IS_ProductNames = data.listAll_IS[i]['IS_ProductNames']?data.listAll_IS[i]['IS_ProductNames']:'';
 
                         li += "<li><span class='label-manual'>Name:</span> "+first_name+" "+last_name+"</li>";
+                        li += "<li><span class='label-manual'>Email:</span> "+IS_Email+"</li>";
                         li += "<li><span class='label-manual'>OrderDate:</span> "+IS_OrderDate+"</li>";
                         li += "<li><span class='label-manual'>OrderTitle:</span> "+IS_OrderTitle+"</li>";
                         li += "<li><span class='label-manual'>ProductNames:</span> "+IS_ProductNames+"</li>";
@@ -654,6 +667,47 @@
         
     }
 
+    function audit()
+    {
+
+        var repOption = $("#reportOpt").val();
+        var remMatch = $("#remMatch:checked").val()? 1:0;
+       
+
+        $("#spinner").html('<div id="imgcenter" style="width:100%; height:100%"><img src="../../public/images/loading.gif"><p style="text-align:center; color:#ccc; font-size:10px">please wait</p></div>');
+        $("#dataList").hide();
+
+        $.ajaxSetup({
+            headers: {
+
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+           type:'GET',
+           url:'/inv/shipping/report/cross_ref',
+           data:{repOption:repOption, remMatch:remMatch},
+           success:function(data){      
+
+                //console.log(repOption);       
+                $("#spinner").html('');
+                $("#dataList").show();
+                $("#datatabledivcrossref").show();
+            
+                var data = JSON.parse(data);
+
+                console.log(data);
+
+                $("#summary").html("");
+                list_CB_IS_CrossRef(data.listAll);
+
+                                     
+           }
+        });  
+
+        
+    }
     function list(data)
     {
         console.log(data)
@@ -706,12 +760,12 @@
         $('#datatablecrossref').DataTable( {
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             data: data,
-            "order": [[ 12, "asc" ]],
+            "order": [[ 14, "asc" ]],
             retrieve: true,
             "columns": [
               { "data": "CB_FirstName" },
               { "data": "CB_LastName" },
-            //   { "data": "CB_Email" },
+              { "data": "CB_Email" },
               { "data": "CB_Dates" },
               { "data": "CB_SKUs" },
               { "data": "CB_ProductNames" },
@@ -719,15 +773,14 @@
               { "data": "CB_NoOfReBills" },
               { "data": "IS_FirstName" },
               { "data": "IS_LastName" },
+              { "data": "IS_Email" },
               { "data": "IS_OrderDate" },
               { "data": "IS_OrderTitle" },
               { "data": "IS_ProductNames" },
-              { "data": "lnk_name" }
+              { "data": "lnk_email" }
             ]
         } );
     }
-
-
     
     function goToPage(n, t)
     {

@@ -148,7 +148,7 @@
 
         <div class="col-md-4">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('5','PWCP')" style="width:100%">PWCP - Total Sales by SKU <span style="float:right"><i class="fa fa-link"></i></span></a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('5','PWCP')" style="width:100%">PWCP - Total Sold by SKU <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="totalSalesBySKU_div"></div>
                     <?= Lava::render('BarChart', 'totalSalesBySKU', 'totalSalesBySKU_div') ?>
@@ -158,7 +158,7 @@
 
         <div class="col-md-4">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('5','PIC')" style="width:100%">PIC - Total Sales by SKU <span style="float:right"><i class="fa fa-link"></i></span></a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('5','PIC')" style="width:100%">PIC - Total Sold by SKU <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="PICtotalSalesBySKU_div"></div>
                     <?= Lava::render('BarChart', 'PICtotalSalesBySKU', 'PICtotalSalesBySKU_div') ?>

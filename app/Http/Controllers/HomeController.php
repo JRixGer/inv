@@ -44,190 +44,6 @@ class HomeController extends Controller
         foreach ($canceledMembers_pic as $key => $d) 
           $inactive_pic[] = $d->email; 
   
-        
-        $listAll = DB::table('billing')
-        ->distinct()
-        ->select(
-          'notifications.affiliate',
-          DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
-          DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
-          )
-        ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
-        ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-        ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-        ->where('notifications.affiliate', '<>', '')
-        ->where('billing.firstName', '<>', '')
-        ->groupby('notifications.affiliate')->get(); 
-
-
-        $affiliate = \Lava::DataTable();
-        $affiliate->addStringColumn('Affiliate')
-                     ->addNumberColumn('Members')
-                     ->addNumberColumn('Re-Bills');
-
-        foreach ($listAll as $key => $d) 
-            $affiliate->addRow([$d->affiliate,  $d->TotalMembers, $d->NoOfReBills]);
-        
-        \Lava::LineChart('PWCPAffiliates', $affiliate, [
-            'fontSize' => 12,
-            'height' => 400,
-            'legend' => [
-              'position' => 'top'
-            ]
-        ]);
-        
-
-        //////////////////////////////
-
-
-        $listAll = DB::table('billing')
-        ->distinct()
-        ->select(
-          DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y')) As Days"),
-          DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
-          DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
-          )
-        ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
-        ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-        ->where('lineItems.itemNo', 'like', '%pwcp%')
-        ->whereNotIn('billing.email', $inactive)
-        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-        ->where('notifications.affiliate', '<>', '')
-        ->where('billing.firstName', '<>', '')
-        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%d/%Y'))"))->get(); 
-
-        $affiliate = \Lava::DataTable();
-        $affiliate->addStringColumn('Day')
-                     ->addNumberColumn('Members')
-                     ->addNumberColumn('Re-Bills');
-
-        foreach ($listAll as $key => $d) 
-            $affiliate->addRow([$d->Days,  $d->TotalMembers, $d->NoOfReBills]);
-        
-        \Lava::LineChart('PWCPAffiliatesByDay', $affiliate, [
-            'fontSize' => 12,
-            'height' => 400,
-            'legend' => [
-              'position' => 'top'
-            ]
-            ]);
-        
-        
-        ////////////////
-
-
-          $listAll = DB::table('billing')
-          ->distinct()
-          ->select(
-            DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y')) As Months"),
-            DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
-            DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
-            )
-          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
-          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-          ->where('lineItems.itemNo', 'like', '%pwcp%')
-          ->whereNotIn('billing.email', $inactive)
-          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-          ->where('notifications.affiliate', '<>', '')
-          ->where('billing.firstName', '<>', '')
-          ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%Y'))"))->get(); 
-  
-  
-          $affiliate = \Lava::DataTable();
-          $affiliate->addStringColumn('Month')
-                       ->addNumberColumn('Members')
-                       ->addRoleColumn('string', 'annotation')
-                       ->addNumberColumn('Re-Bills')
-                       ->addRoleColumn('string', 'annotation');
-  
-          foreach ($listAll as $key => $d) 
-              $affiliate->addRow([$d->Months,  $d->TotalMembers, $d->TotalMembers, $d->NoOfReBills, $d->NoOfReBills]);
-          
-          \Lava::LineChart('PWCPAffiliatesByMonth', $affiliate, [
-              'fontSize' => 12,
-              'height' => 400,
-              'legend' => [
-                'position' => 'top'
-              ]
-              ]);
-          
-          
-          ////////////////
-          $listAll = DB::table('billing')
-          ->distinct()
-          ->select(
-            'lineItems.itemNo',
-            DB::raw("(COUNT(lineItems.itemNo)) as TotalSales")
-            )
-          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
-          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
-          ->where('lineItems.itemNo', 'like', '%pwcp%')
-          ->whereNotIn('billing.email', $inactive)
-          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-          ->where('notifications.affiliate', '<>', '')
-          ->where('billing.firstName', '<>', '')
-          ->groupby('lineItems.itemNo')->get(); 
-  
-          $totalSalesBySKU = \Lava::DataTable();
-
-          $totalSalesBySKU->addStringColumn('Span')
-                  ->addNumberColumn('SKU')
-                  ->addRoleColumn('string', 'annotation');
-
-                  foreach ($listAll as $key => $d) 
-                    $totalSalesBySKU->addRow([$d->itemNo,  $d->TotalSales, $d->TotalSales]);
-
-          \Lava::BarChart('totalSalesBySKU', $totalSalesBySKU, [
-                'titleTextStyle' => [
-                  'color'    => '#eb6b2c',
-                  'fontSize' => 16
-                ],
-                'height' => 300,
-                'legend' => [
-                  'position' => 'none'
-                ]
-          ]);
-  
-          $listAll = DB::table('pigman_billing')
-          ->distinct()
-          ->select(
-            'pigman_lineItems.itemNo',
-            DB::raw("(COUNT(pigman_lineItems.itemNo)) as TotalSales")
-            )
-          ->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')
-          ->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
-          ->where('pigman_lineItems.itemNo', 'like', '%pic%')
-          ->whereNotIn('pigman_billing.email', $inactive_pic)
-          ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
-          ->where('pigman_notifications.affiliate', '<>', '')
-          ->where('pigman_billing.firstName', '<>', '')
-          ->groupby('pigman_lineItems.itemNo')->get(); 
-  
-          $PICtotalSalesBySKU = \Lava::DataTable();
-
-          $PICtotalSalesBySKU->addStringColumn('Span')
-                  ->addNumberColumn('SKU')
-                  ->addRoleColumn('string', 'annotation');
-
-                  foreach ($listAll as $key => $d) 
-                    $PICtotalSalesBySKU->addRow([$d->itemNo,  $d->TotalSales, $d->TotalSales]);
-  
-          \Lava::BarChart('PICtotalSalesBySKU', $PICtotalSalesBySKU, [
-                'titleTextStyle' => [
-                  'color'    => '#eb6b2c',
-                  'fontSize' => 16
-                ],
-                'height' => 300,
-                'legend' => [
-                  'position' => 'none'
-                ]
-          ]);
-
-          ////////////////
-
-
         $AllMembers = 0;
         $MembersYesterday = 0;
         $MembersLast7Days = 0;
@@ -245,6 +61,10 @@ class HomeController extends Controller
     
         $searchStartDt7 = date('Y-m-d',strtotime("now")-604800);
         $searchStartDt30 = date('Y-m-d',strtotime("now")-2629744);
+
+        ////////////////////////////
+        // PWCP
+        ///////////////////////////       
 
         $allMembers = DB::table('billing')->distinct()->select('billing.firstName','billing.lastName','billing.email')->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
         ->where('lineItems.itemNo', 'like', '%pwcp%')
@@ -297,31 +117,6 @@ class HomeController extends Controller
         ->where('lineItems.itemNo', 'like', '%pwcp%')
         ->whereIn('billing.email', $inactive)
         ->where('billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('billing.email')->get();
-
-        $activeCanceled = \Lava::DataTable();
-
-        $activeCanceled->addStringColumn('Span')
-                ->addNumberColumn('Active')
-                ->addRoleColumn('string', 'annotation')
-                ->addNumberColumn('Canceled')
-                ->addRoleColumn('string', 'annotation')
-                ->addRow(['To Date', $allMembers->count(),$allMembers->count(), $allMembersCanceled->count(), $allMembersCanceled->count()])
-                ->addRow(['Last 30 Days', $membersLast30Days->count(),$membersLast30Days->count(), $membersLast30DaysCanceled->count(), $membersLast30DaysCanceled->count()])
-                ->addRow(['Last 7 Days', $membersLast7Days->count(),$membersLast7Days->count(), $membersLast7DaysCanceled->count(), $membersLast7DaysCanceled->count()])
-                ->addRow(['Yesterday', $membersYesterday->count(),$membersYesterday->count(), $membersYesterdayCanceled->count(), $membersYesterdayCanceled->count()]);
-
-        \Lava::ColumnChart('ActiveCanceled', $activeCanceled, [
-              'titleTextStyle' => [
-                'color'    => '#eb6b2c',
-                'fontSize' => 16
-              ],
-              'height' => 300,
-              'legend' => [
-                'position' => 'top'
-              ]
-        ]);
-
-
 
 
         ////////////////////////////
@@ -380,6 +175,251 @@ class HomeController extends Controller
         ->whereIn('pigman_billing.email', $inactive_pic)
         ->where('pigman_billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('pigman_billing.email')->get();
 
+        ////////////////////////  
+          
+        $listAll = DB::table('billing')
+        ->distinct()
+        ->select(
+          'notifications.affiliate',
+          DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
+          DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+          )
+        ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+        ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+        ->where('lineItems.itemNo', 'like', '%pwcp%')
+        ->whereNotIn('billing.email', $inactive)
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+        ->where('notifications.affiliate', '<>', '')
+        ->where('billing.firstName', '<>', '')
+        ->groupby('notifications.affiliate')->get(); 
+
+        $totReBills = 0;
+        foreach ($listAll as $key => $d) 
+          $totReBills += $d->NoOfReBills;
+
+        $affiliate = \Lava::DataTable();
+        $affiliate->addStringColumn('Affiliate')
+                     ->addNumberColumn('Members:'.$allMembers->count())
+                     ->addNumberColumn('Re-Bills:'.$totReBills);
+
+        foreach ($listAll as $key => $d) 
+          $affiliate->addRow([$d->affiliate,  $d->TotalMembers, $d->NoOfReBills]);
+        
+        \Lava::LineChart('PWCPAffiliates', $affiliate, [
+            'fontSize' => 12,
+            'height' => 400,
+            'legend' => [
+              'position' => 'top',
+              'textStyle' => [
+                'fontSize' => 16
+              ]
+            ]              
+
+        ]);
+        
+
+        //////////////////////////////
+
+
+        $listAll = DB::table('billing')
+        ->distinct()
+        ->select(
+          DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y')) As Days"),
+          DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
+          DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+          )
+        ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+        ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+        ->where('lineItems.itemNo', 'like', '%pwcp%')
+        ->whereNotIn('billing.email', $inactive)
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+        ->where('notifications.affiliate', '<>', '')
+        ->where('billing.firstName', '<>', '')
+        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%d/%Y'))"))->get(); 
+
+   
+        $affiliate = \Lava::DataTable();
+        $affiliate->addStringColumn('Day')
+                     ->addNumberColumn('Members:'.$allMembers->count())
+                     ->addNumberColumn('Re-Bills:'.$totReBills);
+
+        foreach ($listAll as $key => $d) 
+            $affiliate->addRow([$d->Days,  $d->TotalMembers, $d->NoOfReBills]);
+        
+        \Lava::LineChart('PWCPAffiliatesByDay', $affiliate, [
+            'fontSize' => 12,
+            'height' => 400,
+            'legend' => [
+              'position' => 'top',
+              'textStyle' => [
+                'fontSize' => 16
+              ]
+            ]              
+          
+
+            ]);
+        
+        
+        ////////////////
+
+
+          $listAll = DB::table('billing')
+          ->distinct()
+          ->select(
+            DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y')) As Months"),
+            DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
+            DB::raw("SUM(IF(notifications.transactionType='BILL',1,0)) as NoOfReBills")
+            )
+          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          ->where('notifications.affiliate', '<>', '')
+          ->where('billing.firstName', '<>', '')
+          ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%Y'))"))->get(); 
+  
+  
+          $affiliate = \Lava::DataTable();
+          $affiliate->addStringColumn('Month')
+                       ->addNumberColumn('Members:'.$allMembers->count())
+                       ->addRoleColumn('string', 'annotation')
+                       ->addNumberColumn('Re-Bills:'.$totReBills)
+                       ->addRoleColumn('string', 'annotation');
+
+
+          foreach ($listAll as $key => $d) 
+              $affiliate->addRow([$d->Months,  $d->TotalMembers, $d->TotalMembers, $d->NoOfReBills, $d->NoOfReBills]);
+          
+          \Lava::LineChart('PWCPAffiliatesByMonth', $affiliate, [
+              'fontSize' => 12,
+              'height' => 400,
+              'legend' => [
+                'position' => 'top',
+                'textStyle' => [
+                  'fontSize' => 16
+                ]
+              ]              
+            ]);
+          
+          
+          ////////////////
+          $listAll = DB::table('billing')
+          ->distinct()
+          ->select(
+            'lineItems.itemNo',
+            DB::raw("(SUM(lineItems.quantity)) as TotalSales")
+            )
+          ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+          ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+          ->where('lineItems.itemNo', 'like', '%pwcp%')
+          ->whereNotIn('billing.email', $inactive)
+          ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          //->where('notifications.affiliate', '<>', '')
+          ->where('billing.firstName', '<>', '')
+          ->groupby('lineItems.itemNo')->get(); 
+  
+          $totalSalesBySKU = \Lava::DataTable();
+
+          $totalSalesBySKU->addStringColumn('Span')
+                  ->addNumberColumn('SKU')
+                  ->addRoleColumn('string', 'annotation');
+          
+          $tot = 0; 
+          foreach ($listAll as $key => $d) 
+          {
+            $totalSalesBySKU->addRow([$d->itemNo,  $d->TotalSales, $d->TotalSales]);
+            $tot += $d->TotalSales;
+          }
+                    
+
+          \Lava::BarChart('totalSalesBySKU', $totalSalesBySKU, [
+                'title' => 'Total Qty Sold: '.$tot,
+                'titleTextStyle' => [
+                  'color'    => '#000',
+                  'fontSize' => 14
+                ],
+                'height' => 300,
+                'legend' => [
+                  'position' => 'none',
+                ]               
+              
+  
+          ]);
+  
+          $listAll = DB::table('pigman_billing')
+          ->distinct()
+          ->select(
+            'pigman_lineItems.itemNo',
+            DB::raw("(SUM(pigman_lineItems.quantity)) as TotalSales")
+            )
+          ->leftjoin('pigman_notifications', 'pigman_billing.lnkid', '=', 'pigman_notifications.id')
+          ->leftjoin('pigman_lineItems', 'pigman_notifications.id', '=', 'pigman_lineItems.lnkid')
+          ->where('pigman_lineItems.itemNo', 'like', '%pic%')
+          ->whereNotIn('pigman_billing.email', $inactive_pic)
+          ->whereNotIn('pigman_notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+          //->where('pigman_notifications.affiliate', '<>', '')
+          ->where('pigman_billing.firstName', '<>', '')
+          ->groupby('pigman_lineItems.itemNo')->get(); 
+  
+          $PICtotalSalesBySKU = \Lava::DataTable();
+
+          $PICtotalSalesBySKU->addStringColumn('Span')
+                  ->addNumberColumn('SKU')
+                  ->addRoleColumn('string', 'annotation');
+
+          $tot = 0;                    
+          foreach ($listAll as $key => $d) 
+          {
+            $PICtotalSalesBySKU->addRow([$d->itemNo,  $d->TotalSales, $d->TotalSales]);
+            $tot += $d->TotalSales;
+          }
+            
+  
+          \Lava::BarChart('PICtotalSalesBySKU', $PICtotalSalesBySKU, [
+                'title' => 'Total Qty Sold: '.$tot,
+                'titleTextStyle' => [
+                  'color'    => '#000',
+                  'fontSize' => 14
+                ],
+                'height' => 300,
+                'legend' => [
+                  'position' => 'none',
+                ]               
+  
+          ]);
+
+          ////////////////
+
+        $activeCanceled = \Lava::DataTable();
+
+        $activeCanceled->addStringColumn('Span')
+                ->addNumberColumn('Active')
+                ->addRoleColumn('string', 'annotation')
+                ->addNumberColumn('Canceled')
+                ->addRoleColumn('string', 'annotation')
+                ->addRow(['To Date', $allMembers->count(),$allMembers->count(), $allMembersCanceled->count(), $allMembersCanceled->count()])
+                ->addRow(['Last 30 Days', $membersLast30Days->count(),$membersLast30Days->count(), $membersLast30DaysCanceled->count(), $membersLast30DaysCanceled->count()])
+                ->addRow(['Last 7 Days', $membersLast7Days->count(),$membersLast7Days->count(), $membersLast7DaysCanceled->count(), $membersLast7DaysCanceled->count()])
+                ->addRow(['Yesterday', $membersYesterday->count(),$membersYesterday->count(), $membersYesterdayCanceled->count(), $membersYesterdayCanceled->count()]);
+
+        \Lava::ColumnChart('ActiveCanceled', $activeCanceled, [
+              'titleTextStyle' => [
+                'color'    => '#eb6b2c',
+                'fontSize' => 16
+              ],
+              'height' => 300,
+              'legend' => [
+                'position' => 'top',
+                'textStyle' => [
+                  'fontSize' => 16
+                ]
+              ]               
+
+        ]);
+
+
+
 
         $activeCanceledPIC = \Lava::DataTable();
 
@@ -402,8 +442,12 @@ class HomeController extends Controller
               ],
               'height' => 300,
               'legend' => [
-                  'position' => 'top'
-              ]
+                'position' => 'top',
+                'textStyle' => [
+                  'fontSize' => 16
+                ]
+              ]             
+              
         ]);
 
         $activeCanceledPWPCOverall = \Lava::DataTable();
@@ -417,7 +461,7 @@ class HomeController extends Controller
             'is3D'   => true,
             'legend' => [
               'textStyle' => [
-                'fontSize' => 14
+                'fontSize' => 16
               ]
             ],
             'slices' => [
@@ -439,7 +483,7 @@ class HomeController extends Controller
             'is3D'   => true,
             'legend' => [
               'textStyle' => [
-                'fontSize' => 14
+                'fontSize' => 16
               ]
             ],
             'slices' => [

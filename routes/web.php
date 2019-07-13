@@ -238,6 +238,15 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 	
+
+	Route::get('/report/audit', [
+
+		'uses' => 'ReportsController@audit',
+		'as' => 'report.audit'
+	]
+	);
+	
+
 	Route::get('/report/datamine', [
 
 		'uses' => 'ReportsController@datamine',
@@ -245,7 +254,12 @@ Route::group(['prefix' => 'shipping', 'middleware' => 'auth'],function(){
 	]
 	);
 
-	
+	Route::get('/report/cross_ref', [
+
+		'uses' => 'ReportsController@crossRef',
+		'as' => 'report.cross_ref'
+	]
+	);
 
 	Route::get('/sku/temp', [
 

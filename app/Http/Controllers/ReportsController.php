@@ -27,6 +27,13 @@ class ReportsController extends Controller
     return view('reports.datamining',['transtypes' => $transtypes, 'reportName' => strtoupper($input['t'])]); // laravel way
   }
 
+  
+  public function audit()
+  {
+    $input = \Request::all();
+    return view('reports.audit'); // laravel way
+  }
+
   public function datamine(Request $request)
   {
 
@@ -133,20 +140,22 @@ class ReportsController extends Controller
 
       }
 
-      $listAll_IS = DB::table('is_members_pwcp')
+      $listAll_IS = DB::table('vw_IS_ActiveMembersWithEmails')
       ->distinct()
       ->select(
-        'is_members_pwcp.first_name',
-        'is_members_pwcp.last_name',
-        DB::raw("(GROUP_CONCAT(is_members_pwcp.order_date SEPARATOR ', ')) as IS_OrderDate"),
-        DB::raw("(GROUP_CONCAT(is_members_pwcp.order_title SEPARATOR ', ')) as IS_OrderTitle"),
-        DB::raw("(GROUP_CONCAT(is_members_pwcp.product_name SEPARATOR ', ')) as IS_ProductNames")
+        'vw_IS_ActiveMembersWithEmails.first_name',
+        'vw_IS_ActiveMembersWithEmails.last_name',
+        'vw_IS_ActiveMembersWithEmails.email',
+        DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_date SEPARATOR ', ')) as IS_OrderDate"),
+        DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_title SEPARATOR ', ')) as IS_OrderTitle"),
+        DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.product_name SEPARATOR ', ')) as IS_ProductNames")
         )
       ->where(function($query) use ($manualSearch) {
-          $query->orWhere('is_members_pwcp.order_title', 'like', '%' . $manualSearch . '%')
-                ->orWhere('is_members_pwcp.product_name', 'like', '%' . $manualSearch . '%');
+          $query->orWhere('vw_IS_ActiveMembersWithEmails.order_title', 'like', '%' . $manualSearch . '%')
+                ->orWhere('vw_IS_ActiveMembersWithEmails.product_name', 'like', '%' . $manualSearch . '%')
+                ->orWhere('vw_IS_ActiveMembersWithEmails.email', 'like', '%' . $manualSearch . '%');
           })
-      ->groupby('is_members_pwcp.first_name', 'is_members_pwcp.last_name')
+      ->groupby('vw_IS_ActiveMembersWithEmails.first_name', 'vw_IS_ActiveMembersWithEmails.last_name','vw_IS_ActiveMembersWithEmails.email')
       ->get();
 
       return json_encode(['listAll_CB'=>$listAll_CB, 'listAll_IS'=>$listAll_IS, 'listAll_CB_Count'=>$listAll_CB->count(), 'listAll_IS_Count'=>$listAll_IS->count()]);    
@@ -687,28 +696,29 @@ class ReportsController extends Controller
 
         }else if($para["repOption"] == "7"){ 
          
-        $listAll = DB::table('vw_CB_IS_Active')
-        ->distinct()
-        ->select(
-          'vw_CB_IS_Active.lnk_name',
-          'vw_CB_IS_Active.CB_FirstName',
-          'vw_CB_IS_Active.CB_LastName',
-          'vw_CB_IS_Active.CB_Email',
-          'vw_CB_IS_Active.CB_Dates',
-          'vw_CB_IS_Active.CB_SKUs',
-          'vw_CB_IS_Active.CB_ProductNames',
-          'vw_CB_IS_Active.CB_Receipts',
-          'vw_CB_IS_Active.CB_NoOfReBills',
-          'vw_CB_IS_Active.lnk_name',
-          'vw_CB_IS_Active.IS_FirstName',
-          'vw_CB_IS_Active.IS_LastName',
-          DB::raw("(GROUP_CONCAT(is_pwcp_active.OrderDate SEPARATOR ', ')) as IS_OrderDate"),
-          DB::raw("(GROUP_CONCAT(is_pwcp_active.OrderTitle SEPARATOR ', ')) as IS_OrderTitle"),
-          DB::raw("(GROUP_CONCAT(is_pwcp_active.ProductName SEPARATOR ', ')) as IS_ProductNames")
-          )
-        ->leftjoin('is_pwcp_active', 'vw_CB_IS_Active.lnk_name', '=', 'is_pwcp_active.lnk_name')
-        ->groupby('vw_CB_IS_Active.lnk_name')
-        ->get();
+          $listAll = DB::table('vw_active_emails')
+          ->distinct()
+          ->select(
+            'vw_active_emails.lnk_email',
+            'vw_all_active_members.firstName As CB_FirstName',
+            'vw_all_active_members.lastName As CB_LastName',
+            'vw_all_active_members.email As CB_Email',
+            'vw_all_active_members.Dates As CB_Dates',
+            'vw_all_active_members.SKUs As CB_SKUs',
+            'vw_all_active_members.ProductNames As CB_ProductNames',
+            'vw_all_active_members.Receipts As CB_Receipts',
+            'vw_all_active_members.NoOfReBills As CB_NoOfReBills',
+            'vw_IS_ActiveMembersWithEmails.email As IS_Email',
+            'vw_IS_ActiveMembersWithEmails.first_name As IS_FirstName',
+            'vw_IS_ActiveMembersWithEmails.last_name As IS_LastName',
+            DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_date SEPARATOR ', ')) as IS_OrderDate"),
+            DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_title SEPARATOR ', ')) as IS_OrderTitle"),
+            DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.product_Name SEPARATOR ', ')) as IS_ProductNames")
+            )
+          ->leftjoin('vw_all_active_members', 'vw_active_emails.lnk_email', '=', 'vw_all_active_members.email')
+          ->leftjoin('vw_IS_ActiveMembersWithEmails', 'vw_active_emails.lnk_email', '=', 'vw_IS_ActiveMembersWithEmails.email')
+          ->groupby('vw_all_active_members.email')
+          ->get();
 
         if($para["remMatch"] == "1")
         {
@@ -749,6 +759,73 @@ class ReportsController extends Controller
       
     }
 
+    
+  }
+
+  public function crossRef(Request $request)
+  {
+
+    $para = $request->toArray();
+    
+    $listAll = null;
+         
+    $listAll = DB::table('vw_active_emails')
+    ->distinct()
+    ->select(
+      'vw_active_emails.lnk_email',
+      'vw_all_active_members.firstName As CB_FirstName',
+      'vw_all_active_members.lastName As CB_LastName',
+      'vw_all_active_members.email As CB_Email',
+      'vw_all_active_members.Dates As CB_Dates',
+      'vw_all_active_members.SKUs As CB_SKUs',
+      'vw_all_active_members.ProductNames As CB_ProductNames',
+      'vw_all_active_members.Receipts As CB_Receipts',
+      'vw_all_active_members.NoOfReBills As CB_NoOfReBills',
+      'vw_IS_ActiveMembersWithEmails.email As IS_Email',
+      'vw_IS_ActiveMembersWithEmails.first_name As IS_FirstName',
+      'vw_IS_ActiveMembersWithEmails.last_name As IS_LastName',
+      DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_date SEPARATOR ', ')) as IS_OrderDate"),
+      DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_title SEPARATOR ', ')) as IS_OrderTitle"),
+      DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.product_Name SEPARATOR ', ')) as IS_ProductNames")
+      )
+    ->leftjoin('vw_all_active_members', 'vw_active_emails.lnk_email', '=', 'vw_all_active_members.email')
+    ->leftjoin('vw_IS_ActiveMembersWithEmails', 'vw_active_emails.lnk_email', '=', 'vw_IS_ActiveMembersWithEmails.email')
+    ->groupby('vw_all_active_members.email')
+    ->get();
+
+    if($para["remMatch"] == "1")
+    {
+      $listAll = $listAll->toArray();
+      foreach ($listAll as $key => $d) {
+        $foundSKU = TRUE;
+        $foundREC = TRUE;
+        if(!empty($d->CB_FirstName) && !empty($d->IS_FirstName))
+        {
+          $arrSKUs = explode(", ",$d->CB_SKUs);
+          $arrReceipts = explode(", ",$d->CB_Receipts);
+          for($i = 0; $i < sizeof($arrSKUs); $i++)
+          {
+            if (strpos($d->IS_ProductNames, $arrSKUs[$i]) === false) {
+              $foundSKU = FALSE;
+              break;
+            }
+          }
+          for($i = 0; $i < sizeof($arrReceipts); $i++)
+          {
+            if (strpos($d->IS_OrderTitle, $arrReceipts[$i]) === false) {
+              $foundREC = FALSE;
+              break;
+            }
+          }
+
+          if($foundSKU == TRUE || $foundREC == TRUE)
+            unset($listAll[$key]);
+
+        }
+      }
+      array_multisort($listAll, SORT_DESC);
+    }
+    return json_encode(['listAll'=> $listAll]);   
     
   }
 

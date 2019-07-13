@@ -77,6 +77,7 @@ class ImportController extends Controller
         }
         else
         {
+            DB::table('is_members')->delete();
             $data = CsvData::find($request->csv_data_file_id);
             $csv_data = json_decode($data->csv_data, true);
             foreach ($csv_data as $row) {

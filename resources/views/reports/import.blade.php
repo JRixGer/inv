@@ -5,7 +5,7 @@
         <div class="row no-gutters justify-content-center">
             <div class="col-md-8">
                 <div class="card" style="margin:10px">
-                <div class="card-header"><b>IS Transaction CSV Import</b></div>
+                <div class="card-header"><b>IS Transactions CSV Import</b></div>
                     <div class="card-body" style="padding:30px">
                         <form class="form-horizontal" method="POST" action="{{ route('report.import_parse') }}" enctype="multipart/form-data">
                             {{ csrf_field() }}

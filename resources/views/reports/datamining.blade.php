@@ -24,7 +24,7 @@
                                 if($reportName == 'PWCP')
                                 {
                                 ?>
-                                    <option value='7'>CB & IS Active Members Cross Referencing (PWCP)</option>
+                                    <!-- <option value='7'>CB & IS Active Members Cross Referencing (PWCP)</option> -->
                                 <?php
                                 }    
                                 ?>
@@ -134,32 +134,6 @@
                         </table>
                         </div>
 
-                        <div id="datatabledivcrossref" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
-                        <table class="table display" id="datatablecrossref" style="width:100%">
-                            <thead>
-                                <tr>
-                                    
-                                    <th>CB_FirstName</th>
-                                    <th>CB_LastName</th>
-                                    <!-- <th>CB_Email</th> -->
-                                    <th>CB_Dates</th>
-                                    <th>CB_SKUs</th>
-                                    <th>CB_ProductNames</th>
-                                    <th>CB_Receipts</th>
-                                    <th>CB_NoOfReBills</th>
-                                    <th>IS_FirstName</th>
-                                    <th>IS_LastName</th>
-                                    <th>IS_OrderDate</th>
-                                    <th>IS_OrderTitle</th>
-                                    <th>IS_ProductNames</th>
-                                    <th>Lnk_Name</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        </div>
                         
                         <div id="manualSearchResults" class="horiz-scroll" style="max-width:auto; overflow: scroll;" >
                                 
