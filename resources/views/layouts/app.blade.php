@@ -122,6 +122,23 @@
         padding: 10px 0px 10px 0px;
         margin: 10px;
     }
+
+    /* unvisited link */
+    a:link {
+        color: #737373;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    a:visited {
+        color: #737373;
+    }
+
+    /* mouse over link */
+    a:hover {
+        color: #ce0101;
+    }
+
      </style>
 
 <body>
@@ -528,6 +545,7 @@
                     var memberYesterday = "<span>Added Yesterday: <font style='font-size:20px'><b>"+data.membersYesterday+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
                     var member7DaysAgo = "<span>Last 7 Days: <font style='font-size:20px'><b>"+data.membersLast7Days+"</b></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
                     var member30DaysAgo = "<span>Last 30 Days: <font style='font-size:20px'><b>"+data.membersLast30Days+"</b></font></span></p>";
+                    
                     $("#summary").html(totMember+memberYesterday+member7DaysAgo+member30DaysAgo);
                     list(data.listAll);
 
@@ -710,14 +728,25 @@
     }
 
 
+    
+    function goToPage(n, t)
+    {
+        var url = "https://cb.preparedpatriot.us/inv/shipping/report/options?";
+        window.location.href = url+'t='+t+'&n='+n;
+    }
+
+
+
 
     $(document).ready(function() {
+
         $('#datepicker1').datepicker({
             dateFormat: "mm-dd-yyyy", autoclose: true
         });
         $('#datepicker2').datepicker({
             dateFormat: "mm-dd-yyyy", autoclose: true
         });  
+
     });
 
 </script>

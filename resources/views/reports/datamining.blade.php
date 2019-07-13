@@ -10,7 +10,7 @@
                         <h5 class="limit-text" style="font-weight:bold">{{$reportName}}</h5>
                         <input type="hidden" id="reportSelected" value="{{$reportName}}">
                         </div>  
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <select class="form-control" id="reportOpt" onChange="showHide()">
                                 <option value='0'>Manual Search by Email, Receipts</option>
                                 <option value='1'>Added Members Information</option>
@@ -258,7 +258,32 @@
 
 @section('javascripts')
     <script>
+        $(document).ready(function() {
+            var $_GET = <?php echo json_encode($_GET); ?>;
+            if($_GET['n'] > 0)
+            {
+                if($_GET['n']=='1' && $_GET['t']=='PWCP')
+                    $("#reportOpt").val('4');
+                else if($_GET['n']=='1' && $_GET['t']=='PIC')
+                    $("#reportOpt").val('4');
+                else if($_GET['n']=='2' && $_GET['t']=='PWCP')
+                    $("#reportOpt").val('4');
+                else if($_GET['n']=='2' && $_GET['t']=='PIC')
+                    $("#reportOpt").val('4');
+                else if($_GET['n']=='3' && $_GET['t']=='PWCP')
+                    $("#reportOpt").val('6');
+                else if($_GET['n']=='4' && $_GET['t']=='PWCP')
+                    $("#reportOpt").val('6');        
+                else if($_GET['n']=='5' && $_GET['t']=='PWCP')
+                    $("#reportOpt").val('6');
 
-  
+                $("#datepicker1").val('<?php echo '01/01/2019'; ?>');
+                $("#datepicker2").val('<?php echo date('m/d/Y',strtotime('now')); ?>');
+                $("#reportSelected").val($_GET['t']);
+                window.history.pushState({}, document.title, "/" + "inv/shipping/report/options?t="+$_GET['t']);
+                showHide();
+                dataMine();
+            }
+        });
     </script>
 @endsection

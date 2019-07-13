@@ -96,7 +96,7 @@ class HomeController extends Controller
         ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('notifications.affiliate', '<>', '')
         ->where('billing.firstName', '<>', '')
-        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y'))"))->get(); 
+        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%d/%Y'))"))->get(); 
 
 
         
@@ -135,7 +135,7 @@ class HomeController extends Controller
           ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
           ->where('notifications.affiliate', '<>', '')
           ->where('billing.firstName', '<>', '')
-          ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->get(); 
+          ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%Y'))"))->get(); 
   
   
           
@@ -357,11 +357,16 @@ class HomeController extends Controller
         $activeCanceledPWPCOverall
                 ->addStringColumn('PWPC')
                 ->addNumberColumn('Total')
-                ->addRow(['Active Members: '.$allMembers->count(), $allMembers->count()])
-                ->addRow(['Canceled Members: '.$allMembersCanceled->count(), $allMembersCanceled->count()]);
+                ->addRow(['Active: '.$allMembers->count(), $allMembers->count()])
+                ->addRow(['Canceled: '.$allMembersCanceled->count(), $allMembersCanceled->count()]);
         
         \Lava::PieChart('PWPCActiveCanceled', $activeCanceledPWPCOverall, [
             'is3D'   => true,
+            'legend' => [
+              'textStyle' => [
+                'fontSize' => 14
+              ]
+            ],
             'slices' => [
                 ['offset' => 0.2],
                 ['offset' => 0.25],
@@ -374,11 +379,16 @@ class HomeController extends Controller
         $activeCanceledPICOverall
                 ->addStringColumn('PIC')
                 ->addNumberColumn('Total')
-                ->addRow(['Active Members: '.$allMembersPIC->count(), $allMembersPIC->count()])
-                ->addRow(['Canceled Members: '.$allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()]);
+                ->addRow(['Active: '.$allMembersPIC->count(), $allMembersPIC->count()])
+                ->addRow(['Canceled: '.$allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()]);
         
         \Lava::PieChart('PICActiveCanceled', $activeCanceledPICOverall, [
             'is3D'   => true,
+            'legend' => [
+              'textStyle' => [
+                'fontSize' => 14
+              ]
+            ],
             'slices' => [
                 ['offset' => 0.2],
                 ['offset' => 0.25],
