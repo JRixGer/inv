@@ -255,9 +255,7 @@ class HomeController extends Controller
                 'fontSize' => 16
               ]
             ]              
-          
-
-            ]);
+          ]);
         
         
         ////////////////
@@ -465,18 +463,6 @@ class HomeController extends Controller
             ]
         ]);
 
-
-//         $reasons->addStringColumn('Reasons')
-//         ->addNumberColumn('Percent')
-//         ->addRow(['Check Reviews', 5])
-//         ->addRow(['Watch Trailers', 2])
-//         ->addRow(['See Actors Other Work', 4])
-//         ->addRow(['Settle Argument', 89]);
-
-// $lava->DonutChart('IMDB', $reasons, [
-//     'title' => 'Reasons I visit IMDB'
-// ]);
-
         $activeCanceledPICOverall = \Lava::DataTable();
         $activeCanceledPICOverall
                 ->addStringColumn('PIC')
@@ -491,6 +477,54 @@ class HomeController extends Controller
               ]
             ]
         ]);
+
+
+        /////////////////////
+
+        //////////////////////////////
+
+
+        $listAll = DB::table('billing')
+        ->distinct()
+        ->select(
+          DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y')) As Days"),
+          DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
+          DB::raw("SUM(lineItems.productPrice) as TotalProductPrice"),
+          DB::raw("SUM(lineItems.taxAmount) as TotaltaxAmount")
+          )
+        ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
+        ->leftjoin('lineItems', 'notifications.id', '=', 'lineItems.lnkid')
+        ->where('lineItems.itemNo', 'like', '%pwcp%')
+        ->whereNotIn('billing.email', $inactive)
+        ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
+        ->where('notifications.affiliate', '<>', '')
+        ->where('billing.firstName', '<>', '')
+        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->get(); 
+   
+        $affiliate = \Lava::DataTable();
+        $affiliate->addStringColumn('Month')
+                     ->addNumberColumn('Members')
+                     ->addRoleColumn('string', 'annotation')
+                     ->addNumberColumn('Product Price')
+                     ->addRoleColumn('string', 'annotation')
+                     ->addNumberColumn('Tax Amount')
+                     ->addRoleColumn('string', 'annotation');
+
+        foreach ($listAll as $key => $d) 
+            $affiliate->addRow([$d->Days,  $d->TotalMembers,$d->TotalMembers, round($d->TotalProductPrice,2),'$'.round($d->TotalProductPrice,2), round($d->TotaltaxAmount,2),'$'.round($d->TotaltaxAmount,2)]);
+        
+        \Lava::ColumnChart('PWCPAffiliatesByPrice', $affiliate, [
+            'fontSize' => 12,
+            'height' => 400,
+            'legend' => [
+              'position' => 'top',
+              'textStyle' => [
+                'fontSize' => 16
+              ]
+            ]              
+          ]);
+        
+
 
         // $temperatures = \Lava::DataTable();
         // $temperatures->addDateColumn('Date')
@@ -553,7 +587,7 @@ class HomeController extends Controller
         
         // \Lava::PieChart('IMDB1', $reasons1, [
         //     'title'  => 'Reasons I visit IMDB',
-        //     'is3D'   => true,
+        //     'is3D'   => true,*
         //     'slices' => [
         //         ['offset' => 0.2],
         //         ['offset' => 0.25],
