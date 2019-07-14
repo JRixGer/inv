@@ -487,9 +487,10 @@ class HomeController extends Controller
         $listAll = DB::table('billing')
         ->distinct()
         ->select(
-          DB::raw("(DATE_FORMAT(notifications.dt,'%m/%e/%Y')) As Days"),
+          DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y')) As Months"),
           DB::raw("(COUNT(DISTINCT billing.email)) as TotalMembers"),
           DB::raw("SUM(lineItems.productPrice) as TotalProductPrice"),
+          DB::raw("SUM(lineItems.shippingAmount) as TotalshippingAmount"),
           DB::raw("SUM(lineItems.taxAmount) as TotaltaxAmount")
           )
         ->leftjoin('notifications', 'billing.lnkid', '=', 'notifications.id')
@@ -499,7 +500,7 @@ class HomeController extends Controller
         ->whereNotIn('notifications.transactionType', ['TEST', 'TEST_BILL','TEST_SALE'])
         ->where('notifications.affiliate', '<>', '')
         ->where('billing.firstName', '<>', '')
-        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->get(); 
+        ->groupby(DB::raw("(DATE_FORMAT(notifications.dt,'%M/%Y'))"))->orderby(DB::raw("(DATE_FORMAT(notifications.dt,'%m/%Y'))"))->get(); 
    
         $affiliate = \Lava::DataTable();
         $affiliate->addStringColumn('Month')
@@ -507,11 +508,12 @@ class HomeController extends Controller
                      ->addRoleColumn('string', 'annotation')
                      ->addNumberColumn('Product Price')
                      ->addRoleColumn('string', 'annotation')
+                     ->addNumberColumn('Shipping Amount')
+                     ->addRoleColumn('string', 'annotation')
                      ->addNumberColumn('Tax Amount')
                      ->addRoleColumn('string', 'annotation');
-
         foreach ($listAll as $key => $d) 
-            $affiliate->addRow([$d->Days,  $d->TotalMembers,$d->TotalMembers, round($d->TotalProductPrice,2),'$'.round($d->TotalProductPrice,2), round($d->TotaltaxAmount,2),'$'.round($d->TotaltaxAmount,2)]);
+            $affiliate->addRow([$d->Months,  $d->TotalMembers,$d->TotalMembers, round($d->TotalProductPrice,2),'$'.round($d->TotalProductPrice,2), round($d->TotalshippingAmount,2),'$'.round($d->TotalshippingAmount,2), round($d->TotaltaxAmount,2),'$'.round($d->TotaltaxAmount,2)]);
         
         \Lava::ColumnChart('PWCPAffiliatesByPrice', $affiliate, [
             'fontSize' => 12,

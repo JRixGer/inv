@@ -147,7 +147,7 @@
 
         <div class="col-md-8">
             <div class="card" style="margin:10px">
-               <div class="card-header"><a href="#" onClick="goToPage('5','PWCP')" style="width:100%">PWCP - Number of Members, Product Price and Tax by Month<span style="float:right"><i class="fa fa-link"></i></span></a></div>
+               <div class="card-header"><a href="#" onClick="goToPage('5','PWCP')" style="width:100%">PWCP - Number of Members, Product Price, Shipping Amount and Tax by Month<span style="float:right"><i class="fa fa-link"></i></span></a></div>
                <div class="card-body">
                     <div id="PWCPAffiliatesByPrice_div"></div>
                     <?php echo Lava::render('ColumnChart', 'PWCPAffiliatesByPrice', 'PWCPAffiliatesByPrice_div') ?>
