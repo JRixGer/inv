@@ -11,7 +11,7 @@
                 <div class="card-header"><a href="#" onClick="goToPage('1','PWCP')" style="width:100%">PWCP - Overall Active and Canceled Members <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                 <div class="card-body">
                     <div id="PWCP-div"></div>
-                    <?php echo Lava::render('PieChart', 'PWPCActiveCanceled', 'PWCP-div') ?>
+                    <?php echo Lava::render('DonutChart', 'PWPCActiveCanceled', 'PWCP-div') ?>
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@
                 <div class="card-header"><a href="#" onClick="goToPage('1','PIC')" style="width:100%">PIC - Overall Active and Canceled Members <span style="float:right"><i class="fa fa-link"></i></span></a></div>
                 <div class="card-body">
                     <div id="PIC-div"></div>
-                    <?php echo Lava::render('PieChart', 'PICActiveCanceled', 'PIC-div') ?>
+                    <?php echo Lava::render('DonutChart', 'PICActiveCanceled', 'PIC-div') ?>
                 </div>
             </div>
         </div>

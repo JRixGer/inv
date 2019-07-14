@@ -457,20 +457,25 @@ class HomeController extends Controller
                 ->addRow(['Active:'.$allMembers->count(), $allMembers->count()])
                 ->addRow(['Canceled:'.$allMembersCanceled->count(), $allMembersCanceled->count()]);
         
-        \Lava::PieChart('PWPCActiveCanceled', $activeCanceledPWPCOverall, [
-            'is3D'   => true,
+        \Lava::DonutChart('PWPCActiveCanceled', $activeCanceledPWPCOverall, [
             'legend' => [
               'textStyle' => [
                 'fontSize' => 16
               ]
-            ],
-            'slices' => [
-                ['offset' => 0.2],
-                ['offset' => 0.25],
-                ['offset' => 0.3]
             ]
         ]);
 
+
+//         $reasons->addStringColumn('Reasons')
+//         ->addNumberColumn('Percent')
+//         ->addRow(['Check Reviews', 5])
+//         ->addRow(['Watch Trailers', 2])
+//         ->addRow(['See Actors Other Work', 4])
+//         ->addRow(['Settle Argument', 89]);
+
+// $lava->DonutChart('IMDB', $reasons, [
+//     'title' => 'Reasons I visit IMDB'
+// ]);
 
         $activeCanceledPICOverall = \Lava::DataTable();
         $activeCanceledPICOverall
@@ -479,17 +484,11 @@ class HomeController extends Controller
                 ->addRow(['Active:'.$allMembersPIC->count(), $allMembersPIC->count()])
                 ->addRow(['Canceled:'.$allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()]);
         
-        \Lava::PieChart('PICActiveCanceled', $activeCanceledPICOverall, [
-            'is3D'   => true,
+        \Lava::DonutChart('PICActiveCanceled', $activeCanceledPICOverall, [
             'legend' => [
               'textStyle' => [
                 'fontSize' => 16
               ]
-            ],
-            'slices' => [
-                ['offset' => 0.2],
-                ['offset' => 0.25],
-                ['offset' => 0.3]
             ]
         ]);
 
