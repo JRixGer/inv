@@ -760,19 +760,16 @@
         $('#datatablecrossref').DataTable( {
             lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             data: data,
-            "order": [[ 14, "asc" ]],
+            "order": [[ 11, "asc" ]],
             retrieve: true,
             "columns": [
-              { "data": "CB_FirstName" },
-              { "data": "CB_LastName" },
+              { "data": "CB_Name" },
               { "data": "CB_Email" },
               { "data": "CB_Dates" },
               { "data": "CB_SKUs" },
               { "data": "CB_ProductNames" },
               { "data": "CB_Receipts" },
-              { "data": "CB_NoOfReBills" },
-              { "data": "IS_FirstName" },
-              { "data": "IS_LastName" },
+              { "data": "IS_Name" },
               { "data": "IS_Email" },
               { "data": "IS_OrderDate" },
               { "data": "IS_OrderTitle" },
@@ -781,7 +778,6 @@
             ]
         } );
     }
-    
     function goToPage(n, t)
     {
         var url = "https://cb.preparedpatriot.us/inv/shipping/report/options?";

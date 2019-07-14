@@ -40,16 +40,13 @@
                                 <thead>
                                     <tr>
                                         
-                                        <th>CB_FirstName</th>
-                                        <th>CB_LastName</th>
+                                        <th>CB_Name</th>
                                         <th>CB_Email</th>
                                         <th>CB_Dates</th>
                                         <th>CB_SKUs</th>
                                         <th>CB_ProductNames</th>
                                         <th>CB_Receipts</th>
-                                        <th>CB_NoOfReBills</th>
-                                        <th>IS_FirstName</th>
-                                        <th>IS_LastName</th>
+                                        <th>IS_Name</th>
                                         <th>IS_Email</th>
                                         <th>IS_OrderDate</th>
                                         <th>IS_OrderTitle</th>

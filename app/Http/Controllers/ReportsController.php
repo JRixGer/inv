@@ -773,17 +773,15 @@ class ReportsController extends Controller
     ->distinct()
     ->select(
       'vw_active_emails.lnk_email',
-      'vw_all_active_members.firstName As CB_FirstName',
-      'vw_all_active_members.lastName As CB_LastName',
+      DB::raw("CONCAT(vw_all_active_members.firstName, ' ' ,vw_all_active_members.lastName) as CB_Name"),
       'vw_all_active_members.email As CB_Email',
       'vw_all_active_members.Dates As CB_Dates',
       'vw_all_active_members.SKUs As CB_SKUs',
       'vw_all_active_members.ProductNames As CB_ProductNames',
       'vw_all_active_members.Receipts As CB_Receipts',
       'vw_all_active_members.NoOfReBills As CB_NoOfReBills',
+      DB::raw("CONCAT(vw_IS_ActiveMembersWithEmails.first_name, ' ' ,vw_IS_ActiveMembersWithEmails.last_name) as IS_Name"),
       'vw_IS_ActiveMembersWithEmails.email As IS_Email',
-      'vw_IS_ActiveMembersWithEmails.first_name As IS_FirstName',
-      'vw_IS_ActiveMembersWithEmails.last_name As IS_LastName',
       DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_date SEPARATOR ', ')) as IS_OrderDate"),
       DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.order_title SEPARATOR ', ')) as IS_OrderTitle"),
       DB::raw("(GROUP_CONCAT(vw_IS_ActiveMembersWithEmails.product_Name SEPARATOR ', ')) as IS_ProductNames")
@@ -799,7 +797,7 @@ class ReportsController extends Controller
       foreach ($listAll as $key => $d) {
         $foundSKU = TRUE;
         $foundREC = TRUE;
-        if(!empty($d->CB_FirstName) && !empty($d->IS_FirstName))
+        if(!empty($d->CB_Name) && !empty($d->IS_Name))
         {
           $arrSKUs = explode(", ",$d->CB_SKUs);
           $arrReceipts = explode(", ",$d->CB_Receipts);
