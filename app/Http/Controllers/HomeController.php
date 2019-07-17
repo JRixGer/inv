@@ -335,7 +335,7 @@ class HomeController extends Controller
                 'title' => 'Total Qty Sold: '.$tot,
                 'titleTextStyle' => [
                   'color'    => '#000',
-                  'fontSize' => 14
+                  'fontSize' => 16
                 ],
                 'height' => 300,
                 'legend' => [
@@ -378,7 +378,7 @@ class HomeController extends Controller
                 'title' => 'Total Qty Sold: '.$tot,
                 'titleTextStyle' => [
                   'color'    => '#000',
-                  'fontSize' => 14
+                  'fontSize' => 16
                 ],
                 'height' => 300,
                 'legend' => [
@@ -402,15 +402,16 @@ class HomeController extends Controller
                 ->addRow(['Yesterday', $membersYesterday->count(),$membersYesterday->count(), $membersYesterdayCanceled->count(), $membersYesterdayCanceled->count()]);
 
         \Lava::ColumnChart('ActiveCanceled', $activeCanceled, [
+              'title' => 'Total Members (Active & Canceled): '. ((int)$allMembers->count()+(int)$allMembersCanceled->count()),
               'titleTextStyle' => [
-                'color'    => '#eb6b2c',
+                'color'    => '#000',
                 'fontSize' => 16
               ],
               'height' => 300,
               'legend' => [
-                'position' => 'top',
+                'position' => 'bottom',
                 'textStyle' => [
-                  'fontSize' => 16
+                  'fontSize' => 12
                 ]
               ]               
 
@@ -434,15 +435,16 @@ class HomeController extends Controller
                 ->addRow(['Yesterday', $membersYesterdayPIC->count(),$membersYesterdayPIC->count(), $membersYesterdayCanceledPIC->count(), $membersYesterdayCanceledPIC->count()]);
 
         \Lava::ColumnChart('ActiveCanceledPIC', $activeCanceledPIC, [
+              'title' => 'Total Members (Active & Canceled): '.((int)$allMembersPIC->count()+(int)$allMembersCanceledPIC->count()),
               'titleTextStyle' => [
-                'color'    => '#eb6b2c',
-                'fontSize' => 10
+                'color'    => '#000',
+                'fontSize' => 16
               ],
               'height' => 300,
               'legend' => [
-                'position' => 'top',
+                'position' => 'bottom',
                 'textStyle' => [
-                  'fontSize' => 16
+                  'fontSize' => 12
                 ]
               ]             
               
@@ -455,8 +457,15 @@ class HomeController extends Controller
                 ->addRow(['Active:'.$allMembers->count(), $allMembers->count()])
                 ->addRow(['Canceled:'.$allMembersCanceled->count(), $allMembersCanceled->count()]);
         
-        \Lava::DonutChart('PWPCActiveCanceled', $activeCanceledPWPCOverall, [
+        \Lava::PieChart('PWPCActiveCanceled', $activeCanceledPWPCOverall, [
+            'title' => 'Total Members (Active & Canceled): '.((int)$allMembers->count()+(int)$allMembersCanceled->count()),
+            'titleTextStyle' => [
+              'color'    => '#000',
+              'fontSize' => 16
+            ],
+            'height' => 250,
             'legend' => [
+              'position' => 'labeled',
               'textStyle' => [
                 'fontSize' => 16
               ]
@@ -470,8 +479,15 @@ class HomeController extends Controller
                 ->addRow(['Active:'.$allMembersPIC->count(), $allMembersPIC->count()])
                 ->addRow(['Canceled:'.$allMembersCanceledPIC->count(), $allMembersCanceledPIC->count()]);
         
-        \Lava::DonutChart('PICActiveCanceled', $activeCanceledPICOverall, [
+        \Lava::PieChart('PICActiveCanceled', $activeCanceledPICOverall, [
+          'title' => 'Total Members (Active & Canceled): '.((int)$allMembersPIC->count()+(int)$allMembersCanceledPIC->count()),
+            'titleTextStyle' => [
+              'color'    => '#000',
+              'fontSize' => 16
+            ],
+            'height' => 250,
             'legend' => [
+              'position' => 'labeled',
               'textStyle' => [
                 'fontSize' => 16
               ]
