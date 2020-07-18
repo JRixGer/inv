@@ -1,5 +1,11 @@
 <?php
 
+/*
+  
+  This controller is reponsible for showing admin dashboard graphs for different inventory analysis information
+  
+*/
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -175,7 +181,15 @@ class HomeController extends Controller
         ->whereIn('pigman_billing.email', $inactive_pic)
         ->where('pigman_billing.firstName', '<>', '')->where(DB::raw("(STR_TO_DATE(pigman_notifications.dt,'%Y-%m-%d'))"), '>=', $searchStartDt30)->groupby('pigman_billing.email')->get();
 
-        ////////////////////////  
+        /*
+        Multiple queries above are used for difference dashboard graphs below
+        */
+
+
+
+        
+
+        ///////////////////
           
         $listAll = DB::table('billing')
         ->distinct()
@@ -192,6 +206,12 @@ class HomeController extends Controller
         ->where('notifications.affiliate', '<>', '')
         ->where('billing.firstName', '<>', '')
         ->groupby('notifications.affiliate')->get(); 
+
+        /*
+        
+        Code below will show a line chart for the PWCPAffiliates, By Affiliates
+
+        */
 
         $totReBills = 0;
         foreach ($listAll as $key => $d) 
@@ -218,7 +238,11 @@ class HomeController extends Controller
         ]);
         
 
-        //////////////////////////////
+        /*
+        
+        Code below will show a line chart for the PWCPAffiliates, By Daily
+
+        */
 
 
         $listAll = DB::table('billing')
@@ -257,8 +281,15 @@ class HomeController extends Controller
             ]              
           ]);
         
+
         
-        ////////////////
+        
+        /*
+        
+        Code below will show a line chart for the PWCPAffiliates, By Monthly
+
+        */
+
 
 
           $listAll = DB::table('billing')
@@ -300,8 +331,16 @@ class HomeController extends Controller
               ]              
             ]);
           
+
+
           
-          ////////////////
+          /*
+        
+         Code below will show a Bar Chart for the total sales, By SKU
+
+         */
+
+
           $listAll = DB::table('billing')
           ->distinct()
           ->select(
@@ -345,6 +384,15 @@ class HomeController extends Controller
   
           ]);
   
+
+
+
+         /*
+        
+         Code below will show a Bar Chart for the PIC total Sales, By SKU
+
+         */
+
           $listAll = DB::table('pigman_billing')
           ->distinct()
           ->select(
@@ -387,7 +435,14 @@ class HomeController extends Controller
   
           ]);
 
-          ////////////////
+
+
+
+         /*
+        
+         Code below will show a Column Chart for the Total Members (Active & Canceled)
+
+         */
 
         $activeCanceled = \Lava::DataTable();
 
@@ -420,6 +475,12 @@ class HomeController extends Controller
 
 
 
+         /*
+        
+         Code below will show a Column Chart for the Total Members (Active & Canceled) - PIC category
+
+         */
+
         $activeCanceledPIC = \Lava::DataTable();
 
         $activeCanceledPIC
@@ -450,6 +511,15 @@ class HomeController extends Controller
               
         ]);
 
+        
+
+
+        /*
+        
+        Code below will show a Pie Chart for the Total Members (Active & Canceled) - PWPC category
+
+        */
+
         $activeCanceledPWPCOverall = \Lava::DataTable();
         $activeCanceledPWPCOverall
                 ->addStringColumn('PWPC')
@@ -471,6 +541,15 @@ class HomeController extends Controller
               ]
             ]
         ]);
+
+
+
+        
+        /*
+        
+        Code below will show a Pie Chart for the Total Members (Active & Canceled) - PIC category
+
+        */
 
         $activeCanceledPICOverall = \Lava::DataTable();
         $activeCanceledPICOverall
@@ -495,10 +574,14 @@ class HomeController extends Controller
         ]);
 
 
-        /////////////////////
 
-        //////////////////////////////
 
+
+        /*
+        
+        Code below will show a Column Chart for the Affiliates By Price - PWCP category
+
+        */
 
         $listAll = DB::table('billing')
         ->distinct()
@@ -542,102 +625,6 @@ class HomeController extends Controller
             ]              
           ]);
         
-
-
-        // $temperatures = \Lava::DataTable();
-        // $temperatures->addDateColumn('Date')
-        //              ->addNumberColumn('Max Temp')
-        //              ->addNumberColumn('Mean Temp')
-        //              ->addNumberColumn('Min Temp')
-        //              ->addRow(['2014-10-1',  67, 65, 62])
-        //              ->addRow(['2014-10-2',  68, 65, 61])
-        //              ->addRow(['2014-10-3',  68, 62, 55])
-        //              ->addRow(['2014-10-4',  72, 62, 52])
-        //              ->addRow(['2014-10-5',  61, 54, 47])
-        //              ->addRow(['2014-10-6',  70, 58, 45])
-        //              ->addRow(['2014-10-7',  74, 70, 65])
-        //              ->addRow(['2014-10-8',  75, 69, 62])
-        //              ->addRow(['2014-10-9',  69, 63, 56])
-        //              ->addRow(['2014-10-10', 64, 58, 52])
-        //              ->addRow(['2014-10-11', 59, 55, 50])
-        //              ->addRow(['2014-10-12', 65, 56, 46])
-        //              ->addRow(['2014-10-13', 66, 56, 46])
-        //              ->addRow(['2014-10-14', 75, 70, 64])
-        //              ->addRow(['2014-10-15', 76, 72, 68])
-        //              ->addRow(['2014-10-16', 71, 66, 60])
-        //              ->addRow(['2014-10-17', 72, 66, 60])
-        //              ->addRow(['2014-10-18', 63, 62, 62]);
-        
-        // \Lava::LineChart('Temps', $temperatures, [
-        //     'title' => 'Weather in October'
-        // ]);
-        
-
-
-        // $population = \Lava::DataTable();
-        // $population->addDateColumn('Year')
-        //         ->addNumberColumn('Number of People')
-        //         ->addRow(['2006', 623452])
-        //         ->addRow(['2007', 685034])
-        //         ->addRow(['2008', 716845])
-        //         ->addRow(['2009', 757254])
-        //         ->addRow(['2010', 778034])
-        //         ->addRow(['2011', 792353])
-        //         ->addRow(['2012', 839657])
-        //         ->addRow(['2013', 842367])
-        //         ->addRow(['2014', 873490]);
-
-        // \Lava::AreaChart('Population', $population, [
-        //     'title' => 'Population Growth',
-        //     'legend' => [
-        //         'position' => 'in'
-        //     ]
-        // ]);
-
-
-        // $reasons1 = \Lava::DataTable();
-        // $reasons1->addStringColumn('Reasons')
-        //         ->addNumberColumn('Percent')
-        //         ->addRow(['Check Reviews', 5])
-        //         ->addRow(['Watch Trailers', 2])
-        //         ->addRow(['See Actors Other Work', 4])
-        //         ->addRow(['Settle Argument', 89]);
-        
-        // \Lava::PieChart('IMDB1', $reasons1, [
-        //     'title'  => 'Reasons I visit IMDB',
-        //     'is3D'   => true,*
-        //     'slices' => [
-        //         ['offset' => 0.2],
-        //         ['offset' => 0.25],
-        //         ['offset' => 0.3]
-        //     ]
-        // ]);
-
-        // $reasons2 = \Lava::DataTable();
-        // $reasons2->addStringColumn('Reasons')
-        //         ->addNumberColumn('Percent')
-        //         ->addRow(['Check Reviews', 5])
-        //         ->addRow(['Watch Trailers', 2])
-        //         ->addRow(['See Actors Other Work', 4])
-        //         ->addRow(['Settle Argument', 89]);
-
-        // \Lava::DonutChart('IMDB2', $reasons2, [
-        //     'title' => 'Reasons I visit IMDB'
-        // ]);
-
-        // $votes  = \Lava::DataTable();
-        // $votes->addStringColumn('Food Poll')
-        //     ->addNumberColumn('Votes')
-        //     ->addRow(['Tacos',  rand(1000,5000)])
-        //     ->addRow(['Salad',  rand(1000,5000)])
-        //     ->addRow(['Pizza',  rand(1000,5000)])
-        //     ->addRow(['Apples', rand(1000,5000)])
-        //     ->addRow(['Fish',   rand(1000,5000)]);
-
-        // \Lava::BarChart('Votes', $votes);
-        
-        //$data['Votes'] = \Lava::BarChart('Votes', $votes);
-        //return view('home', $data);
 
         return view('home');
     }
